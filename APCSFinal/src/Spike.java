@@ -6,7 +6,8 @@ public class Spike extends Obstacle
 		super(x, y, "spike.png" );
 	}
 
-	public int getDamage() {
+	public int getDamage() 
+	{
 		return 1;
 	}
 

@@ -4,17 +4,18 @@ public abstract class Obstacle
 {
 	private float topX;
 	private float topY;
-	private PImage p;
+	private String imagePath;
 	
-	public Obstacle( float x, float y, String imagePath, PApplet drawer ) 
+	public Obstacle( float x, float y, String imPath ) 
 	{
 		topX = x;
 		topY = y;
-		p = drawer.loadImage(imagePath);
-		
+		imagePath = imPath;
 	}
 	
 	public abstract int getDamage();
+	
+	// public abstract void animate();
 	
 	//public abstract double getArea();
 
@@ -27,6 +28,7 @@ public abstract class Obstacle
 	
 	public void draw( PApplet drawer ) 
 	{
-		
+		PShape p = drawer.loadShape(imagePath);
+		drawer.shape( p, topX, topY );
 	}
 }

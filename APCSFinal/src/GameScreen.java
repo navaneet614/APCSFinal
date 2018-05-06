@@ -13,7 +13,7 @@ public class GameScreen extends PApplet
 	{
 		startMenu = new StartMenu();
 		currentMenu = null;
-		guy = new Player(50,0,50,50);
+		guy = new Player(50,50,50,50);
 	}
 	
 	public void setup() 
