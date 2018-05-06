@@ -13,24 +13,40 @@ public class GameScreen extends PApplet
 	{
 		startMenu = new StartMenu();
 		currentMenu = null;
-		guy = new Player(50,50,50,50);
+		guy = new Player(50,0,50,50);
 	}
 	
 	public void setup() 
 	{
-		
+		guy.setup(this);
 	}
 	
 	public void draw() 
 	{
-		background( Color.BLUE.getRGB() );
-		
 		scale(width / ORIGINAL_WIDTH, height / ORIGNAL_HEIGHT);
 		background( Color.WHITE.getRGB() );
-		currentMenu = startMenu;
+		//currentMenu = startMenu;
 		if(currentMenu!=null) {
 			currentMenu.draw(this);
 		}
->>>>>>> branch 'master' of https://github.com/navaneet614/APCSFinal.git
+		
+		if(currentMenu == null) {
+		guy.draw(this);
+		}
+	}
+	
+	public void keyPressed() {
+		char v = key;
+		if(Character.toUpperCase(v) == 'A') {
+			guy.moveDirection(-6);
+		}
+		if(Character.toUpperCase(v) == 'D') {
+			guy.moveDirection(6);
+		}
+		if(Character.toUpperCase(v)== 'W') {
+			guy.jump(25);
+		}
+		
+			
 	}
 }
