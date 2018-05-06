@@ -14,7 +14,7 @@ public class StartMenu extends Menu {
 	}
 	
 	private void doButtons() {
-		this.addButton(new Button(100, 100, 100, 50, "Start", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(300, 300, 100, 50, "Start", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 	}
 	
 	
