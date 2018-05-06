@@ -15,6 +15,8 @@ public abstract class Obstacle
 	
 	public abstract int getDamage();
 	
+	// public abstract void animate();
+	
 	//public abstract double getArea();
 
 	
@@ -26,6 +28,7 @@ public abstract class Obstacle
 	
 	public void draw( PApplet drawer ) 
 	{
-		
+		PShape p = drawer.loadShape(imagePath);
+		drawer.shape( p, topX, topY );
 	}
 }
