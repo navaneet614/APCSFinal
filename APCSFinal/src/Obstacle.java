@@ -16,7 +16,7 @@ public abstract class Obstacle
 	
 	public abstract int getDamage();
 	
-	public abstract double getArea();
+	//public abstract double getArea();
 
 	
 	/*

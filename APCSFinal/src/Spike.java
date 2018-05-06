@@ -10,8 +10,4 @@ public class Spike extends Obstacle
 		return 1;
 	}
 
-	public double getArea() {
-		return 0;
-	}
-
 }
