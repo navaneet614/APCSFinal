@@ -31,6 +31,5 @@ public class GameScreen extends PApplet
 		if(currentMenu!=null) {
 			currentMenu.draw(this);
 		}
->>>>>>> branch 'master' of https://github.com/navaneet614/APCSFinal.git
 	}
 }

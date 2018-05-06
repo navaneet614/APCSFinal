@@ -4,14 +4,13 @@ public abstract class Obstacle
 {
 	private float topX;
 	private float topY;
-	private PImage p;
+	private String imagePath;
 	
-	public Obstacle( float x, float y, String imagePath, PApplet drawer ) 
+	public Obstacle( float x, float y, String imPath ) 
 	{
 		topX = x;
 		topY = y;
-		p = drawer.loadImage(imagePath);
-		
+		imagePath = imPath;
 	}
 	
 	public abstract int getDamage();
