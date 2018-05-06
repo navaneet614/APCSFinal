@@ -13,6 +13,7 @@ public abstract class Obstacle
 		imagePath = imPath;
 	}
 	
+	
 	public abstract int getDamage();
 	
 	// public abstract void animate();
