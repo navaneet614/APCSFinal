@@ -2,9 +2,9 @@
 public class LightningBolt extends Obstacle
 {
 
-	public LightningBolt(float x, float y, String imPath) 
+	public LightningBolt(float x, float y ) 
 	{
-		super(x, y, imPath);
+		super(x, y, "lightning.png");
 	}
 
 	public int getDamage() 
