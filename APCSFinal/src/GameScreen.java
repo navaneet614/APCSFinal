@@ -18,5 +18,6 @@ public class GameScreen extends PApplet
 	public void draw() 
 	{
 		background( Color.BLUE.getRGB() );
+		int x = 1;
 	}
 }
