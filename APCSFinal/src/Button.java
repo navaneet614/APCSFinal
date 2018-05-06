@@ -30,11 +30,12 @@ public class Button {
 		}
 		drawer.stroke(edgeColor.getRGB());
 		drawer.rect(x, y, width, height);
-		drawer.stroke(textColor.getRGB());
+		
+		drawer.fill(textColor.getRGB());
 		drawer.textFont(drawer.createFont("Georgia", 20));
 		drawer.textSize(20);
 		drawer.textAlign(PApplet.CENTER, PApplet.CENTER);
-		drawer.text(text, x, y);
+		drawer.text(text, x + width/2, y + height/2);
 	}
 
 	private boolean mouseOver(int mouseX, int mouseY) {
