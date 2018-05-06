@@ -13,6 +13,11 @@ public class God
 		
 	}
 	
+	public void addObstacle() 
+	{
+		
+	}
+	
 	
 	
 }
