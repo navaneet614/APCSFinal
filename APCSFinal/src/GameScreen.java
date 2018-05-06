@@ -8,12 +8,14 @@ public class GameScreen extends PApplet
 	StartMenu startMenu;
 	Menu currentMenu;
 	Player guy;
+	God dog;
 	
 	public GameScreen() 
 	{
 		startMenu = new StartMenu();
 		currentMenu = null;
 		guy = new Player(50,50,50,50);
+		dog = new God();
 	}
 	
 	public void setup() 
@@ -44,7 +46,8 @@ public class GameScreen extends PApplet
 			guy.moveDirection(6);
 		}
 		if(Character.toUpperCase(v)== 'W') {
-			guy.jump(25);
+			guy.jump(50);
+			
 		}
 		
 			
