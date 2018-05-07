@@ -2,6 +2,7 @@ import java.awt.Color;
 
 import processing.core.PApplet;
 
+
 public class GameScreen extends PApplet {
 	public static final float ORIGINAL_WIDTH = 800, ORIGNAL_HEIGHT = 600;
 	StartMenu startMenu;

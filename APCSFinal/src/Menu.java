@@ -19,6 +19,7 @@ public abstract class Menu {
 		drawer.background(Color.WHITE.getRGB());
 		for (Button b : buttons) {
 			b.draw(drawer);
+
 		}
 	}
 
