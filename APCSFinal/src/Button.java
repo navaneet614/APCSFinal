@@ -39,11 +39,7 @@ public class Button {
 	}
 
 	public boolean mouseOver(int mouseX, int mouseY) {
-		if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
-			return true;
-		} else {
-			return false;
-		}
+		return (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height);
 	}
 	
 	public String getText() {

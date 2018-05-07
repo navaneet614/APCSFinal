@@ -16,10 +16,10 @@ public abstract class Menu{
 		
 	}
 	
-	public void draw(PApplet drawer) {
+	public void draw(GameScreen drawer) {
 		drawer.background(Color.WHITE.getRGB());
 		for(Button b:buttons) {
-			b.draw(drawer, (int)(drawer.mouseX / (drawer.width / GameScreen.ORIGINAL_WIDTH)), (int)(drawer.mouseY/ (drawer.height / GameScreen.ORIGNAL_HEIGHT)));
+			b.draw(drawer, (int)(drawer.mouseX / (drawer.width / drawer.ORIGINAL_WIDTH)), (int)(drawer.mouseY/ (drawer.height / drawer.ORIGNAL_HEIGHT)));
 		}
 	}
 	
