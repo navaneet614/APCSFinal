@@ -1,3 +1,4 @@
+import processing.core.*;
 
 public class Turret extends Obstacle
 {
@@ -12,10 +13,20 @@ public class Turret extends Obstacle
 		super("turret.png");
 	}
 
-	@Override
 	public int getDamage() 
 	{
 		return 2;
+	}
+	
+	public void shoot() 
+	{
+		Blip b = new Blip(  );
+	}
+	
+	public void draw( PApplet drawer ) 
+	{
+		super.draw(drawer);
+		
 	}
 
 }

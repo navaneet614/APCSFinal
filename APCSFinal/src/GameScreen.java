@@ -17,7 +17,7 @@ public class GameScreen extends PApplet {
 		startMenu = new StartMenu();
 		currentMenu = startMenu;
 		guy = new Player(50, 50, 50, 50);
-		god = new God(0, 375, 50, 70);
+		god = new God(width/2, height/4, 80, 100);
 		ground = new Line(0, 600, 800, 600);
 		keys = new HashSet<Integer>();
 	}
@@ -29,15 +29,23 @@ public class GameScreen extends PApplet {
 
 	public void draw() 
 	{
+		
 		scale(width / ORIGINAL_WIDTH, height / ORIGNAL_HEIGHT);
 		background( Color.WHITE.getRGB() );
 		if(currentMenu!=null) {
 			currentMenu.draw(this);
 		}
 		
+		/*if ( guy.getX() > 3*width/4 ) 
+		{
+			translate( -5, 0 );
+			guy.moveDirection(5);
+		}*/
+		
 		if(currentMenu == null) {
 			guy.update(keys,this);
 			guy.draw(this);
+			god.draw(this);
 		
 //		if ( ! guy.intersects(ground) )
 //			guy.fall();
