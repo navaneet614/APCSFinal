@@ -4,7 +4,7 @@ import processing.core.PApplet;
 
 public class GameScreen extends PApplet
 {
-	private static final float ORIGINAL_WIDTH = 800, ORIGNAL_HEIGHT = 600;
+	public static final float ORIGINAL_WIDTH = 800, ORIGNAL_HEIGHT = 600;
 	StartMenu startMenu;
 	Menu currentMenu;
 	Player guy;
@@ -14,7 +14,7 @@ public class GameScreen extends PApplet
 	public GameScreen() 
 	{
 		startMenu = new StartMenu();
-		currentMenu = null;
+		currentMenu = startMenu;
 		guy = new Player(50,50,50,50);
 		god = new God(0, 375, 50, 70);
 		ground = new Line(0, 600, 800, 600);
@@ -30,7 +30,6 @@ public class GameScreen extends PApplet
 	{
 		scale(width / ORIGINAL_WIDTH, height / ORIGNAL_HEIGHT);
 		background( Color.WHITE.getRGB() );
-		//currentMenu = startMenu;
 		if(currentMenu!=null) {
 			currentMenu.draw(this);
 		}
@@ -69,5 +68,28 @@ public class GameScreen extends PApplet
 		  } 
 		
 			
+	}
+	
+	public void mousePressed() {
+		if(currentMenu!=null) {
+			String buttonText = currentMenu.checkIfButtonsPressed((int)(mouseX / (width / ORIGINAL_WIDTH)), (int)(mouseY/ (height / ORIGNAL_HEIGHT)));
+			if(buttonText==null) {
+				return;
+			}
+			currentMenu.doButtonAction(buttonText, this);
+		}
+		
+	}
+	
+	public void changeMenuShowing(String menu) {
+		if(menu==null) {
+			currentMenu = null;
+			return;
+		}
+		if(menu.equals("start")) {
+			currentMenu = startMenu;
+		} else {
+			currentMenu = null;
+		}
 	}
 }	

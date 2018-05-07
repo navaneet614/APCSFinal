@@ -38,11 +38,16 @@ public class Button {
 		drawer.text(text, x + width/2, y + height/2);
 	}
 
-	private boolean mouseOver(int mouseX, int mouseY) {
+	public boolean mouseOver(int mouseX, int mouseY) {
 		if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
 			return true;
 		} else {
 			return false;
 		}
 	}
+	
+	public String getText() {
+		return text;
+	}
+
 }
