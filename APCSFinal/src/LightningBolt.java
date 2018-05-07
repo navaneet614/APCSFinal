@@ -7,6 +7,11 @@ public class LightningBolt extends Obstacle
 		super(x, y, "lightning.png");
 	}
 
+	public LightningBolt() 
+	{
+		super( "lightningbolt.png" );
+	}
+	
 	public int getDamage() 
 	{
 		return 3;

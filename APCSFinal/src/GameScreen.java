@@ -8,7 +8,7 @@ public class GameScreen extends PApplet
 	StartMenu startMenu;
 	Menu currentMenu;
 	Player guy;
-	God dog;
+	God god;
 	Line ground;
 	
 	public GameScreen() 
@@ -16,13 +16,14 @@ public class GameScreen extends PApplet
 		startMenu = new StartMenu();
 		currentMenu = null;
 		guy = new Player(50,50,50,50);
-		dog = new God();
+		god = new God(0, 375, 50, 70);
 		ground = new Line(0, 600, 800, 600);
 	}
 	
 	public void setup() 
 	{
 		guy.setup(this);
+		god.setup(this);
 	}
 	
 	public void draw() 
@@ -59,7 +60,7 @@ public class GameScreen extends PApplet
 		    if (keyCode == UP) {
 		      guy.jump(100);;
 		    } else if (keyCode == DOWN) {
-		    
+		    	  god.throwObstacle(new LightningBolt(), 0, (float)Math.random()*601 );	
 		    } else if (keyCode == LEFT) {
 		      guy.moveDirection(-20);
 		    } else if (keyCode == RIGHT) {

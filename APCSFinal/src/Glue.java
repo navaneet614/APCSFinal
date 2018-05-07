@@ -6,6 +6,11 @@ public class Glue extends Obstacle
 	{
 		super(x, y, "glue.png");
 	}
+	
+	public Glue() 
+	{
+		super( "glue.png" );
+	}
 
 	public int getDamage() 
 	{

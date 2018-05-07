@@ -6,6 +6,11 @@ public class Block extends Obstacle
 	{
 		super(x, y, "block.png");
 	}
+	
+	public Block() 
+	{
+		super( "block.png" );
+	}
 
 	public int getDamage() 
 	{

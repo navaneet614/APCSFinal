@@ -49,7 +49,7 @@ public class Player {
 			canFall = false;*/
 		
 		if(distanceFromGround() > 1) {
-		velocity++;
+		velocity+=0.25;
 		if(velocity >= maxVelocity) {
 			velocity = maxVelocity;
 		}
@@ -68,8 +68,8 @@ public class Player {
 			if(yCoord > 550) {
 				yCoord = 550;
 			}
-		}
-		velocity = 0;*/
+		}*/
+		//velocity = 0;
 		
 	}
 	
