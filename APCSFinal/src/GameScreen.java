@@ -9,6 +9,7 @@ public class GameScreen extends PApplet
 	Menu currentMenu;
 	Player guy;
 	God dog;
+	Line ground;
 	
 	public GameScreen() 
 	{
@@ -16,6 +17,7 @@ public class GameScreen extends PApplet
 		currentMenu = null;
 		guy = new Player(50,50,50,50);
 		dog = new God();
+		ground = new Line(0, 600, 800, 600);
 	}
 	
 	public void setup() 
@@ -34,11 +36,15 @@ public class GameScreen extends PApplet
 		
 		if(currentMenu == null) {
 		guy.draw(this);
+		
+		if ( ! guy.intersects(ground) )
+			guy.fall();
+		
 		}
 	}
 	
 	public void keyPressed() {
-		char v = key;
+		/*char v = key;
 		if(Character.toUpperCase(v) == 'A') {
 			guy.moveDirection(-6);
 		}
@@ -48,10 +54,19 @@ public class GameScreen extends PApplet
 		if(Character.toUpperCase(v)== 'W') {
 			guy.jump(50);
 			
-		}
+		}*/
+		if (key == CODED) {
+		    if (keyCode == UP) {
+		      guy.jump(100);;
+		    } else if (keyCode == DOWN) {
+		    
+		    } else if (keyCode == LEFT) {
+		      guy.moveDirection(-20);
+		    } else if (keyCode == RIGHT) {
+		      guy.moveDirection(20);;
+		    }  
+		  } 
 		
 			
 	}
-	
-
-}
+}	

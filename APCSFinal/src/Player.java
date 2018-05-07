@@ -34,31 +34,55 @@ public class Player {
 	public void draw(PApplet drawer) {
 		fall();
 		drawer.image(character, (float)xCoord, (float)yCoord, (float) width, (float) height);
+		
 	}
 	
 	public void moveDirection(double x) {
 		xCoord += x;
 	}
 	
-	private void fall() {
-		if(canFall) {
+	public void fall() {
+		
+	/*	if ( yCoord < 550 )
+			canFall = true;
+		else
+			canFall = false;*/
+		
+		if(distanceFromGround() > 1) {
 		velocity++;
 		if(velocity >= maxVelocity) {
 			velocity = maxVelocity;
 		}
 		yCoord+=velocity;
-		if(yCoord >= 600) {
+		if(yCoord > 550) {
 			yCoord = 550;
-			canFall = false;
+			//canFall = false;
 		}
 		}
+		/*while(distanceFromGround() > 1) {
+			velocity++;
+			if(velocity >= maxVelocity) {
+				velocity = maxVelocity;
+			}
+			yCoord+=velocity;
+			if(yCoord > 550) {
+				yCoord = 550;
+			}
+		}
+		velocity = 0;*/
+		
 	}
 	
 	public void jump(double y) {
-		if(canJump) {
+		/*if(canJump) {
 		yCoord -= y;
+		fall();
 		}
-		canJump = false;
+		canJump = false;*/
+		if ( 600 - yCoord <= 51 ) 
+		{
+			yCoord -= y;
+		}
 	}
 	
 	public void takeDamage(int damage) {
@@ -68,12 +92,25 @@ public class Player {
 		}
 	}
 	
+	public double distanceFromGround() 
+	{
+		return ( 600 - yCoord - height );
+	}
+	
 	public boolean getStatus() {
 		return alive;
 	}
 	
 	public void setFall(boolean x) {
 		canFall = x;
+	}
+	
+	public boolean intersects( Line l ) 
+	{
+		Line feet = new Line( xCoord, yCoord+height, xCoord+width, yCoord+height );
+		if (feet.intersects(l) )
+			return true;
+		return false;
 	}
 	
 
