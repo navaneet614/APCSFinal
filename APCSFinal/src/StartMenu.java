@@ -9,7 +9,7 @@ public class StartMenu extends Menu {
 		doButtons();
 	}
 	
-	public void draw(GameScreen drawer) {
+	public void draw(PApplet drawer) {
 		super.draw(drawer);
 	}
 	

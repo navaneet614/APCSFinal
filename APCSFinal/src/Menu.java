@@ -16,10 +16,10 @@ public abstract class Menu{
 		
 	}
 	
-	public void draw(GameScreen drawer) {
+	public void draw(PApplet drawer) {
 		drawer.background(Color.WHITE.getRGB());
 		for(Button b:buttons) {
-			b.draw(drawer, (int)(drawer.mouseX / (drawer.width / drawer.ORIGINAL_WIDTH)), (int)(drawer.mouseY/ (drawer.height / drawer.ORIGNAL_HEIGHT)));
+			b.draw(drawer);
 		}
 	}
 	
@@ -34,6 +34,12 @@ public abstract class Menu{
 			}
 		}
 		return null;
+	}
+	
+	public void updateButtons(int mouseX, int mouseY) {
+		for(Button b:buttons) {
+			b.update(mouseX, mouseY);
+		}
 	}
 	
 	public abstract void doButtonAction(String buttonText, GameScreen gameScreen);
