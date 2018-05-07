@@ -1,8 +1,14 @@
 import processing.core.PImage;
+
+import java.util.HashSet;
+
 import processing.core.PApplet;
 
 
 public class Player {
+	
+	private final double GRAVITY = 1.05;
+	
 	private double xCoord;
 	private double yCoord;
 	private int health;
@@ -10,10 +16,7 @@ public class Player {
 	private double height;
 	private PImage character;
 	private boolean alive;
-	private double velocity;
-	private double maxVelocity;
-	private boolean canFall;
-	private boolean canJump;
+	private double vy;
 	
 	public Player(double x, double y,double w, double h) {
 		xCoord = x;
@@ -21,10 +24,7 @@ public class Player {
 		width = w;
 		height = h;
 		alive = true;
-		velocity = 0;
-		maxVelocity = 15;
-		canFall = true;
-		canJump = true;
+		vy = 0;
 	}
 	
 	public void setup(PApplet drawer) {
@@ -32,7 +32,9 @@ public class Player {
 	}
 	
 	public void draw(PApplet drawer) {
-		fall();
+
+		
+		
 		drawer.image(character, (float)xCoord, (float)yCoord, (float) width, (float) height);
 		
 	}
@@ -41,48 +43,8 @@ public class Player {
 		xCoord += x;
 	}
 	
-	public void fall() {
-		
-	/*	if ( yCoord < 550 )
-			canFall = true;
-		else
-			canFall = false;*/
-		
-		if(distanceFromGround() > 1) {
-		velocity+=0.25;
-		if(velocity >= maxVelocity) {
-			velocity = maxVelocity;
-		}
-		yCoord+=velocity;
-		if(yCoord > 550) {
-			yCoord = 550;
-			//canFall = false;
-		}
-		}
-		/*while(distanceFromGround() > 1) {
-			velocity++;
-			if(velocity >= maxVelocity) {
-				velocity = maxVelocity;
-			}
-			yCoord+=velocity;
-			if(yCoord > 550) {
-				yCoord = 550;
-			}
-		}*/
-		//velocity = 0;
-		
-	}
-	
 	public void jump(double y) {
-		/*if(canJump) {
-		yCoord -= y;
-		fall();
-		}
-		canJump = false;*/
-		if ( 600 - yCoord <= 51 ) 
-		{
-			yCoord -= y;
-		}
+		vy = -10;
 	}
 	
 	public void takeDamage(int damage) {
@@ -101,9 +63,7 @@ public class Player {
 		return alive;
 	}
 	
-	public void setFall(boolean x) {
-		canFall = x;
-	}
+
 	
 	public boolean intersects( Line l ) 
 	{
@@ -113,6 +73,34 @@ public class Player {
 		return false;
 	}
 	
+	public double getX() {
+		return xCoord;
+	}
+	
+	public double getY() {
+		return yCoord;
+	}
+	
+	public void update(HashSet<Integer> keys, GameScreen gameScreen) {
+		for(int key:keys) {
+			if (key == PApplet.UP) {
+				jump(100);
+				;
+			} else if (key == PApplet.DOWN) {
+//				god.throwObstacle(new LightningBolt(), 0, (float) Math.random() * 601);
+			} else if (key == PApplet.LEFT && getX() > 0) {
+				moveDirection(-1);
+			} else if (key == PApplet.RIGHT) {
+				moveDirection(1);
+				;
+			}
+		}
+		act(gameScreen);
+	}
+	
+	private void act( GameScreen gameScreen) {
+		
+	}
 
 	
 }

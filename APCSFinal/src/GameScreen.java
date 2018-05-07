@@ -1,14 +1,17 @@
 import java.awt.Color;
+import java.util.HashSet;
 
 import processing.core.PApplet;
 
 public class GameScreen extends PApplet {
 	public final float ORIGINAL_WIDTH = 800, ORIGNAL_HEIGHT = 600;
-	StartMenu startMenu;
-	Menu currentMenu;
-	Player guy;
-	God god;
-	Line ground;
+	public final float LEFT_BOUND = 0;
+	private StartMenu startMenu;
+	private  Menu currentMenu;
+	private Player guy;
+	private God god;
+	private Line ground;
+	public HashSet<Integer> keys;
 
 	public GameScreen() {
 		startMenu = new StartMenu();
@@ -16,6 +19,7 @@ public class GameScreen extends PApplet {
 		guy = new Player(50, 50, 50, 50);
 		god = new God(0, 375, 50, 70);
 		ground = new Line(0, 600, 800, 600);
+		keys = new HashSet<Integer>();
 	}
 
 	public void setup() {
@@ -32,11 +36,12 @@ public class GameScreen extends PApplet {
 		}
 		
 		if(currentMenu == null) {
-		guy.draw(this);
+			guy.update(keys,this);
+			guy.draw(this);
 		
-		if ( ! guy.intersects(ground) )
-			guy.fall();
-		
+//		if ( ! guy.intersects(ground) )
+//			guy.fall();
+//		
 		}
 	}
 
@@ -48,19 +53,11 @@ public class GameScreen extends PApplet {
 		 * 
 		 * }
 		 */
-		if (key == CODED) {
-			if (keyCode == UP) {
-				guy.jump(100);
-				;
-			} else if (keyCode == DOWN) {
-				god.throwObstacle(new LightningBolt(), 0, (float) Math.random() * 601);
-			} else if (keyCode == LEFT) {
-				guy.moveDirection(-20);
-			} else if (keyCode == RIGHT) {
-				guy.moveDirection(20);
-				;
-			}
-		}
+		keys.add(this.keyCode);
+	}
+	
+	public void keyReleased() {
+		keys.remove(this.keyCode);
 
 	}
 
