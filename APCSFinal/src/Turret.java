@@ -2,9 +2,9 @@
 public class Turret extends Obstacle
 {
 
-	public Turret(float x, float y, String imPath) {
+	public Turret(float x, float y, String imPath) 
+	{
 		super(x, y, imPath);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Turret() 
@@ -13,9 +13,9 @@ public class Turret extends Obstacle
 	}
 
 	@Override
-	public int getDamage() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getDamage() 
+	{
+		return 2;
 	}
 
 }
