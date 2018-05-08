@@ -25,7 +25,7 @@ public class GameScreen extends PApplet {
 		startMenu = new StartMenu();
 		currentMenu = startMenu;
 		guy = new Player(50, 50, 50, 50);
-		god = new God(width/2, height/4, 80, 100);
+		god = new God(450, 100, 120, 140);
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
 		platforms = new ArrayList<Platform>();
@@ -60,6 +60,7 @@ public class GameScreen extends PApplet {
 				o.draw(this);
 			}
 			guy.draw(this);	
+			god.draw(this);
 			for(Platform p:platforms) {
 				p.draw(this);
 			}
