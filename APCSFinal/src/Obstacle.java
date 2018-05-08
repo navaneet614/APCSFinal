@@ -57,8 +57,8 @@ public abstract class Obstacle
 	
 	public void draw( PApplet drawer ) 
 	{
-		PShape p = drawer.loadShape(imagePath);
-		drawer.shape( p, topX, topY, (float)width, (float)height );
+		PImage p = drawer.loadImage(imagePath);
+		drawer.image( p, topX, topY, (float)width, (float)height );
 	}
 	
 	public Rectangle getBoundRect() {
