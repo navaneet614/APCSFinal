@@ -36,6 +36,8 @@ public class GameScreen extends PApplet {
 			currentMenu.draw(this);
 		}
 		
+		camera();
+		
 		if(currentMenu == null) {
 			guy.update(keys,this);
 			guy.draw(this);		
