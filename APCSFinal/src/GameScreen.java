@@ -7,7 +7,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class GameScreen extends PApplet {
-	public final float ORIGINAL_WIDTH = 800, ORIGNAL_HEIGHT = 600;
+	public final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
 	public final float LEFT_BOUND = 0;
 	private StartMenu startMenu;
 	private  Menu currentMenu;
@@ -15,6 +15,7 @@ public class GameScreen extends PApplet {
 	private God god;
 	private HashSet<Integer> keys;
 	private ArrayList<Platform> platforms;
+	private ArrayList<Obstacle> obstacles;
 	private PImage background;
 	
 
@@ -40,7 +41,7 @@ public class GameScreen extends PApplet {
 	public void draw() 
 	{
 		
-		scale(width / ORIGINAL_WIDTH, height / ORIGNAL_HEIGHT);
+		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
 		if(currentMenu!=null) {
 			currentMenu.draw(this);
@@ -78,7 +79,7 @@ public class GameScreen extends PApplet {
 	public void mousePressed() {
 		if (currentMenu != null) {
 			String buttonText = currentMenu.checkIfButtonsPressed((int) (mouseX / (width / ORIGINAL_WIDTH)),
-					(int) (mouseY / (height / ORIGNAL_HEIGHT)));
+					(int) (mouseY / (height / ORIGINAL_HEIGHT)));
 			if (buttonText == null) {
 				return;
 			}
@@ -89,7 +90,7 @@ public class GameScreen extends PApplet {
 
 	public void mouseMoved() {
 		if (currentMenu != null) {
-			currentMenu.updateButtons((int)(mouseX / (width / ORIGINAL_WIDTH)), (int)(mouseY / (height / ORIGNAL_HEIGHT)));
+			currentMenu.updateButtons((int)(mouseX / (width / ORIGINAL_WIDTH)), (int)(mouseY / (height / ORIGINAL_HEIGHT)));
 		}
 	}
 
