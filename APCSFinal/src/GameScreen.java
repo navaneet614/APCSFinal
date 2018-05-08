@@ -27,7 +27,9 @@ public class GameScreen extends PApplet {
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
 		platforms = new ArrayList<Platform>();
-		platforms.add(new Platform(0, 200, 200, 40, "platform.png"));
+		platforms.add(new Platform(30, 200, 200, 40, "platform.png"));
+		platforms.add(new Platform(300, 350, 200, 40, "platform.png"));
+		platforms.add(new Platform(500, 550, 200, 40, "platform.png"));
 	}
 
 	public void setup() {
