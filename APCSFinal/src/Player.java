@@ -15,7 +15,7 @@ public class Player{
 	private double width;
 	private double height;
 	private PImage character;
-	private boolean alive, jumping;
+	private boolean alive, jumping,slow;
 	private double vy;
 	private Rectangle boundingRectangle;
 	
@@ -27,10 +27,11 @@ public class Player{
 		alive = true;
 		vy = 0;
 		boundingRectangle = new Rectangle((int)x, (int)y, (int)w, (int)h);
+		slow = false;
 	}
 	
 	public void setup(PApplet drawer) {
-		character = drawer.loadImage("character.png");
+		character = drawer.loadImage("player_walk.gif");
 	}
 	
 	public void draw(PApplet drawer) {
@@ -82,10 +83,16 @@ public class Player{
 			} else if (key == PApplet.DOWN) {
 //				god.throwObstacle(new LightningBolt(), 0, (float) Math.random() * 601);
 			} else if (key == PApplet.LEFT && getX() > 0) {
+				if(slow) {
+					moveDirection(-.5);
+				}else
 				moveDirection(-1);
 			} else if (key == PApplet.RIGHT) {
+				if(slow) {
+					moveDirection(.5);
+				}else
 				moveDirection(1);
-				;
+				
 			}
 		}
 		act(gameScreen);
@@ -97,7 +104,7 @@ public class Player{
 		}
 		boundingRectangle.setLocation((int)xCoord, (int)yCoord);
 
-		gameScreen.line(0, gameScreen.ORIGNAL_HEIGHT, gameScreen.ORIGINAL_WIDTH, gameScreen.ORIGNAL_HEIGHT);
+		gameScreen.line(0, gameScreen.ORIGINAL_HEIGHT, gameScreen.ORIGINAL_WIDTH, gameScreen.ORIGINAL_HEIGHT);
 		if(boundingRectangle.intersectsLine(0, gameScreen.height, gameScreen.width, gameScreen.height)) {
 			vy=0;
 			if(jumping){
@@ -109,6 +116,14 @@ public class Player{
 		
 		yCoord+=vy;
 		boundingRectangle.setLocation((int)xCoord, (int)yCoord);
+	}
+	
+	public Rectangle getBoundingRect() {
+		return boundingRectangle;
+	}
+	
+	public void setSlow(boolean x) {
+		slow = x;
 	}
 
 	
