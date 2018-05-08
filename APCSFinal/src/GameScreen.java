@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -133,4 +134,3 @@ public class GameScreen extends PApplet {
 		return platforms;
 	}
 }
-

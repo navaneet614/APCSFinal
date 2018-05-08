@@ -25,6 +25,7 @@ public class Platform extends Rectangle{
 	public void draw( PApplet drawer ) 
 	{
 		drawer.image(pic, (float)x, (float)y, (float) width, (float) height);
+//		drawer.rect(x, y, width, height);
 	}
 
 }

@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.HashSet;
 
@@ -6,7 +7,7 @@ import processing.core.PImage;
 
 public class Player {
 
-	private final double GRAVITY = 1.05, JUMP_HEIGHT = 15;
+	private final double GRAVITY = 1.05, JUMP_HEIGHT = 20;
 
 	private double xCoord;
 	private double yCoord;
@@ -36,6 +37,8 @@ public class Player {
 	public void draw(PApplet drawer) {
 
 		drawer.image(character, (float) xCoord, (float) yCoord, (float) width, (float) height);
+		
+//		drawer.rect(boundingRectangle.x, boundingRectangle.y, boundingRectangle.width, boundingRectangle.height);
 
 	}
 
@@ -102,6 +105,26 @@ public class Player {
 		}
 		boundingRectangle.setLocation((int) xCoord, (int) yCoord);
 
+		for (Platform p : gameScreen.getPlatforms()) {
+			if (boundingRectangle.intersectsLine(p.getX(), p.getY(), p.getMaxX(), p.getY())) {
+				vy = 0;
+				yCoord = p.getY() - height;
+				if (jumping)
+					jumping = false;
+			} if (boundingRectangle.intersectsLine(p.getX(), p.getY(), p.getX(), p.getMaxY())) {
+				if (jumping)
+					jumping = false;
+				xCoord = p.getX() - height;
+			} if (boundingRectangle.intersectsLine(p.getMaxX(), p.getY(), p.getMaxX(), p.getMaxY())) {
+				if (jumping)
+					jumping = false;
+				xCoord = p.getMaxX();
+			}  if (boundingRectangle.intersectsLine(p.getX(), p.getMaxY(), p.getMaxX(), p.getMaxY())) {
+				if (jumping)
+					jumping = false;
+			}
+		}
+
 		gameScreen.line(0, gameScreen.ORIGINAL_HEIGHT, gameScreen.ORIGINAL_WIDTH, gameScreen.ORIGINAL_HEIGHT);
 		if (boundingRectangle.intersectsLine(0, gameScreen.ORIGINAL_HEIGHT, gameScreen.ORIGINAL_WIDTH,
 				gameScreen.ORIGINAL_HEIGHT)) {
@@ -114,17 +137,6 @@ public class Player {
 		} else {
 			vy += GRAVITY;
 		}
-
-		for (Platform p : gameScreen.getPlatforms()) {
-			if (boundingRectangle.intersects(p)) {
-				vy = 0;
-				if (jumping) {
-					jumping = false;
-				}
-				yCoord = p.getY() - height;
-			}
-		}
-
 		yCoord += vy;
 		boundingRectangle.setLocation((int) xCoord, (int) yCoord);
 	}
