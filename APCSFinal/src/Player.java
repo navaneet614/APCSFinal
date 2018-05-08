@@ -98,13 +98,24 @@ public class Player{
 		boundingRectangle.setLocation((int)xCoord, (int)yCoord);
 
 		gameScreen.line(0, gameScreen.ORIGNAL_HEIGHT, gameScreen.ORIGINAL_WIDTH, gameScreen.ORIGNAL_HEIGHT);
-		if(boundingRectangle.intersectsLine(0, gameScreen.height, gameScreen.width, gameScreen.height)) {
+		if(boundingRectangle.intersectsLine(0, gameScreen.ORIGNAL_HEIGHT, gameScreen.ORIGINAL_WIDTH, gameScreen.ORIGNAL_HEIGHT)) {
 			vy=0;
+			yCoord =  gameScreen.ORIGNAL_HEIGHT - height;
 			if(jumping){
 				jumping = false;
 			}
 		} else {
 			vy+=GRAVITY;
+		}
+		
+		for(Platform p:gameScreen.getPlatforms()) {
+			if(boundingRectangle.intersects(p)) {
+				vy = 0;
+				if(jumping){
+					jumping = false;
+				}
+				yCoord = p.getY() - height;
+			}
 		}
 		
 		yCoord+=vy;

@@ -1,7 +1,9 @@
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class GameScreen extends PApplet {
 	public final float ORIGINAL_WIDTH = 800, ORIGNAL_HEIGHT = 600;
@@ -10,35 +12,44 @@ public class GameScreen extends PApplet {
 	private  Menu currentMenu;
 	private Player guy;
 	private God god;
-	private Line ground;
-	public HashSet<Integer> keys;
+	private HashSet<Integer> keys;
+	private ArrayList<Platform> platforms;
+	private PImage background;
+	
 
 	public GameScreen() {
 		startMenu = new StartMenu();
 		currentMenu = startMenu;
 		guy = new Player(50, 50, 50, 50);
 		god = new God(width/2, height/4, 80, 100);
-		ground = new Line(0, 600, 800, 600);
 		keys = new HashSet<Integer>();
+		platforms = new ArrayList<Platform>();
+		platforms.add(new Platform(0, 200, 200, 40, "platform.png"));
 	}
 
 	public void setup() {
 		guy.setup(this);
 		god.setup(this);
+		for(Platform p:platforms) {
+			p.setup(this);
+		}
 	}
 
 	public void draw() 
 	{
 		
 		scale(width / ORIGINAL_WIDTH, height / ORIGNAL_HEIGHT);
-		background( Color.WHITE.getRGB() );
+		background(Color.WHITE.getRGB());
 		if(currentMenu!=null) {
 			currentMenu.draw(this);
 		}
 		
 		if(currentMenu == null) {
 			guy.update(keys,this);
-			guy.draw(this);		
+			guy.draw(this);	
+			for(Platform p:platforms) {
+				p.draw(this);
+			}
 		}
 	}
 
@@ -86,5 +97,9 @@ public class GameScreen extends PApplet {
 		} else {
 			currentMenu = null;
 		}
+	}
+	
+	public ArrayList<Platform> getPlatforms() {
+		return platforms;
 	}
 }
