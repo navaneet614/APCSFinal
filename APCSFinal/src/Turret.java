@@ -18,7 +18,7 @@ public class Turret extends Obstacle
 	
 	public void shoot( double angle ) 
 	{
-		bullets.add(new Bullet(getX(), getY(), angle));
+		bullets.add(new Bullet(getX()+getWidth()/2, getY()+getHeight()/2, angle));
 	}
 	
 	public void draw( PApplet drawer ) 
