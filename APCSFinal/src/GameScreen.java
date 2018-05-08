@@ -18,6 +18,7 @@ public class GameScreen extends PApplet {
 	private ArrayList<Platform> platforms;
 	private ArrayList<Obstacle> obstacles;
 	private PImage background;
+	private Turret t;
 	
 
 	public GameScreen() {
@@ -31,6 +32,7 @@ public class GameScreen extends PApplet {
 		platforms.add(new Platform(30, 200, 200, 40, "platform.png"));
 		platforms.add(new Platform(300, 350, 200, 40, "platform.png"));
 		platforms.add(new Platform(500, 550, 200, 40, "platform.png"));
+		t = new Turret( 400, 150, "turret.png", 50, 50, 5*Math.PI/4 );
 	}
 
 	public void setup() {
@@ -39,6 +41,7 @@ public class GameScreen extends PApplet {
 		for(Platform p:platforms) {
 			p.setup(this);
 		}
+		t.setup(this);
 	}
 
 	public void draw() 
@@ -60,6 +63,7 @@ public class GameScreen extends PApplet {
 			for(Platform p:platforms) {
 				p.draw(this);
 			}
+			t.draw(this);
 		}
 	}
 
