@@ -2,15 +2,11 @@
 public class Glue extends Obstacle
 {
 
-	public Glue(float x, float y ) 
+	public Glue(float x, float y, double width, double height ) 
 	{
-		super(x, y, "glue.png");
+		super(x, y, "glue.png", width, height);
 	}
 	
-	public Glue() 
-	{
-		super( "glue.png" );
-	}
 
 	public int getDamage() 
 	{

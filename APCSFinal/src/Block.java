@@ -2,16 +2,11 @@
 public class Block extends Obstacle 
 {
 
-	public Block(float x, float y) 
+	public Block(float x, float y, double width, double height) 
 	{
-		super(x, y, "block.png");
+		super(x, y, "block.png",width,height);
 	}
 	
-	public Block() 
-	{
-		super( "block.png" );
-	}
-
 	public int getDamage() 
 	{
 		return 0;
