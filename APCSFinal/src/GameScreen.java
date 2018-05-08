@@ -15,7 +15,6 @@ public class GameScreen extends PApplet {
 	private God god;
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
-	private Turret t;
 
 	public GameScreen() {
 		startMenu = new StartMenu();
@@ -24,13 +23,18 @@ public class GameScreen extends PApplet {
 		god = new God(450, 100, 120, 140);
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
-		t = new Turret(400, 150, "turret.png", 50, 50, 5 * Math.PI / 4);
+		obstacles.add(new Turret(400, 150, "turret.png", 50, 50, 5 * Math.PI / 4));
 	}
 
 	public void setup() {
 		guy.setup(this);
 		god.setup(this);
-		t.setup(this);
+//		for(int i = 0;i*50<=ORIGINAL_WIDTH;i++){
+//			obstacles.add(new Block(i*50, ORIGINAL_HEIGHT - 50, 50, 50));
+//		}
+		for(Obstacle o:obstacles) {
+			o.setup(this);
+		}
 	}
 
 	public void draw() {
@@ -47,7 +51,6 @@ public class GameScreen extends PApplet {
 			}
 			guy.draw(this);
 			god.draw(this);
-			t.draw(this);
 		}
 	}
 
@@ -101,12 +104,6 @@ public class GameScreen extends PApplet {
 	public void hitDetection() {
 		Rectangle gRect = guy.getBoundingRect();
 		Rectangle oRect;
-
-		for (Bullet b : t.bullets()) {
-			if (gRect.intersects(b.getBoundingRect())) {
-				// do something
-			}
-		}
 
 		for (int i = 0; i < obstacles.size(); i++) {
 			oRect = obstacles.get(i).getBoundRect();
