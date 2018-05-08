@@ -1,13 +1,13 @@
-import processing.core.PImage;
-
+import java.awt.Rectangle;
 import java.util.HashSet;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 
-public class Player {
+public class Player{
 	
-	private final double GRAVITY = 1.05;
+	private final double GRAVITY = 1.05, JUMP_HEIGHT = 15;
 	
 	private double xCoord;
 	private double yCoord;
@@ -15,8 +15,9 @@ public class Player {
 	private double width;
 	private double height;
 	private PImage character;
-	private boolean alive;
+	private boolean alive, jumping;
 	private double vy;
+	private Rectangle boundingRectangle;
 	
 	public Player(double x, double y,double w, double h) {
 		xCoord = x;
@@ -25,6 +26,7 @@ public class Player {
 		height = h;
 		alive = true;
 		vy = 0;
+		boundingRectangle = new Rectangle((int)x, (int)y, (int)w, (int)h);
 	}
 	
 	public void setup(PApplet drawer) {
@@ -33,18 +35,17 @@ public class Player {
 	
 	public void draw(PApplet drawer) {
 
-		
-		
 		drawer.image(character, (float)xCoord, (float)yCoord, (float) width, (float) height);
 		
 	}
 	
 	public void moveDirection(double x) {
-		xCoord += x;
+		xCoord += x*5;
 	}
 	
-	public void jump(double y) {
-		vy = -10;
+	public void jump() {
+		if(!jumping)
+			jumping = true;
 	}
 	
 	public void takeDamage(int damage) {
@@ -54,16 +55,9 @@ public class Player {
 		}
 	}
 	
-	public double distanceFromGround() 
-	{
-		return ( 600 - yCoord - height );
-	}
-	
 	public boolean getStatus() {
 		return alive;
 	}
-	
-
 	
 	public boolean intersects( Line l ) 
 	{
@@ -84,8 +78,7 @@ public class Player {
 	public void update(HashSet<Integer> keys, GameScreen gameScreen) {
 		for(int key:keys) {
 			if (key == PApplet.UP) {
-				jump(100);
-				;
+				jump();
 			} else if (key == PApplet.DOWN) {
 //				god.throwObstacle(new LightningBolt(), 0, (float) Math.random() * 601);
 			} else if (key == PApplet.LEFT && getX() > 0) {
@@ -98,8 +91,24 @@ public class Player {
 		act(gameScreen);
 	}
 	
-	private void act( GameScreen gameScreen) {
+	private void act(GameScreen gameScreen) {
+		if(jumping) {
+			yCoord-=JUMP_HEIGHT;
+		}
+		boundingRectangle.setLocation((int)xCoord, (int)yCoord);
+
+		gameScreen.line(0, gameScreen.ORIGNAL_HEIGHT, gameScreen.ORIGINAL_WIDTH, gameScreen.ORIGNAL_HEIGHT);
+		if(boundingRectangle.intersectsLine(0, gameScreen.height, gameScreen.width, gameScreen.height)) {
+			vy=0;
+			if(jumping){
+				jumping = false;
+			}
+		} else {
+			vy+=GRAVITY;
+		}
 		
+		yCoord+=vy;
+		boundingRectangle.setLocation((int)xCoord, (int)yCoord);
 	}
 
 	

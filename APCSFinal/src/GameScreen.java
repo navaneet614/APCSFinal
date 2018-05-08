@@ -36,20 +36,9 @@ public class GameScreen extends PApplet {
 			currentMenu.draw(this);
 		}
 		
-		/*if ( guy.getX() > 3*width/4 ) 
-		{
-			translate( -5, 0 );
-			guy.moveDirection(5);
-		}*/
-		
 		if(currentMenu == null) {
 			guy.update(keys,this);
-			guy.draw(this);
-			god.draw(this);
-		
-//		if ( ! guy.intersects(ground) )
-//			guy.fall();
-//		
+			guy.draw(this);		
 		}
 	}
 
