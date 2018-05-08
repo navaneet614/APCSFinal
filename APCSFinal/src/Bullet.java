@@ -39,6 +39,11 @@ public class Bullet
 		return angle;
 	}
 	
+	public Rectangle getBoundingRect() 
+	{
+		return boundingRectangle;
+	}
+	
 	public void draw(PApplet drawer) {
 		drawer.fill(250,250,210);
 		drawer.rect((int)xCoord,(int) yCoord, 10, 10);
