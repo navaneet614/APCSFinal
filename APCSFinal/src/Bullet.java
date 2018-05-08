@@ -6,17 +6,19 @@ public class Bullet
 {
 	private double xCoord, yCoord;
 	private Rectangle boundingRectangle;
-	private String direction;
+	//private String direction;
+	private double angle; // in radians
 	
-	public Bullet(double X, double Y, String direction) {
+	public Bullet(double X, double Y, /*String direction*/ double a) {
 		xCoord = X;
 		yCoord = Y;
-		this.direction = direction;
+		//this.direction = direction;
+		angle = a;
 		boundingRectangle = new Rectangle((int)xCoord,(int)yCoord, 10,10);
 	}
 	
 	public void shoot() {
-		String d = direction.toLowerCase();
+		/*String d = direction.toLowerCase();
 		if(d.equals("left")) {
 			xCoord -= 10;
 		}else if(d.equals("right")) {
@@ -25,7 +27,9 @@ public class Bullet
 			yCoord -= 10;
 		}else if(d.equals("down")) {
 			yCoord += 10;
-		}
+		}*/
+		xCoord += 10*Math.cos(angle);
+		yCoord -= 10*Math.sin(angle);
 		
 		boundingRectangle.setLocation((int)xCoord, (int)yCoord);
 	}
