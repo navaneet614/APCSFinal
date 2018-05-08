@@ -28,10 +28,15 @@ public class Bullet
 		}else if(d.equals("down")) {
 			yCoord += 10;
 		}*/
-		xCoord += 10*Math.cos(angle);
-		yCoord -= 10*Math.sin(angle);
+		xCoord += 1*Math.cos(angle);
+		yCoord -= 1*Math.sin(angle);
 		
 		boundingRectangle.setLocation((int)xCoord, (int)yCoord);
+	}
+	
+	public double getAngle() 
+	{
+		return angle;
 	}
 	
 	public void draw(PApplet drawer) {
