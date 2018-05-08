@@ -1,3 +1,6 @@
+import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
+
 import processing.core.*;
 
 public abstract class Obstacle 
@@ -6,23 +9,16 @@ public abstract class Obstacle
 	private float topY;
 	private String imagePath;
 	private double width, height;
+	private Rectangle boundingRectangle;
 	
-	public Obstacle( float x, float y, String imPath ) 
+	public Obstacle( float x, float y, String imPath, double width, double height) 
 	{
 		topX = x;
 		topY = y;
 		imagePath = imPath;
-		width = 30;
-		height = 30;
-	}
-	
-	public Obstacle( String imPath ) 
-	{
-		topX = 0;
-		topY = 0;
-		imagePath = imPath;
-		width = 30;
-		height = 30;
+		this.width = width;
+		this.height = height;
+		boundingRectangle = new Rectangle((int)topX,(int)topY,(int)width,(int)height);
 	}
 	
 	
@@ -48,15 +44,6 @@ public abstract class Obstacle
 		topY = y;
 	}
 	
-	public float getX() 
-	{
-		return topX;
-	}
-	
-	public float getY() 
-	{
-		return topY;
-	}
 	
 	public double getWidth() 
 	{
@@ -73,4 +60,17 @@ public abstract class Obstacle
 		PShape p = drawer.loadShape(imagePath);
 		drawer.shape( p, topX, topY, (float)width, (float)height );
 	}
+	
+	public Rectangle getBoundRect() {
+		return boundingRectangle;
+	}
+	
+	public double getX() {
+		return topX;
+	}
+	
+	public double getY() {
+		return topY;
+	}
+
 }

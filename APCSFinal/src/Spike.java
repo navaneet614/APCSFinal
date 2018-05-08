@@ -2,14 +2,11 @@
 public class Spike extends Obstacle
 {
 
-	public Spike(float x, float y) {
-		super(x, y, "spike.png" );
+	public Spike(float x, float y,double width, double height) {
+		super(x, y, "spike.png" ,width,height);
 	}
 	
-	public Spike() 
-	{
-		super( "spike.png" );
-	}
+
 
 	public int getDamage() 
 	{

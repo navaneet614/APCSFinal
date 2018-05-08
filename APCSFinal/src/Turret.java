@@ -1,16 +1,14 @@
+import java.util.ArrayList;
+
 import processing.core.*;
 
 public class Turret extends Obstacle
 {
-
-	public Turret(float x, float y, String imPath) 
+	private ArrayList<Bullet> bullets;
+	public Turret(float x, float y, String imPath, double width, double height) 
 	{
-		super(x, y, imPath);
-	}
-	
-	public Turret() 
-	{
-		super("turret.png");
+		super(x, y, imPath, width, height);
+		bullets = new ArrayList<Bullet>();
 	}
 
 	public int getDamage() 
@@ -18,14 +16,17 @@ public class Turret extends Obstacle
 		return 2;
 	}
 	
-	public void shoot() 
+	public void shoot( double angle ) 
 	{
-		Blip b = new Blip(  );
+		bullets.add(new Bullet(getX()+getWidth()/2, getY()+getHeight()/2, angle));
 	}
 	
 	public void draw( PApplet drawer ) 
 	{
 		super.draw(drawer);
+		for(Bullet b : bullets) {
+			b.draw(drawer);
+		}
 		
 	}
 
