@@ -103,34 +103,30 @@ public class Player {
 		boundingRectangle.setLocation((int) xCoord, (int) yCoord);
 
 		gameScreen.line(0, gameScreen.ORIGINAL_HEIGHT, gameScreen.ORIGINAL_WIDTH, gameScreen.ORIGINAL_HEIGHT);
-		if (boundingRectangle.intersectsLine(0, gameScreen.height, gameScreen.width, gameScreen.height)) {
+		if (boundingRectangle.intersectsLine(0, gameScreen.ORIGINAL_HEIGHT, gameScreen.ORIGINAL_WIDTH,
+				gameScreen.ORIGINAL_HEIGHT)) {
 
-			gameScreen.line(0, gameScreen.ORIGINAL_HEIGHT, gameScreen.ORIGINAL_WIDTH, gameScreen.ORIGINAL_HEIGHT);
-			if (boundingRectangle.intersectsLine(0, gameScreen.ORIGINAL_HEIGHT, gameScreen.ORIGINAL_WIDTH,
-					gameScreen.ORIGINAL_HEIGHT)) {
+			vy = 0;
+			yCoord = gameScreen.ORIGINAL_HEIGHT - height;
+			if (jumping) {
+				jumping = false;
+			}
+		} else {
+			vy += GRAVITY;
+		}
 
+		for (Platform p : gameScreen.getPlatforms()) {
+			if (boundingRectangle.intersects(p)) {
 				vy = 0;
-				yCoord = gameScreen.ORIGINAL_HEIGHT - height;
 				if (jumping) {
 					jumping = false;
 				}
-			} else {
-				vy += GRAVITY;
+				yCoord = p.getY() - height;
 			}
-
-			for (Platform p : gameScreen.getPlatforms()) {
-				if (boundingRectangle.intersects(p)) {
-					vy = 0;
-					if (jumping) {
-						jumping = false;
-					}
-					yCoord = p.getY() - height;
-				}
-			}
-
-			yCoord += vy;
-			boundingRectangle.setLocation((int) xCoord, (int) yCoord);
 		}
+
+		yCoord += vy;
+		boundingRectangle.setLocation((int) xCoord, (int) yCoord);
 	}
 
 	public Rectangle getBoundingRect() {
