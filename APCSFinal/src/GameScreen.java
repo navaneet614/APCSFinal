@@ -9,9 +9,8 @@ import processing.core.PImage;
 
 public class GameScreen extends PApplet {
 	public final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
-	public final float LEFT_BOUND = 0;
 	private StartMenu startMenu;
-	private  Menu currentMenu;
+	private Menu currentMenu;
 	private Player guy;
 	private God god;
 	private HashSet<Integer> keys;
