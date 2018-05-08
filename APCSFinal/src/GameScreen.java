@@ -149,7 +149,7 @@ public class GameScreen extends PApplet {
 
 	public void translate(int x) {
 		for (Obstacle o : obstacles) {
-			o.setX((float) (o.getX() + x));
+			o.setX((float) (o.getX() - x));
 		}
 	}
 }
