@@ -19,6 +19,8 @@ public class GameScreen extends PApplet {
 	private ArrayList<Obstacle> obstacles;
 	private PImage background;
 	private Turret t;
+	private float translationX;
+	
 	
 
 	public GameScreen() {
@@ -31,7 +33,8 @@ public class GameScreen extends PApplet {
 		platforms = new ArrayList<Platform>();
 		platforms.add(new Platform(30, 200, 200, 40, "platform.png"));
 		platforms.add(new Platform(300, 350, 200, 40, "platform.png"));
-		platforms.add(new Platform(500, 550, 200, 40, "platform.png"));
+		platforms.add(new Platform(500, 510, 200, 40, "platform.png"));
+		platforms.add(new Platform(700, 400, 200, 40, "platform.png"));
 		t = new Turret( 400, 150, "turret.png", 50, 50, 5*Math.PI/4 );
 	}
 
@@ -46,14 +49,13 @@ public class GameScreen extends PApplet {
 
 	public void draw() 
 	{
-		
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
 		if(currentMenu!=null) {
 			currentMenu.draw(this);
 		}
-		
-		if(currentMenu == null) {
+		else if(currentMenu == null) {
+			translate(translationX, 0);
 			guy.update(keys,this);
 			guy.draw(this);	
 			for(Obstacle o : obstacles) {
@@ -145,5 +147,9 @@ public class GameScreen extends PApplet {
 	
 	public ArrayList<Platform> getPlatforms() {
 		return platforms;
+	}
+	
+	public void translate(int x) {
+		translationX-=x;
 	}
 }

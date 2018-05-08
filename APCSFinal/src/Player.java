@@ -37,8 +37,9 @@ public class Player {
 	public void draw(PApplet drawer) {
 
 		drawer.image(character, (float) xCoord, (float) yCoord, (float) width, (float) height);
-		
-//		drawer.rect(boundingRectangle.x, boundingRectangle.y, boundingRectangle.width, boundingRectangle.height);
+
+		// drawer.rect(boundingRectangle.x, boundingRectangle.y,
+		// boundingRectangle.width, boundingRectangle.height);
 
 	}
 
@@ -89,10 +90,14 @@ public class Player {
 				} else
 					moveDirection(-1);
 			} else if (key == PApplet.RIGHT) {
-				if (slow) {
-					moveDirection(.5);
-				} else
-					moveDirection(1);
+				if (xCoord < gameScreen.ORIGINAL_WIDTH * 3 / 4) {
+					if (slow) {
+						moveDirection(.5);
+					} else
+						moveDirection(1);
+				} else {
+					gameScreen.translate(10);
+				}
 
 			}
 		}
@@ -106,26 +111,31 @@ public class Player {
 		boundingRectangle.setLocation((int) xCoord, (int) yCoord);
 
 		for (Platform p : gameScreen.getPlatforms()) {
-			if (boundingRectangle.intersectsLine(p.getX(), p.getY(), p.getMaxX(), p.getY())) {
+			int offset = 10;
+			if (boundingRectangle.intersectsLine(p.getX() + offset, p.getY(), p.getMaxX() - offset, p.getY())) {
 				vy = 0;
 				yCoord = p.getY() - height;
 				if (jumping)
 					jumping = false;
-			} if (boundingRectangle.intersectsLine(p.getX(), p.getY(), p.getX(), p.getMaxY())) {
+			}
+			if (boundingRectangle.intersectsLine(p.getX(), p.getY() + offset, p.getX(), p.getMaxY() - offset)) {
 				if (jumping)
 					jumping = false;
 				xCoord = p.getX() - height;
-			} if (boundingRectangle.intersectsLine(p.getMaxX(), p.getY(), p.getMaxX(), p.getMaxY())) {
+			}
+			if (boundingRectangle.intersectsLine(p.getMaxX(), p.getY() + offset, p.getMaxX(), p.getMaxY() - offset)) {
 				if (jumping)
 					jumping = false;
 				xCoord = p.getMaxX();
-			}  if (boundingRectangle.intersectsLine(p.getX(), p.getMaxY(), p.getMaxX(), p.getMaxY())) {
+			}
+			if (boundingRectangle.intersectsLine(p.getX(), p.getMaxY(), p.getMaxX(), p.getMaxY())) {
 				if (jumping)
 					jumping = false;
 			}
 		}
 
-		gameScreen.line(0, gameScreen.ORIGINAL_HEIGHT, gameScreen.ORIGINAL_WIDTH, gameScreen.ORIGINAL_HEIGHT);
+		// gameScreen.line(0, gameScreen.ORIGINAL_HEIGHT, gameScreen.ORIGINAL_WIDTH,
+		// gameScreen.ORIGINAL_HEIGHT);
 		if (boundingRectangle.intersectsLine(0, gameScreen.ORIGINAL_HEIGHT, gameScreen.ORIGINAL_WIDTH,
 				gameScreen.ORIGINAL_HEIGHT)) {
 
