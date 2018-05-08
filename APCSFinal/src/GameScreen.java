@@ -117,6 +117,14 @@ public class GameScreen extends PApplet {
 		Rectangle gRect = guy.getBoundingRect();
 		Rectangle oRect;
 		
+		for ( Bullet b : t.bullets() ) 
+		{
+			if ( gRect.intersects(b.getBoundingRect()) ) 
+			{
+				// do something
+			}
+		}
+		
 		for(int i = 0; i < obstacles.size(); i++) {
 			oRect = obstacles.get(i).getBoundRect();
 			if(gRect.intersects(oRect)) {

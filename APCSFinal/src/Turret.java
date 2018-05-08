@@ -23,7 +23,7 @@ public class Turret extends Obstacle implements ActionListener
 
 	public int getDamage() 
 	{
-		return 2;
+		return 1;
 	}
 	
 	
@@ -40,6 +40,11 @@ public class Turret extends Obstacle implements ActionListener
 			b.draw(drawer);
 		}
 		
+	}
+	
+	public ArrayList<Bullet> bullets() 
+	{
+		return bullets;
 	}
 
 	public void actionPerformed(ActionEvent e) 

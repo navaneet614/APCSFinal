@@ -2,7 +2,7 @@ import java.awt.Rectangle;
 
 import processing.core.*;
 
-public class Bullet 
+public class Bullet //extends Obstacle ?
 {
 	private double xCoord, yCoord;
 	private Rectangle boundingRectangle;
