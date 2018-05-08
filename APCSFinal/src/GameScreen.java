@@ -15,13 +15,8 @@ public class GameScreen extends PApplet {
 	private Player guy;
 	private God god;
 	private HashSet<Integer> keys;
-	private ArrayList<Platform> platforms;
 	private ArrayList<Obstacle> obstacles;
-	private PImage background;
 	private Turret t;
-	private float translationX;
-	
-	
 
 	public GameScreen() {
 		startMenu = new StartMenu();
@@ -30,20 +25,12 @@ public class GameScreen extends PApplet {
 		god = new God(450, 100, 120, 140);
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
-		platforms = new ArrayList<Platform>();
-		platforms.add(new Platform(30, 200, 200, 40, "platform.png"));
-		platforms.add(new Platform(300, 350, 200, 40, "platform.png"));
-		platforms.add(new Platform(500, 510, 200, 40, "platform.png"));
-		platforms.add(new Platform(700, 400, 200, 40, "platform.png"));
 		t = new Turret( 400, 150, "turret.png", 50, 50, 5*Math.PI/4 );
 	}
 
 	public void setup() {
 		guy.setup(this);
 		god.setup(this);
-		for(Platform p:platforms) {
-			p.setup(this);
-		}
 		t.setup(this);
 	}
 
@@ -55,7 +42,6 @@ public class GameScreen extends PApplet {
 			currentMenu.draw(this);
 		}
 		else if(currentMenu == null) {
-			translate(translationX, 0);
 			guy.update(keys,this);
 			guy.draw(this);	
 			for(Obstacle o : obstacles) {
@@ -63,9 +49,6 @@ public class GameScreen extends PApplet {
 			}
 			guy.draw(this);	
 			god.draw(this);
-			for(Platform p:platforms) {
-				p.draw(this);
-			}
 			t.draw(this);
 		}
 	}
@@ -145,11 +128,9 @@ public class GameScreen extends PApplet {
 		}
 	}
 	
-	public ArrayList<Platform> getPlatforms() {
-		return platforms;
-	}
-	
 	public void translate(int x) {
-		translationX-=x;
+		for(Obstacle o:obstacles) {
+			o.setX((float) (o.getX()+ x));
+		}
 	}
 }

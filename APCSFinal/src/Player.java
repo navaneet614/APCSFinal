@@ -31,7 +31,7 @@ public class Player {
 	}
 
 	public void setup(PApplet drawer) {
-		character = drawer.loadImage("player_walk.gif");
+		character = drawer.loadImage("character.png");
 	}
 
 	public void draw(PApplet drawer) {
@@ -85,10 +85,14 @@ public class Player {
 			} else if (key == PApplet.DOWN) {
 				// god.throwObstacle(new LightningBolt(), 0, (float) Math.random() * 601);
 			} else if (key == PApplet.LEFT && getX() > 0) {
-				if (slow) {
-					moveDirection(-.5);
-				} else
-					moveDirection(-1);
+				if (xCoord > gameScreen.ORIGINAL_WIDTH * 1 / 4) {
+					if (slow) {
+						moveDirection(-.5);
+					} else
+						moveDirection(-1);
+				} else {
+					gameScreen.translate(-10);
+				}
 			} else if (key == PApplet.RIGHT) {
 				if (xCoord < gameScreen.ORIGINAL_WIDTH * 3 / 4) {
 					if (slow) {
@@ -110,29 +114,31 @@ public class Player {
 		}
 		boundingRectangle.setLocation((int) xCoord, (int) yCoord);
 
-		for (Platform p : gameScreen.getPlatforms()) {
-			int offset = 10;
-			if (boundingRectangle.intersectsLine(p.getX() + offset, p.getY(), p.getMaxX() - offset, p.getY())) {
-				vy = 0;
-				yCoord = p.getY() - height;
-				if (jumping)
-					jumping = false;
-			}
-			if (boundingRectangle.intersectsLine(p.getX(), p.getY() + offset, p.getX(), p.getMaxY() - offset)) {
-				if (jumping)
-					jumping = false;
-				xCoord = p.getX() - height;
-			}
-			if (boundingRectangle.intersectsLine(p.getMaxX(), p.getY() + offset, p.getMaxX(), p.getMaxY() - offset)) {
-				if (jumping)
-					jumping = false;
-				xCoord = p.getMaxX();
-			}
-			if (boundingRectangle.intersectsLine(p.getX(), p.getMaxY(), p.getMaxX(), p.getMaxY())) {
-				if (jumping)
-					jumping = false;
-			}
-		}
+//		for (Platform p : gameScreen.getPlatforms()) {
+//			int offset = 10;
+//			if (boundingRectangle.intersectsLine(p.getX() + offset, p.getY(), p.getMaxX() - offset, p.getY())) {
+//				vy = 0;
+//				yCoord = p.getY() - height;
+//				if (jumping)
+//					jumping = false;
+//			}
+//			if (boundingRectangle.intersectsLine(p.getX(), p.getY() + offset, p.getX(), p.getMaxY() - offset)) {
+//				if (jumping)
+//					jumping = false;
+//				xCoord = p.getX() - height;
+//			}
+//			if (boundingRectangle.intersectsLine(p.getMaxX(), p.getY() + offset, p.getMaxX(), p.getMaxY() - offset)) {
+//				if (jumping)
+//					jumping = false;
+//				xCoord = p.getMaxX();
+//			}
+//			if (boundingRectangle.intersectsLine(p.getX(), p.getMaxY(), p.getMaxX(), p.getMaxY())) {
+//				if (jumping) {
+//					jumping = false;
+//					yCoord = p.getMaxY();
+//				}
+//			}
+//		}
 
 		// gameScreen.line(0, gameScreen.ORIGINAL_HEIGHT, gameScreen.ORIGINAL_WIDTH,
 		// gameScreen.ORIGINAL_HEIGHT);

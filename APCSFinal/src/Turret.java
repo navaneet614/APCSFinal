@@ -8,7 +8,7 @@ import javax.swing.Timer;
 public class Turret extends Obstacle implements ActionListener
 {
 	private ArrayList<Bullet> bullets;
-	Timer t;
+	private Timer t;
 	double angle;
 	int count;
 	public Turret(float x, float y, String imPath, double width, double height, double a) 

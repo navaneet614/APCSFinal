@@ -33,7 +33,7 @@ public class Bullet //extends Obstacle ?
 		
 		boundingRectangle.setLocation((int)xCoord, (int)yCoord);
 	}
-	
+
 	public double getAngle() 
 	{
 		return angle;
