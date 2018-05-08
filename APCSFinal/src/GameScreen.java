@@ -24,7 +24,7 @@ public class GameScreen extends PApplet {
 		god = new God(450, 100, 120, 140);
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
-		t = new Turret( 400, 150, "turret.png", 50, 50, 5*Math.PI/4 );
+		t = new Turret(400, 150, "turret.png", 50, 50, 5 * Math.PI / 4);
 	}
 
 	public void setup() {
@@ -33,20 +33,19 @@ public class GameScreen extends PApplet {
 		t.setup(this);
 	}
 
-	public void draw() 
-	{
+	public void draw() {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
-		if(currentMenu!=null) {
+		if (currentMenu != null) {
 			currentMenu.draw(this);
-		}
-		else if(currentMenu == null) {
-			guy.update(keys,this);
-			guy.draw(this);	
-			for(Obstacle o : obstacles) {
+		} else if (currentMenu == null) {
+			hitDetection();
+			guy.update(keys, this);
+			guy.draw(this);
+			for (Obstacle o : obstacles) {
 				o.draw(this);
 			}
-			guy.draw(this);	
+			guy.draw(this);
 			god.draw(this);
 			t.draw(this);
 		}
@@ -62,7 +61,7 @@ public class GameScreen extends PApplet {
 		 */
 		keys.add(this.keyCode);
 	}
-	
+
 	public void keyReleased() {
 		keys.remove(this.keyCode);
 
@@ -82,7 +81,8 @@ public class GameScreen extends PApplet {
 
 	public void mouseMoved() {
 		if (currentMenu != null) {
-			currentMenu.updateButtons((int)(mouseX / (width / ORIGINAL_WIDTH)), (int)(mouseY / (height / ORIGINAL_HEIGHT)));
+			currentMenu.updateButtons((int) (mouseX / (width / ORIGINAL_WIDTH)),
+					(int) (mouseY / (height / ORIGINAL_HEIGHT)));
 		}
 	}
 
@@ -97,39 +97,62 @@ public class GameScreen extends PApplet {
 			currentMenu = null;
 		}
 	}
-	
+
 	public void hitDetection() {
 		Rectangle gRect = guy.getBoundingRect();
 		Rectangle oRect;
-		
-		for ( Bullet b : t.bullets() ) 
-		{
-			if ( gRect.intersects(b.getBoundingRect()) ) 
-			{
+
+		for (Bullet b : t.bullets()) {
+			if (gRect.intersects(b.getBoundingRect())) {
 				// do something
 			}
 		}
-		
-		for(int i = 0; i < obstacles.size(); i++) {
+
+		for (int i = 0; i < obstacles.size(); i++) {
 			oRect = obstacles.get(i).getBoundRect();
-			if(gRect.intersects(oRect)) {
+			if (gRect.intersects(oRect)) {
 				guy.takeDamage(obstacles.get(i).getDamage());
-				
-				if(obstacles.get(i) instanceof Glue) {
+
+				if (obstacles.get(i) instanceof Glue) {
 					guy.setSlow(true);
 				}
-				
-				if(obstacles.get(i) instanceof Block) {
-					
+
+				if (obstacles.get(i) instanceof Block) {
+					int offset = 3;
+					if (gRect.intersectsLine(oRect.getX() + offset, oRect.getY(), oRect.getMaxX() - offset,
+							oRect.getY())) {
+						guy.setVY(0);
+						guy.setY(oRect.getY() - guy.getHeight());
+						guy.cancelJump();
+					}
+					if (gRect.intersectsLine(oRect.getX(), oRect.getY() + offset, oRect.getX(),
+							oRect.getMaxY() - offset)) {
+						guy.cancelJump();
+						guy.setX(oRect.getX() - guy.getHeight());
+					}
+					if (gRect.intersectsLine(oRect.getMaxX(), oRect.getY() + offset, oRect.getMaxX(),
+							oRect.getMaxY() - offset)) {
+						guy.cancelJump();
+						guy.setX(oRect.getMaxX());
+					}
+					if (gRect.intersectsLine(oRect.getX(), oRect.getMaxY(), oRect.getMaxX(), oRect.getMaxY())) {
+						guy.cancelJump();
+						guy.setY(oRect.getMaxY());
+					}
 				}
 			}
-			guy.setSlow(false);
+		}
+		guy.setSlow(false);
+		if (gRect.intersectsLine(0, ORIGINAL_HEIGHT, ORIGINAL_WIDTH,ORIGINAL_HEIGHT)) {
+			guy.setVY(0);
+			guy.setY(ORIGINAL_HEIGHT - guy.getHeight());
+			guy.cancelJump();
 		}
 	}
-	
+
 	public void translate(int x) {
-		for(Obstacle o:obstacles) {
-			o.setX((float) (o.getX()+ x));
+		for (Obstacle o : obstacles) {
+			o.setX((float) (o.getX() + x));
 		}
 	}
 }

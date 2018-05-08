@@ -51,7 +51,13 @@ public class Player {
 		if (!jumping)
 			jumping = true;
 	}
-
+	
+	public void cancelJump()
+	{
+		if(jumping) {
+			jumping = false;
+		}
+	}
 	public void takeDamage(int damage) {
 		health -= damage;
 		if (health <= 0) {
@@ -63,19 +69,32 @@ public class Player {
 		return alive;
 	}
 
-	public boolean intersects(Line l) {
-		Line feet = new Line(xCoord, yCoord + height, xCoord + width, yCoord + height);
-		if (feet.intersects(l))
-			return true;
-		return false;
-	}
-
 	public double getX() {
 		return xCoord;
 	}
 
 	public double getY() {
 		return yCoord;
+	}
+	
+	public double getHeight() {
+		return height;
+	}
+	
+	public double getWidth() {
+		return width;
+	}
+	
+	public void setX(double x) {
+		xCoord = x;
+	}
+	
+	public void setY(double y) {
+		yCoord = y;
+	}
+	
+	public void setVY(double newVY) {
+		vy = newVY;
 	}
 
 	public void update(HashSet<Integer> keys, GameScreen gameScreen) {
@@ -114,45 +133,8 @@ public class Player {
 		}
 		boundingRectangle.setLocation((int) xCoord, (int) yCoord);
 
-//		for (Platform p : gameScreen.getPlatforms()) {
-//			int offset = 10;
-//			if (boundingRectangle.intersectsLine(p.getX() + offset, p.getY(), p.getMaxX() - offset, p.getY())) {
-//				vy = 0;
-//				yCoord = p.getY() - height;
-//				if (jumping)
-//					jumping = false;
-//			}
-//			if (boundingRectangle.intersectsLine(p.getX(), p.getY() + offset, p.getX(), p.getMaxY() - offset)) {
-//				if (jumping)
-//					jumping = false;
-//				xCoord = p.getX() - height;
-//			}
-//			if (boundingRectangle.intersectsLine(p.getMaxX(), p.getY() + offset, p.getMaxX(), p.getMaxY() - offset)) {
-//				if (jumping)
-//					jumping = false;
-//				xCoord = p.getMaxX();
-//			}
-//			if (boundingRectangle.intersectsLine(p.getX(), p.getMaxY(), p.getMaxX(), p.getMaxY())) {
-//				if (jumping) {
-//					jumping = false;
-//					yCoord = p.getMaxY();
-//				}
-//			}
-//		}
-
-		// gameScreen.line(0, gameScreen.ORIGINAL_HEIGHT, gameScreen.ORIGINAL_WIDTH,
-		// gameScreen.ORIGINAL_HEIGHT);
-		if (boundingRectangle.intersectsLine(0, gameScreen.ORIGINAL_HEIGHT, gameScreen.ORIGINAL_WIDTH,
-				gameScreen.ORIGINAL_HEIGHT)) {
-
-			vy = 0;
-			yCoord = gameScreen.ORIGINAL_HEIGHT - height;
-			if (jumping) {
-				jumping = false;
-			}
-		} else {
-			vy += GRAVITY;
-		}
+		 
+		vy += GRAVITY;
 		yCoord += vy;
 		boundingRectangle.setLocation((int) xCoord, (int) yCoord);
 	}
