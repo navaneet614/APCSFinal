@@ -5,7 +5,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Player {
-	
+
 	private final double GRAVITY = 1.05, JUMP_HEIGHT = 15;
 
 	private double xCoord;
@@ -35,8 +35,8 @@ public class Player {
 
 	public void draw(PApplet drawer) {
 
-		drawer.image(character, (float)xCoord, (float)yCoord, (float) width, (float) height);
-		
+		drawer.image(character, (float) xCoord, (float) yCoord, (float) width, (float) height);
+
 	}
 
 	public void moveDirection(double x) {

@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -130,71 +129,5 @@ public class GameScreen extends PApplet {
 	
 	public ArrayList<Platform> getPlatforms() {
 		return platforms;
-	}
-}
-
-	public void draw() 
-	{
-		
-		scale(width / ORIGINAL_WIDTH, height / ORIGNAL_HEIGHT);
-		background( Color.WHITE.getRGB() );
-		if(currentMenu!=null) {
-			currentMenu.draw(this);
-		}
-		
-		
-		
-		if(currentMenu == null) {
-			guy.update(keys,this);
-			guy.draw(this);	
-			
-			t.draw(this);
-		}
-	}
-
-	public void keyPressed() {
-		/*
-		 * char v = key; if(Character.toUpperCase(v) == 'A') { guy.moveDirection(-6); }
-		 * if(Character.toUpperCase(v) == 'D') { guy.moveDirection(6); }
-		 * if(Character.toUpperCase(v)== 'W') { guy.jump(50);
-		 * 
-		 * }
-		 */
-		keys.add(this.keyCode);
-	}
-	
-	public void keyReleased() {
-		keys.remove(this.keyCode);
-
-	}
-
-	public void mousePressed() {
-		if (currentMenu != null) {
-			String buttonText = currentMenu.checkIfButtonsPressed((int) (mouseX / (width / ORIGINAL_WIDTH)),
-					(int) (mouseY / (height / ORIGNAL_HEIGHT)));
-			if (buttonText == null) {
-				return;
-			}
-			currentMenu.doButtonAction(buttonText, this);
-		}
-
-	}
-
-	public void mouseMoved() {
-		if (currentMenu != null) {
-			currentMenu.updateButtons((int)(mouseX / (width / ORIGINAL_WIDTH)), (int)(mouseY / (height / ORIGNAL_HEIGHT)));
-		}
-	}
-
-	public void changeMenuShowing(String menu) {
-		if (menu == null) {
-			currentMenu = null;
-			return;
-		}
-		if (menu.equals("start")) {
-			currentMenu = startMenu;
-		} else {
-			currentMenu = null;
-		}
 	}
 }

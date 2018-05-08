@@ -10,6 +10,7 @@ public abstract class Obstacle
 	private String imagePath;
 	private double width, height;
 	private Rectangle boundingRectangle;
+	private PImage pic;
 	
 	public Obstacle( float x, float y, String imPath, double width, double height) 
 	{
@@ -55,10 +56,13 @@ public abstract class Obstacle
 		return height;
 	}
 	
+	public void setup(PApplet drawer) {
+		pic = drawer.loadImage(imagePath);
+	}
+	
 	public void draw( PApplet drawer ) 
 	{
-		PImage p = drawer.loadImage(imagePath);
-		drawer.image( p, topX, topY, (float)width, (float)height );
+		drawer.image(pic , topX, topY, (float)width, (float)height );
 	}
 	
 	public Rectangle getBoundRect() {
