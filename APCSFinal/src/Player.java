@@ -123,8 +123,8 @@ public class Player {
 					if(!gameScreen.translate(-7))
 						moveLeft();
 				}
-			} else if (key == PApplet.RIGHT) {
-				if (xCoord < gameScreen.ORIGINAL_WIDTH * 3 / 4) {
+			} else if (key == PApplet.RIGHT && getX() + width < gameScreen.width) {
+				if (xCoord + width < gameScreen.ORIGINAL_WIDTH * 3 / 4) {
 					moveRight();
 				} else {
 					if(!gameScreen.translate(7))
