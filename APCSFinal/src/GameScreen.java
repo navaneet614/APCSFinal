@@ -187,7 +187,7 @@ public class GameScreen extends PApplet {
 	}
 
 	public boolean translate(int x) {
-		System.out.println(distanceTranslated);
+//		System.out.println(distanceTranslated);
 		if(x<0 && distanceTranslated<=0) {
 			return false;
 		}
