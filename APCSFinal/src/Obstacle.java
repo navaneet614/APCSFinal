@@ -7,16 +7,15 @@ public abstract class Obstacle
 {
 	private float x;
 	private float y;
-	private String imagePath;
 	private double width, height;
 	private Rectangle boundingRectangle;
 	private PImage pic;
 	
-	public Obstacle( float x, float y, String imPath, double width, double height) 
+	public Obstacle( float x, float y, PImage p, double width, double height) 
 	{
 		this.x = x;
 		this.y = y;
-		imagePath = imPath;
+		pic = p;
 		this.width = width;
 		this.height = height;
 		boundingRectangle = new Rectangle((int)x,(int)y,(int)width,(int)height);
@@ -57,7 +56,7 @@ public abstract class Obstacle
 	}
 	
 	public void setup(PApplet drawer) {
-		pic = drawer.loadImage(imagePath);
+
 	}
 	
 	public void draw( PApplet drawer ) 

@@ -11,9 +11,9 @@ public class Turret extends Obstacle implements ActionListener
 	private Timer t;
 	double angle;
 	int count;
-	public Turret(float x, float y, String imPath, double width, double height, double a) 
+	public Turret(float x, float y, double width, double height, double a) 
 	{
-		super(x, y, imPath, width, height);
+		super(x, y, ImageLoader.turret, width, height);
 		bullets = new ArrayList<Bullet>();
 		t = new Timer( 10, this );
 		t.start();

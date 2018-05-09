@@ -9,10 +9,11 @@ import processing.core.PImage;
 
 public class GameScreen extends PApplet {
 	public final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
+	private int levelLength = 2000 - 50, densityOfBlocks = 2;
 	private StartMenu startMenu;
 	private Menu currentMenu;
 	private Player guy;
-	private God god;
+//	private God god;
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
 	private int distanceTranslated;
@@ -22,49 +23,56 @@ public class GameScreen extends PApplet {
 		currentMenu = startMenu;
 		distanceTranslated = 0;
 		guy = new Player(50, 50, 50, 50);
-		god = new God(450, 100, 120, 140);
+//		god = new God(450, 100, 120, 140);
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
-		obstacles.add(new Turret(400, 150, "turret.png", 50, 50, 5 * Math.PI / 4));
 	}
 
 	public void setup() {
+		ImageLoader.loadAllImages(this, "");
 		guy.setup(this);
-		god.setup(this);
-		// for(int i = 0;i*50<=ORIGINAL_WIDTH;i++){
-		// obstacles.add(new Block(i*50, ORIGINAL_HEIGHT - 50, 50, 50));
-		// }
-		obstacles.add(new Block(0, 550, 50, 50));
-		obstacles.add(new Block(50, 550, 50, 50));
-		obstacles.add(new Block(100, 550, 50, 50));
-		
-		obstacles.add(new Block(200, 450, 50, 50));
-		obstacles.add(new Block(250, 450, 50, 50));
-		obstacles.add(new Block(300, 450, 50, 50));
-		
-		obstacles.add(new Block(400, 400, 50, 50));
-		obstacles.add(new Block(450, 400, 50, 50));
-		obstacles.add(new Block(500, 400, 50, 50));
-		
-		obstacles.add(new Block(600, 250, 50, 50));
-		obstacles.add(new Block(650, 250, 50, 50));
-		obstacles.add(new Block(700, 250, 50, 50));
-		
-		obstacles.add(new Block(800, 150, 50, 50));
-		obstacles.add(new Block(850, 150, 50, 50));
-		obstacles.add(new Block(900, 150, 50, 50));
-		
-		obstacles.add(new Block(1100, 250, 50, 50));
-		obstacles.add(new Block(1150, 250, 50, 50));
-		obstacles.add(new Block(1200, 250, 50, 50));
-		
-		obstacles.add(new Block(1300, 400, 50, 50));
-		obstacles.add(new Block(1350, 400, 50, 50));
-		obstacles.add(new Block(1400, 400, 50, 50));
-		
-		obstacles.add(new Block(1500, 550, 50, 50));
-		obstacles.add(new Block(1550, 550, 50, 50));
-		obstacles.add(new Block(1600, 550, 50, 50));
+//		god.setup(this);
+		 for(int i = 0;i<=(ORIGINAL_WIDTH+levelLength+50);i+=50){
+			 obstacles.add(new Block(i, ORIGINAL_HEIGHT - 50, 50, 50));
+			 int y = (int)(Math.random()*(ORIGINAL_HEIGHT-50))/50*50+50;
+			 for(int j = 0;j<Math.random()*densityOfBlocks;j++) {
+				 obstacles.add(new Block(i + j*50, y, 50, 50));
+			 }
+		 }
+//		obstacles.add(new Block(0, 550, 50, 50));
+//		obstacles.add(new Block(50, 550, 50, 50));
+//		obstacles.add(new Block(100, 550, 50, 50));
+//		
+//		obstacles.add(new Block(200, 450, 50, 50));
+//		obstacles.add(new Block(250, 450, 50, 50));
+//		obstacles.add(new Block(300, 450, 50, 50));
+//		
+//		obstacles.add(new Block(400, 400, 50, 50));
+//		obstacles.add(new Block(450, 400, 50, 50));
+//		obstacles.add(new Block(500, 400, 50, 50));
+//		
+//		obstacles.add(new Block(600, 250, 50, 50));
+//		obstacles.add(new Block(650, 250, 50, 50));
+//		obstacles.add(new Block(700, 250, 50, 50));
+//		
+//		obstacles.add(new Block(800, 150, 50, 50));
+//		obstacles.add(new Block(850, 150, 50, 50));
+//		obstacles.add(new Block(900, 150, 50, 50));
+//		
+//		obstacles.add(new Block(1100, 250, 50, 50));
+//		obstacles.add(new Block(1150, 250, 50, 50));
+//		obstacles.add(new Block(1200, 250, 50, 50));
+//		
+//		obstacles.add(new Block(1300, 400, 50, 50));
+//		obstacles.add(new Block(1350, 400, 50, 50));
+//		obstacles.add(new Block(1400, 400, 50, 50));
+//		
+//		obstacles.add(new Block(1500, 550, 50, 50));
+//		obstacles.add(new Block(1550, 550, 50, 50));
+//		obstacles.add(new Block(1600, 550, 50, 50));
+//		
+//		obstacles.add(new Turret(400, 150, 50, 50, 5 * Math.PI / 4));
+
 		
 		for (Obstacle o : obstacles) {
 			o.setup(this);
@@ -84,8 +92,8 @@ public class GameScreen extends PApplet {
 				o.draw(this);
 			}
 			guy.draw(this);
-			god.draw(this);
-		}
+//			god.draw(this);
+			}
 	}
 
 	public void keyPressed() {
@@ -169,7 +177,7 @@ public class GameScreen extends PApplet {
 						guy.cancelJump();
 						guy.setX(oRect.getMaxX());
 					}
-					if (gRect.intersectsLine(oRect.getX(), oRect.getMaxY(), oRect.getMaxX(), oRect.getMaxY())) {
+					if (gRect.intersectsLine(oRect.getX() + offset, oRect.getMaxY(), oRect.getMaxX() - offset, oRect.getMaxY())) {
 //						System.out.println("bottom");
 						guy.cancelJump();
 						guy.setY(oRect.getMaxY());
@@ -191,7 +199,8 @@ public class GameScreen extends PApplet {
 		if(x<0 && distanceTranslated<=0) {
 			return false;
 		}
-		else if(x>0 && distanceTranslated>=/*end of level length*/850) {
+		else if(x>0 && distanceTranslated>=levelLength) {
+//			System.out.println("here");
 			return false;
 		}
 		for (Obstacle o : obstacles) {

@@ -92,6 +92,10 @@ public class Player {
 		yCoord = y;
 	}
 	
+	public double getVY() {
+		return vy;
+	}
+	
 	public void setVY(double newVY) {
 		vy = GRAVITY;
 	}
