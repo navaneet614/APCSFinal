@@ -128,7 +128,7 @@ public class Player {
 					moveRight();
 				} else {
 					if(!gameScreen.translate(7))
-						moveLeft();
+						moveRight();
 				}
 
 			}

@@ -34,15 +34,37 @@ public class GameScreen extends PApplet {
 		// for(int i = 0;i*50<=ORIGINAL_WIDTH;i++){
 		// obstacles.add(new Block(i*50, ORIGINAL_HEIGHT - 50, 50, 50));
 		// }
-		obstacles.add(new Block(0, ORIGINAL_HEIGHT - 50, 50, 50));
-		obstacles.add(new Block(50, ORIGINAL_HEIGHT - 50, 50, 50));
-		obstacles.add(new Block(100, ORIGINAL_HEIGHT - 50, 50, 50));
+		obstacles.add(new Block(0, 550, 50, 50));
+		obstacles.add(new Block(50, 550, 50, 50));
+		obstacles.add(new Block(100, 550, 50, 50));
+		
 		obstacles.add(new Block(200, 450, 50, 50));
 		obstacles.add(new Block(250, 450, 50, 50));
 		obstacles.add(new Block(300, 450, 50, 50));
+		
 		obstacles.add(new Block(400, 400, 50, 50));
 		obstacles.add(new Block(450, 400, 50, 50));
 		obstacles.add(new Block(500, 400, 50, 50));
+		
+		obstacles.add(new Block(600, 250, 50, 50));
+		obstacles.add(new Block(650, 250, 50, 50));
+		obstacles.add(new Block(700, 250, 50, 50));
+		
+		obstacles.add(new Block(800, 150, 50, 50));
+		obstacles.add(new Block(850, 150, 50, 50));
+		obstacles.add(new Block(900, 150, 50, 50));
+		
+		obstacles.add(new Block(1100, 250, 50, 50));
+		obstacles.add(new Block(1150, 250, 50, 50));
+		obstacles.add(new Block(1200, 250, 50, 50));
+		
+		obstacles.add(new Block(1300, 400, 50, 50));
+		obstacles.add(new Block(1350, 400, 50, 50));
+		obstacles.add(new Block(1400, 400, 50, 50));
+		
+		obstacles.add(new Block(1500, 550, 50, 50));
+		obstacles.add(new Block(1550, 550, 50, 50));
+		obstacles.add(new Block(1600, 550, 50, 50));
 		
 		for (Obstacle o : obstacles) {
 			o.setup(this);
@@ -164,15 +186,11 @@ public class GameScreen extends PApplet {
 	}
 
 	public boolean translate(int x) {
-//		System.out.println(distanceTranslated);
-//		if(distanceTranslated == -1) {
-//			distanceTranslated = 0;
-//			return false;
-//		}
+		System.out.println(distanceTranslated);
 		if(x<0 && distanceTranslated<=0) {
 			return false;
 		}
-		else if(x>0 && distanceTranslated>=/*end of level length*/900) {
+		else if(x>0 && distanceTranslated>=/*end of level length*/850) {
 			return false;
 		}
 		for (Obstacle o : obstacles) {
