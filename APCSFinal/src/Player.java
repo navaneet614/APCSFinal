@@ -7,7 +7,7 @@ import processing.core.PImage;
 
 public class Player {
 
-	private final double GRAVITY = 1.05, JUMP_HEIGHT = 20;
+	public final double GRAVITY = 1.05, JUMP_HEIGHT = 20;
 
 	private double xCoord;
 	private double yCoord;
@@ -37,9 +37,8 @@ public class Player {
 	public void draw(PApplet drawer) {
 
 		drawer.image(character, (float) xCoord, (float) yCoord, (float) width, (float) height);
-
-		// drawer.rect(boundingRectangle.x, boundingRectangle.y,
-		// boundingRectangle.width, boundingRectangle.height);
+		drawer.point((float)xCoord, (float)yCoord);
+//		 drawer.rect(boundingRectangle.x, boundingRectangle.y,boundingRectangle.width, boundingRectangle.height);
 
 	}
 
@@ -94,7 +93,21 @@ public class Player {
 	}
 	
 	public void setVY(double newVY) {
-		vy = newVY;
+		vy = GRAVITY;
+	}
+	
+	private void moveLeft() {
+		if (slow) {
+			moveDirection(-.5);
+		} else
+			moveDirection(-1);
+	}
+	
+	private void moveRight() {
+		if (slow) {
+			moveDirection(.5);
+		} else
+			moveDirection(1);
 	}
 
 	public void update(HashSet<Integer> keys, GameScreen gameScreen) {
@@ -105,35 +118,29 @@ public class Player {
 				// god.throwObstacle(new LightningBolt(), 0, (float) Math.random() * 601);
 			} else if (key == PApplet.LEFT && getX() > 0) {
 				if (xCoord > gameScreen.ORIGINAL_WIDTH * 1 / 4) {
-					if (slow) {
-						moveDirection(-.5);
-					} else
-						moveDirection(-1);
+					moveLeft();
 				} else {
-					gameScreen.translate(-10);
+					if(!gameScreen.translate(-7))
+						moveLeft();
 				}
 			} else if (key == PApplet.RIGHT) {
 				if (xCoord < gameScreen.ORIGINAL_WIDTH * 3 / 4) {
-					if (slow) {
-						moveDirection(.5);
-					} else
-						moveDirection(1);
+					moveRight();
 				} else {
-					gameScreen.translate(10);
+					if(!gameScreen.translate(7))
+						moveLeft();
 				}
 
 			}
 		}
-		act(gameScreen);
+		act();
 	}
 
-	private void act(GameScreen gameScreen) {
+	private void act() {
+		boundingRectangle.setLocation((int) xCoord, (int) yCoord);
 		if (jumping) {
 			yCoord -= JUMP_HEIGHT;
 		}
-		boundingRectangle.setLocation((int) xCoord, (int) yCoord);
-
-		 
 		vy += GRAVITY;
 		yCoord += vy;
 		boundingRectangle.setLocation((int) xCoord, (int) yCoord);

@@ -15,10 +15,12 @@ public class GameScreen extends PApplet {
 	private God god;
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
+	private int distanceTranslated;
 
 	public GameScreen() {
 		startMenu = new StartMenu();
 		currentMenu = startMenu;
+		distanceTranslated = 0;
 		guy = new Player(50, 50, 50, 50);
 		god = new God(450, 100, 120, 140);
 		keys = new HashSet<Integer>();
@@ -29,10 +31,20 @@ public class GameScreen extends PApplet {
 	public void setup() {
 		guy.setup(this);
 		god.setup(this);
-//		for(int i = 0;i*50<=ORIGINAL_WIDTH;i++){
-//			obstacles.add(new Block(i*50, ORIGINAL_HEIGHT - 50, 50, 50));
-//		}
-		for(Obstacle o:obstacles) {
+		// for(int i = 0;i*50<=ORIGINAL_WIDTH;i++){
+		// obstacles.add(new Block(i*50, ORIGINAL_HEIGHT - 50, 50, 50));
+		// }
+		obstacles.add(new Block(0, ORIGINAL_HEIGHT - 50, 50, 50));
+		obstacles.add(new Block(50, ORIGINAL_HEIGHT - 50, 50, 50));
+		obstacles.add(new Block(100, ORIGINAL_HEIGHT - 50, 50, 50));
+		obstacles.add(new Block(200, 450, 50, 50));
+		obstacles.add(new Block(250, 450, 50, 50));
+		obstacles.add(new Block(300, 450, 50, 50));
+		obstacles.add(new Block(400, 400, 50, 50));
+		obstacles.add(new Block(450, 400, 50, 50));
+		obstacles.add(new Block(500, 400, 50, 50));
+		
+		for (Obstacle o : obstacles) {
 			o.setup(this);
 		}
 	}
@@ -115,24 +127,28 @@ public class GameScreen extends PApplet {
 				}
 
 				if (obstacles.get(i) instanceof Block) {
-					int offset = 3;
+					int offset = 20;
 					if (gRect.intersectsLine(oRect.getX() + offset, oRect.getY(), oRect.getMaxX() - offset,
 							oRect.getY())) {
-						guy.setVY(0);
+//						System.out.println("top");
 						guy.setY(oRect.getY() - guy.getHeight());
+						guy.setVY(0);
 						guy.cancelJump();
 					}
-					if (gRect.intersectsLine(oRect.getX(), oRect.getY() + offset, oRect.getX(),
+					else if (gRect.intersectsLine(oRect.getX(), oRect.getY() + offset, oRect.getX(),
 							oRect.getMaxY() - offset)) {
+//						System.out.println("left");
 						guy.cancelJump();
 						guy.setX(oRect.getX() - guy.getHeight());
 					}
-					if (gRect.intersectsLine(oRect.getMaxX(), oRect.getY() + offset, oRect.getMaxX(),
+					else if (gRect.intersectsLine(oRect.getMaxX(), oRect.getY() + offset, oRect.getMaxX(),
 							oRect.getMaxY() - offset)) {
+//						System.out.println("right");
 						guy.cancelJump();
 						guy.setX(oRect.getMaxX());
 					}
 					if (gRect.intersectsLine(oRect.getX(), oRect.getMaxY(), oRect.getMaxX(), oRect.getMaxY())) {
+//						System.out.println("bottom");
 						guy.cancelJump();
 						guy.setY(oRect.getMaxY());
 					}
@@ -140,16 +156,34 @@ public class GameScreen extends PApplet {
 			}
 		}
 		guy.setSlow(false);
-		if (gRect.intersectsLine(0, ORIGINAL_HEIGHT, ORIGINAL_WIDTH,ORIGINAL_HEIGHT)) {
+		if (gRect.intersectsLine(0, ORIGINAL_HEIGHT, ORIGINAL_WIDTH, ORIGINAL_HEIGHT)) {
 			guy.setVY(0);
 			guy.setY(ORIGINAL_HEIGHT - guy.getHeight());
 			guy.cancelJump();
 		}
 	}
 
-	public void translate(int x) {
+	public boolean translate(int x) {
+//		System.out.println(distanceTranslated);
+//		if(distanceTranslated == -1) {
+//			distanceTranslated = 0;
+//			return false;
+//		}
+		if(x<0 && distanceTranslated<=0) {
+			return false;
+		}
+		else if(x>0 && distanceTranslated>=/*end of level length*/900) {
+			return false;
+		}
 		for (Obstacle o : obstacles) {
 			o.setX((float) (o.getX() - x));
+			if(o instanceof Turret) {
+				for(Bullet b:((Turret) o).bullets()) {
+					b.setX((float) (b.getX() - x));
+				}
+			}
 		}
+		distanceTranslated += x;
+		return true;
 	}
 }

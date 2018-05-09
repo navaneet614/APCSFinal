@@ -5,8 +5,8 @@ import processing.core.*;
 
 public abstract class Obstacle 
 {
-	private float topX;
-	private float topY;
+	private float x;
+	private float y;
 	private String imagePath;
 	private double width, height;
 	private Rectangle boundingRectangle;
@@ -14,12 +14,12 @@ public abstract class Obstacle
 	
 	public Obstacle( float x, float y, String imPath, double width, double height) 
 	{
-		topX = x;
-		topY = y;
+		this.x = x;
+		this.y = y;
 		imagePath = imPath;
 		this.width = width;
 		this.height = height;
-		boundingRectangle = new Rectangle((int)topX,(int)topY,(int)width,(int)height);
+		boundingRectangle = new Rectangle((int)x,(int)y,(int)width,(int)height);
 	}
 	
 	
@@ -37,12 +37,12 @@ public abstract class Obstacle
 	}*/
 	public void setX( float x ) 
 	{
-		topX = x;
+		this.x = x;
 	}
 	
 	public void setY( float y ) 
 	{
-		topY = y;
+		this.y = y;
 	}
 	
 	
@@ -62,7 +62,9 @@ public abstract class Obstacle
 	
 	public void draw( PApplet drawer ) 
 	{
-		drawer.image(pic , topX, topY, (float)width, (float)height );
+		boundingRectangle.setLocation((int)x, (int)y);
+		drawer.image(pic , x, y, (float)width, (float)height );
+//		drawer.rect(boundingRectangle.x, boundingRectangle.y, boundingRectangle.width, boundingRectangle.height);
 	}
 	
 	public Rectangle getBoundRect() {
@@ -70,11 +72,11 @@ public abstract class Obstacle
 	}
 	
 	public double getX() {
-		return topX;
+		return x;
 	}
 	
 	public double getY() {
-		return topY;
+		return y;
 	}
 
 }

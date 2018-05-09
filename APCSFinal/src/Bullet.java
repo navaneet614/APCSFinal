@@ -48,4 +48,22 @@ public class Bullet //extends Obstacle ?
 		drawer.fill(250,250,210);
 		drawer.rect((int)xCoord,(int) yCoord, 10, 10);
 	}
+	
+	public double getX() {
+		return xCoord;
+	}
+	
+	public double getY() {
+		return yCoord;
+	}
+	
+	public void setX( float x ) 
+	{
+		xCoord = x;
+	}
+	
+	public void setY( float y ) 
+	{
+		yCoord = y;
+	}
 }
