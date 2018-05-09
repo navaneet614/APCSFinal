@@ -183,7 +183,7 @@ public class GameScreen extends PApplet {
 			guy.setY(ORIGINAL_HEIGHT - guy.getHeight());
 			guy.cancelJump();
 		}
-		System.out.println(guy.getX() + guy.getWidth());
+//		System.out.println(guy.getX() + guy.getWidth());
 	}
 
 	public boolean translate(int x) {
