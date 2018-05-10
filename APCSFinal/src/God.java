@@ -18,13 +18,16 @@ public class God
 	private PImage character;
 	private double xCoord, yCoord;
 	private double width, height;
+	private int amountOfObstacles, placedObstacles;
 	
-	public God( double x, double y, double w, double h ) 
+	public God( double x, double y, double w, double h, int amountOfObstacles ) 
 	{
 		xCoord = x;
 		yCoord = y;
 		width = w;
 		height = h;
+		this.amountOfObstacles = amountOfObstacles;
+		placedObstacles = 0;
 	}
 	
 	public void setup(PApplet drawer) {
@@ -36,33 +39,42 @@ public class God
 		drawer.image(character, (float)xCoord, (float)yCoord, (float) width, (float) height);
 	}
 	
-	public void throwObstacle( Obstacle ob, float startX, float startY ) 
-	{
-		
+	public void place() {
+		placedObstacles++;
 	}
 	
-	private void fall( Obstacle o ) {
-		
-		/*	if ( yCoord < 550 )
-				canFall = true;
-			else
-				canFall = false;*/
-		double velocity = 0;
-			
-			if( ( 600 - o.getY() - o.getHeight() ) > 1) {
-			velocity+=0.25;
-			if(velocity >= 15) {
-				velocity = 15;
-			}
-			o.setY((float)o.getY() + (float)velocity);
-			if(o.getY() > 550) {
-				o.setY(550);
-				//canFall = false;
-			}
-			}
-			
-		}
+	public boolean canPlace() {
+		return amountOfObstacles > placedObstacles;
+	}
 	
+	
+//	public void throwObstacle( Obstacle ob, float startX, float startY ) 
+//	{
+//		
+//	}
+//	
+//	private void fall( Obstacle o ) {
+//		
+//		/*	if ( yCoord < 550 )
+//				canFall = true;
+//			else
+//				canFall = false;*/
+//		double velocity = 0;
+//			
+//			if( ( 600 - o.getY() - o.getHeight() ) > 1) {
+//			velocity+=0.25;
+//			if(velocity >= 15) {
+//				velocity = 15;
+//			}
+//			o.setY((float)o.getY() + (float)velocity);
+//			if(o.getY() > 550) {
+//				o.setY(550);
+//				//canFall = false;
+//			}
+//			}
+//			
+//		}
+//	
 	
 	
 	

@@ -185,11 +185,7 @@ public class GameScreen extends PApplet {
 			oRect = obstacles.get(i).getBoundRect();
 			if (gRect.intersects(oRect)) {
 				
-				if(currentObstacle != null && !(currentObstacle instanceof Block) && !currentObstacle.equals(obstacles.get(i)))
-					currentObstacle.resetNumTimesHit();
-				
-				currentObstacle = obstacles.get(i) instanceof Block ? currentObstacle:obstacles.get(i);
-				
+			
 				if (obstacles.get(i) instanceof Glue) {
 					guy.setSlow(true);
 				}
