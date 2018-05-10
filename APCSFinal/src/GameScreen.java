@@ -208,7 +208,7 @@ public class GameScreen extends PApplet {
 				}
 				else if ( obstacles.get(i) instanceof Spike ) 
 				{
-					System.out.println( "Hit spike!" );
+					//System.out.println( "Hit spike!" );
 				}
 			}
 		}
