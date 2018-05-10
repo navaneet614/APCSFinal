@@ -3,13 +3,12 @@ import processing.core.PImage;
 
 public class ImageLoader {
 	
-	public static PImage block, character, glue, god, health, lightningbolt, platform, player_walk, spike, turret;
+	public static PImage block, character, glue, health, lightningbolt, platform, player_walk, spike, turret;
 	
 	public static void loadAllImages(PApplet p, String locationOfResources) {
 		block = p.loadImage(locationOfResources + "block.png");
 		character = p.loadImage(locationOfResources + "character.png");
 		glue = p.loadImage(locationOfResources + "glue.png");
-		god = p.loadImage(locationOfResources + "god.png");
 		health = p.loadImage(locationOfResources + "health.png");
 		lightningbolt = p.loadImage(locationOfResources + "lightningbolt.png");
 		platform = p.loadImage(locationOfResources + "platform.png");
