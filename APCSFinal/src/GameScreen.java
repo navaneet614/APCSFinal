@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+
 import processing.core.PApplet;
 
 /**
@@ -27,6 +29,7 @@ public class GameScreen extends PApplet {
 	private int distanceTranslated;
 	private enum gameModes {singleplayer, localMultiplayer}
 	private gameModes gameMode;
+	private Obstacle currentObstacle;
 
 	public GameScreen() {
 		startMenu = new StartMenu();
@@ -39,6 +42,7 @@ public class GameScreen extends PApplet {
 	}
 
 	public void setup() {
+		
 		ImageLoader.loadAllImages(this, "");
 		guy.setup(this);
 //		god.setup(this);
@@ -172,8 +176,12 @@ public class GameScreen extends PApplet {
 		for (int i = 0; i < obstacles.size(); i++) {
 			oRect = obstacles.get(i).getBoundRect();
 			if (gRect.intersects(oRect)) {
-				guy.takeDamage(obstacles.get(i).getDamage());
-
+				
+				if(currentObstacle != null && !(currentObstacle instanceof Block) && !currentObstacle.equals(obstacles.get(i)))
+					currentObstacle.resetNumTimesHit();
+				
+				currentObstacle = obstacles.get(i) instanceof Block ? currentObstacle:obstacles.get(i);
+				
 				if (obstacles.get(i) instanceof Glue) {
 					guy.setSlow(true);
 				}
@@ -206,12 +214,15 @@ public class GameScreen extends PApplet {
 						guy.setY(oRect.getMaxY());
 					}
 				}
-				else if ( obstacles.get(i) instanceof Spike ) 
-				{
-					//System.out.println( "Hit spike!" );
+				else 
+				{	
+					
+					guy.takeDamage(obstacles.get(i).getDamage());
+					}
 				}
 			}
-		}
+		
+		
 		guy.setSlow(false);
 		if (gRect.intersectsLine(0, ORIGINAL_HEIGHT, ORIGINAL_WIDTH, ORIGINAL_HEIGHT)) {
 			guy.setVY(0);

@@ -21,9 +21,11 @@ public abstract class Obstacle
 	private double width, height;
 	private Rectangle boundingRectangle;
 	private PImage pic;
+	private long numTimesHit;
 	
 	public Obstacle( float x, float y, PImage p, double width, double height) 
-	{
+	{	
+		
 		this.x = x;
 		this.y = y;
 		pic = p;
@@ -32,19 +34,20 @@ public abstract class Obstacle
 		boundingRectangle = new Rectangle((int)x,(int)y,(int)width,(int)height);
 	}
 	
+	public void hit() {
+		numTimesHit++;
+	}
+	
+	public void resetNumTimesHit() {
+		numTimesHit = 0;
+	}
 	
 	public abstract int getDamage();
 	
-	// public abstract void animate();
+	public boolean canDamage() {
+		return numTimesHit % 60 == 0 || numTimesHit == 1;
+	}
 	
-	//public abstract double getArea();
-
-	
-	/*
-	public boolean intersects( Obstacle other ) 
-	{
-		
-	}*/
 	public void setX( float x ) 
 	{
 		this.x = x;
@@ -66,12 +69,16 @@ public abstract class Obstacle
 		return height;
 	}
 	
+	
+
+	
 	public void setup(PApplet drawer) {
 
 	}
 	
 	public void draw( PApplet drawer ) 
-	{
+	{	
+		//canHit = 
 		boundingRectangle.setLocation((int)x, (int)y);
 		drawer.image(pic , x, y, (float)width, (float)height );
 //		drawer.rect(boundingRectangle.x, boundingRectangle.y, boundingRectangle.width, boundingRectangle.height);

@@ -19,8 +19,12 @@ public class Spike extends Obstacle
 
 
 	public int getDamage() 
-	{
-		return 1;
+	{	
+		super.hit();
+		if(canDamage()) {
+			return 1;
+		}
+		return 0;
 	}
 
 }
