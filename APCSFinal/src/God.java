@@ -2,6 +2,17 @@ import java.util.ArrayList;
 
 import processing.core.*;
 
+/**
+ * 
+ * @author Shaunak Bhandarkar
+ * 
+ * The God class is what enables the dropping and placing
+ * of Obstacles that hinder the Player from reaching the 
+ * end of the level. However, there is a limit to the number
+ * of Obstacles that can be used by the God in a certain amount
+ * of time.
+ *
+ */
 public class God 
 {
 	private PImage character;

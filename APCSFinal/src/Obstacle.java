@@ -3,6 +3,17 @@ import java.awt.geom.Rectangle2D;
 
 import processing.core.*;
 
+/**
+ * 
+ * @author William Hu
+ * 
+ * The abstract superclass Obstacle provides 
+ * the framework for all Obstacles in the game.
+ * In particular, this includes quantifying the 
+ * health damage done to the Player as well as 
+ * identifying the boundaries of a given Obstacle.
+ *
+ */
 public abstract class Obstacle 
 {
 	private float x;

@@ -5,6 +5,17 @@ import java.util.ArrayList;
 import processing.core.*;
 import javax.swing.Timer;
 
+/**
+ * 
+ * @author Shaunak Bhandarkar
+ * 
+ * The Turret class is an Obstacle that is capable of 
+ * shooting bullets in a given direction indefinitely.
+ * While it does not do much damage to the Player, it 
+ * greatly restricts the paths the Player can take to
+ * get past the stream of Bullets.
+ *
+ */
 public class Turret extends Obstacle implements ActionListener
 {
 	private ArrayList<Bullet> bullets;

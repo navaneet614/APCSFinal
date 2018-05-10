@@ -5,6 +5,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import processing.core.PApplet;
 
+/**
+ * 
+ * @author Navaneet Kadaba
+ * 
+ * The GameScreen class is the class that enables the GUI. It
+ * uses the Java Processing library in order to perform various
+ * actions such as drawing, moving, scrolling, and animating. Quite
+ * simply, GameScreen is the "backbone" of the game.
+ *
+ */
 public class GameScreen extends PApplet {
 	public final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
 	private int levelLength = 2000 - 50, densityOfBlocks = 2;

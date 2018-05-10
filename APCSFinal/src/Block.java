@@ -1,4 +1,13 @@
-
+/**
+ * 
+ * @author Shaunak Bhandarkar
+ *
+ * The Block class is a very specific type of Obstacle. However, unlike 
+ * other obstacles, it cannot affect the user's health; their purpose is
+ * either to block the user from going somewhere, or to be stepped on by
+ * the user.
+ *
+ */
 public class Block extends Obstacle 
 {
 

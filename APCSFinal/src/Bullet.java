@@ -2,7 +2,19 @@ import java.awt.Rectangle;
 
 import processing.core.*;
 
-public class Bullet //extends Obstacle ?
+
+/**
+ * 
+ * @author Shaunak Bhandarkar
+ *
+ * The Bullet class is essential to Obstacles such as Turret, as
+ * it enables bullets to be fired from the given source. A Bullet
+ * starts at a specified location, and fire at a constant velocity,
+ * going in a straight line indefinitely. Moreover, the user can 
+ * select the angle from which a Bullet is to be fired.
+ * 
+ */
+public class Bullet 
 {
 	private double xCoord, yCoord;
 	private Rectangle boundingRectangle;

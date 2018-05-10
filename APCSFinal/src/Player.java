@@ -5,6 +5,19 @@ import java.util.HashSet;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+/**
+ * 
+ * @author William Hu
+ * 
+ * The Player class is the main class used to 
+ * control the actual main character of the game.
+ * This involves simulating gravity, as on Earth,
+ * moving around, and jumping. It also enables one
+ * to check the "boundaries" of a Player to identify
+ * whether it is intersecting or overlapping with another
+ * graphical object.
+ *
+ */
 public class Player {
 
 	public final double GRAVITY = 1.05, JUMP_HEIGHT = 20;

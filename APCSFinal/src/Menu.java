@@ -2,7 +2,16 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
-
+/**
+ * 
+ * @author Navaneet Kadaba
+ * 
+ * The Menu class is responsible for providing certain 
+ * menus such as the StartMenu, PauseMenu, and DeathMenu 
+ * to the user, which are responsible for giving the user
+ * a specific list of options.
+ *
+ */
 public abstract class Menu{
 	
 	private ArrayList<Button> buttons;

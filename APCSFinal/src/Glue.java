@@ -1,4 +1,12 @@
-
+/**
+ * 
+ * @author Shaunak Bhandarkar
+ *
+ * The Glue class is a type of Obstacle whose specific
+ * effect is not to damage the user, but rather slow
+ * down the user's speed.
+ *
+ */
 public class Glue extends Obstacle
 {
 

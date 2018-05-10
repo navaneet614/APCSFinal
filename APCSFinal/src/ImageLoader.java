@@ -1,6 +1,17 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
+/**
+ * 
+ * @author Navaneet Kadaba
+ * 
+ * The ImageLoader class is a static class that
+ * provides a convenient and centralized way to 
+ * load image (png) files. This helps in executing
+ * the program faster, as well as eliminating the
+ * issue of lagging.
+ *
+ */
 public class ImageLoader {
 	
 	public static PImage block, character, glue, health, lightningbolt, platform, player_walk, spike, turret;

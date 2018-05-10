@@ -2,6 +2,15 @@ import java.awt.Color;
 
 import processing.core.PApplet;
 
+/**
+ * 
+ * @author Navaneet Kadaba
+ * 
+ * The Button class is a convenient element of GUI that 
+ * enables the user in a game to choose their game mode,
+ * adjust the game settings, pause, and quit. 
+ *
+ */
 public class Button {
 
 	private float x, y, width, height;

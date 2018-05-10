@@ -2,6 +2,17 @@ import java.awt.Color;
 
 import processing.core.PApplet;
 
+/**
+ * 
+ * @author Navaneet Kadaba
+ * 
+ * The StartMenu class is a specific type of Menu that
+ * shows up before the user starts playing the game. It 
+ * allows the user to pick his or her choice of game 
+ * (single-player or multiplayer mode), as well as edit
+ * certain game settings.
+ *
+ */
 public class StartMenu extends Menu {
 
 	public StartMenu() {
