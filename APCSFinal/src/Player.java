@@ -61,6 +61,10 @@ public class Player {
 //		 drawer.rect(boundingRectangle.x, boundingRectangle.y,boundingRectangle.width, boundingRectangle.height);
 
 	}
+	
+	public int hearts() {
+		return health;
+	}
 
 	public void moveDirection(double x) {
 		xCoord += x * 5;

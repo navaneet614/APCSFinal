@@ -21,10 +21,10 @@ public class StartMenu extends Menu {
 	}
 	
 	private void doButtons() {
-		this.addButton(new Button(350, 200, 150, 50, "Singleplayer", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(350, 260, 150, 50, "Multiplayer", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(350, 320, 150, 50, "Options", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(350, 380, 150, 50, "Quit", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 200, 150, 50, "Singleplayer", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 260, 150, 50, "Multiplayer", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 320, 150, 50, "Options", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 380, 150, 50, "Quit", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 	}
 
 	@Override
@@ -38,5 +38,13 @@ public class StartMenu extends Menu {
 		} else if(buttonText.equals("Quit")) {
 			System.exit(0);
 		}
+	}
+	
+	public void draw(PApplet drawer) {
+		super.draw(drawer);
+		drawer.textFont(drawer.createFont("Georgia", 20));
+		drawer.textSize(20);
+		drawer.textAlign(PApplet.CENTER, PApplet.CENTER);
+		drawer.text("God's Plan", 400, 100);
 	}
 }

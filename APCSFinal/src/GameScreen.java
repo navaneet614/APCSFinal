@@ -4,17 +4,16 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-
 import processing.core.PApplet;
 
 /**
  * 
  * @author Navaneet Kadaba
  * 
- * The GameScreen class is the class that enables the GUI. It
- * uses the Java Processing library in order to perform various
- * actions such as drawing, moving, scrolling, and animating. Quite
- * simply, GameScreen is the "backbone" of the game.
+ *         The GameScreen class is the class that enables the GUI. It uses the
+ *         Java Processing library in order to perform various actions such as
+ *         drawing, moving, scrolling, and animating. Quite simply, GameScreen
+ *         is the "backbone" of the game.
  *
  */
 public class GameScreen extends PApplet {
@@ -25,13 +24,16 @@ public class GameScreen extends PApplet {
 	private PauseMenu pauseMenu;
 	private DeathMenu deathMenu;
 	private Player guy;
-//	private God god;
+	// private God god;
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
 	private int distanceTranslated;
-	private enum gameModes {singleplayer, localMultiplayer}
+
+	private enum gameModes {
+		singleplayer, localMultiplayer
+	}
+
 	private gameModes gameMode;
-	private Obstacle currentObstacle;
 
 	public GameScreen() {
 		startMenu = new StartMenu();
@@ -39,91 +41,104 @@ public class GameScreen extends PApplet {
 		deathMenu = new DeathMenu();
 		currentMenu = startMenu;
 		distanceTranslated = 0;
-		guy = new Player(50, 50, 50, 50);
-//		god = new God(450, 100, 120, 140);
+		guy = new Player(50, 450, 50, 50);
+		// god = new God(450, 100, 120, 140);
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
 	}
 
+	public void reset() {
+		distanceTranslated = 0;
+		guy = new Player(50, 450, 50, 50);
+		guy.setup(this);
+		// god = new God(450, 100, 120, 140);
+		keys.clear();
+		obstacles.clear();
+		doLvl(0);
+	}
+
 	public void setup() {
-		
+
 		ImageLoader.loadAllImages(this, "");
 		guy.setup(this);
-//		god.setup(this);
-		
-
-		
-		//rando lvl generation
-		 for(int i = 0;i<=(ORIGINAL_WIDTH+levelLength+50);i+=50)
-		 {
-			 obstacles.add(new Block(i, ORIGINAL_HEIGHT - 50, 50, 50));
-			 int y = (int)(Math.random()*(ORIGINAL_HEIGHT-50))/50*50+50;
-			 for(int j = 0;j<Math.random()*densityOfBlocks;j++) 
-			 {
-				/* if ( j % 10 == 3 ) 
-				 {
-					 obstacles.add( new FadingBlock( i + j*50, y, 50, 50 ) );
-				 }
-				 else */
-				 {
-					 obstacles.add(new Block(i + j*50, y, 50, 50));
-				 }
-			 }
-			 if ( i % 200 == 0 ) 
-			 {
-				 obstacles.add( new Spike( i, y-25, 50, 25 ) );
-			 }
-		 }
-		
-//		lvl1();
-		
+		// god.setup(this);
 		for (Obstacle o : obstacles) {
 			o.setup(this);
 		}
+		doLvl(0);
 	}
-	
-	public void lvl1() {
+
+	public void doLvl(int lvlNum) {
 		obstacles.clear();
-		 
-		for(int i = 0;i<=(ORIGINAL_WIDTH+levelLength+50);i+=50)
-			 obstacles.add(new Block(i, ORIGINAL_HEIGHT - 50, 50, 50));
-		 
-		obstacles.add(new Block(0, 550, 50, 50));
-		obstacles.add(new Block(50, 550, 50, 50));
-		obstacles.add(new Block(100, 550, 50, 50));
+		for (int i = 0; i <= (ORIGINAL_WIDTH + levelLength + 50); i += 50)
+			obstacles.add(new Block(i, ORIGINAL_HEIGHT - 50, 50, 50));
+		if (lvlNum == 0) {
+			// rando lvl generation
+			for (int i = 0; i <= (ORIGINAL_WIDTH + levelLength + 50); i += 50) {
+				obstacles.add(new Block(i, ORIGINAL_HEIGHT - 50, 50, 50));
+				int y = (int) (Math.random() * (ORIGINAL_HEIGHT - 50)) / 50 * 50 + 50;
+				for (int j = 0; j < Math.random() * densityOfBlocks; j++) {
+					/*
+					 * if ( j % 10 == 3 ) { obstacles.add( new FadingBlock( i + j*50, y, 50, 50 ) );
+					 * } else
+					 */
+					{
+						obstacles.add(new Block(i + j * 50, y, 50, 50));
+					}
+				}
+				if (i % 200 == 0) {
+					obstacles.add(new Spike(i, y - 25, 50, 25));
+				}
+			}
+		}
+		if (lvlNum == 1) {
+			obstacles.add(new Block(0, 550, 50, 50));
+			obstacles.add(new Block(50, 550, 50, 50));
+			obstacles.add(new Block(100, 550, 50, 50));
+
+			obstacles.add(new Block(200, 450, 50, 50));
+			obstacles.add(new Block(250, 450, 50, 50));
+			obstacles.add(new Block(300, 450, 50, 50));
+
+			obstacles.add(new Block(400, 400, 50, 50));
+			obstacles.add(new Block(450, 400, 50, 50));
+			obstacles.add(new Block(500, 400, 50, 50));
+
+			obstacles.add(new Block(600, 250, 50, 50));
+			obstacles.add(new Block(650, 250, 50, 50));
+			obstacles.add(new Block(700, 250, 50, 50));
+
+			obstacles.add(new Block(800, 150, 50, 50));
+			obstacles.add(new Block(850, 150, 50, 50));
+			obstacles.add(new Block(900, 150, 50, 50));
+
+			obstacles.add(new Block(1100, 250, 50, 50));
+			obstacles.add(new Block(1150, 250, 50, 50));
+			obstacles.add(new Block(1200, 250, 50, 50));
+
+			obstacles.add(new Block(1300, 400, 50, 50));
+			obstacles.add(new Block(1350, 400, 50, 50));
+			obstacles.add(new Block(1400, 400, 50, 50));
+
+			obstacles.add(new Block(1500, 550, 50, 50));
+			obstacles.add(new Block(1550, 550, 50, 50));
+			obstacles.add(new Block(1600, 550, 50, 50));
+		}
+		else if (lvlNum == 2) {
+			
+		} 
+		else if(lvlNum == 3) {
+			
+		}
 		
-		obstacles.add(new Block(200, 450, 50, 50));
-		obstacles.add(new Block(250, 450, 50, 50));
-		obstacles.add(new Block(300, 450, 50, 50));
-		
-		obstacles.add(new Block(400, 400, 50, 50));
-		obstacles.add(new Block(450, 400, 50, 50));
-		obstacles.add(new Block(500, 400, 50, 50));
-		
-		obstacles.add(new Block(600, 250, 50, 50));
-		obstacles.add(new Block(650, 250, 50, 50));
-		obstacles.add(new Block(700, 250, 50, 50));
-		
-		obstacles.add(new Block(800, 150, 50, 50));
-		obstacles.add(new Block(850, 150, 50, 50));
-		obstacles.add(new Block(900, 150, 50, 50));
-		
-		obstacles.add(new Block(1100, 250, 50, 50));
-		obstacles.add(new Block(1150, 250, 50, 50));
-		obstacles.add(new Block(1200, 250, 50, 50));
-		
-		obstacles.add(new Block(1300, 400, 50, 50));
-		obstacles.add(new Block(1350, 400, 50, 50));
-		obstacles.add(new Block(1400, 400, 50, 50));
-		
-		obstacles.add(new Block(1500, 550, 50, 50));
-		obstacles.add(new Block(1550, 550, 50, 50));
-		obstacles.add(new Block(1600, 550, 50, 50));
 	}
 
 	public void draw() {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
+		if (guy.hearts() <= 0) {
+			currentMenu = deathMenu;
+		}
 		if (currentMenu != null) {
 			currentMenu.draw(this);
 		} else if (currentMenu == null) {
@@ -131,12 +146,13 @@ public class GameScreen extends PApplet {
 			guy.update(keys, this);
 			guy.draw(this);
 			for (Obstacle o : obstacles) {
-				//if ( !(o instanceof FadingBlock ) || (o instanceof FadingBlock && !( (FadingBlock) o ).steppedOn(guy)) )
-					o.draw(this);
+				// if ( !(o instanceof FadingBlock ) || (o instanceof FadingBlock && !(
+				// (FadingBlock) o ).steppedOn(guy)) )
+				o.draw(this);
 			}
 			guy.draw(this);
-//			god.draw(this);
-			}
+			// god.draw(this);
+		}
 	}
 
 	public void keyPressed() {
@@ -147,7 +163,7 @@ public class GameScreen extends PApplet {
 		 * 
 		 * }
 		 */
-		if(key == 'p'&&currentMenu==null) {
+		if (key == 'p' && currentMenu == null) {
 			currentMenu = pauseMenu;
 		}
 		keys.add(this.keyCode);
@@ -178,20 +194,20 @@ public class GameScreen extends PApplet {
 	}
 
 	public void changeMenuMode(String menumode) {
-		
-		if(menumode.equals("singleplayer")) {
+//		System.out.println(menumode);
+		if (menumode.equals("singleplayer")) {
 			gameMode = gameModes.singleplayer;
 			currentMenu = null;
-		} else if(menumode.equals("localmultiplayer")) {
+//			reset();
+		} else if (menumode.equals("localmultiplayer")) {
 			gameMode = gameModes.localMultiplayer;
 			currentMenu = null;
-		} else if(menumode.equals("main")) {
-			setup();
+		} else if (menumode.equals("main")) {
+			reset();
 			currentMenu = startMenu;
-		} else if(menumode.equals("options")) {
-//			currentMenu = optionsMenu;
-		}
-		else {
+		} else if (menumode.equals("options")) {
+			// currentMenu = optionsMenu;
+		} else {
 			currentMenu = null;
 		}
 	}
@@ -203,87 +219,81 @@ public class GameScreen extends PApplet {
 		for (int i = 0; i < obstacles.size(); i++) {
 			oRect = obstacles.get(i).getBoundRect();
 			if (gRect.intersects(oRect)) {
-				
-			
+
 				if (obstacles.get(i) instanceof Glue) {
 					guy.setSlow(true);
 				}
-				
-				/*else if ( obstacles.get(i) instanceof FadingBlock ) 
-				{
-					
-				}*/
 
-				else if (obstacles.get(i) instanceof Block) 
-				{
+				/*
+				 * else if ( obstacles.get(i) instanceof FadingBlock ) {
+				 * 
+				 * }
+				 */
+
+				else if (obstacles.get(i) instanceof Block) {
 					int offset = 20;
 					if (gRect.intersectsLine(oRect.getX() + offset, oRect.getY(), oRect.getMaxX() - offset,
 							oRect.getY())) {
-//						System.out.println("top");
+						// System.out.println("top");
 						guy.setY(oRect.getY() - guy.getHeight());
 						guy.setVY(0);
 						guy.cancelJump();
-					}
-					else if (gRect.intersectsLine(oRect.getX(), oRect.getY() + offset, oRect.getX(),
+					} else if (gRect.intersectsLine(oRect.getX(), oRect.getY() + offset, oRect.getX(),
 							oRect.getMaxY() - offset)) {
-//						System.out.println("left");
+						// System.out.println("left");
 						guy.cancelJump();
 						guy.setX(oRect.getX() - guy.getHeight());
-					}
-					else if (gRect.intersectsLine(oRect.getMaxX(), oRect.getY() + offset, oRect.getMaxX(),
+					} else if (gRect.intersectsLine(oRect.getMaxX(), oRect.getY() + offset, oRect.getMaxX(),
 							oRect.getMaxY() - offset)) {
-//						System.out.println("right");
+						// System.out.println("right");
 						guy.cancelJump();
 						guy.setX(oRect.getMaxX());
 					}
-					if (gRect.intersectsLine(oRect.getX() + offset, oRect.getMaxY(), oRect.getMaxX() - offset, oRect.getMaxY())) {
-//						System.out.println("bottom");
+					if (gRect.intersectsLine(oRect.getX() + offset, oRect.getMaxY(), oRect.getMaxX() - offset,
+							oRect.getMaxY())) {
+						// System.out.println("bottom");
 						guy.cancelJump();
 						guy.setY(oRect.getMaxY());
 					}
-				}
-				else 
-				{	
-					
-					guy.takeDamage(obstacles.get(i).getDamage());
-					}
 				} else {
-					obstacles.get(i).resetNumTimesHit();
+
+					guy.takeDamage(obstacles.get(i).getDamage());
 				}
-				if(obstacles.get(i) instanceof Turret) {
-					Turret t = (Turret)(obstacles.get(i));
-					for(int j = 0;j<t.bullets().size();j++) {
-						Bullet b = t.bullets().get(j);
-						if(b.getBoundingRect().intersects(guy.getBoundingRect())) {
-							guy.takeDamage(t.getDamage());
-							t.bullets().remove(j);
-						}
+			} else {
+				obstacles.get(i).resetNumTimesHit();
+			}
+			if (obstacles.get(i) instanceof Turret) {
+				Turret t = (Turret) (obstacles.get(i));
+				for (int j = 0; j < t.bullets().size(); j++) {
+					Bullet b = t.bullets().get(j);
+					if (b.getBoundingRect().intersects(guy.getBoundingRect())) {
+						guy.takeDamage(t.getDamage());
+						t.bullets().remove(j);
 					}
 				}
 			}
-		
-		
+		}
+
 		guy.setSlow(false);
 		if (gRect.intersectsLine(0, ORIGINAL_HEIGHT, ORIGINAL_WIDTH, ORIGINAL_HEIGHT)) {
 			guy.setVY(0);
 			guy.setY(ORIGINAL_HEIGHT - guy.getHeight());
 			guy.cancelJump();
 		}
-//		System.out.println(guy.getX() + guy.getWidth());
+		// System.out.println(guy.getX() + guy.getWidth());
 	}
 
 	public boolean translate(int x) {
-		if(x<0 && distanceTranslated<=0) {
+		if (x < 0 && distanceTranslated <= 0) {
 			return false;
-		}
-		else if(x>0 && distanceTranslated>=levelLength) {
-//			System.out.println("here");
+		} else if (x > 0 && distanceTranslated >= levelLength) {
+			// System.out.println("here");
 			return false;
 		}
 		for (Obstacle o : obstacles) {
 			o.setX((float) (o.getX() - x));
-			if(o instanceof Turret) {
-				for(Bullet b:((Turret) o).bullets()) {
+			if (o instanceof Turret) {
+				for (Bullet b : ((Turret) o).bullets()) {
 					b.setX((float) (b.getX() - x));
 				}
 			}
