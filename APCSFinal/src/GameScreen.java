@@ -3,9 +3,7 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
-
 import processing.core.PApplet;
-import processing.core.PImage;
 
 public class GameScreen extends PApplet {
 	public final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
@@ -17,6 +15,8 @@ public class GameScreen extends PApplet {
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
 	private int distanceTranslated;
+	private enum gameModes {singleplayer, localMultiplayer, LANMultiplayer}
+	private gameModes gameMode;
 
 	public GameScreen() {
 		startMenu = new StartMenu();
@@ -131,14 +131,22 @@ public class GameScreen extends PApplet {
 		}
 	}
 
-	public void changeMenuShowing(String menu) {
-		if (menu == null) {
+	public void changeMenuMode(String menumode) {
+		
+		if(menumode.equals("singleplayer")) {
+			gameMode = gameModes.singleplayer;
 			currentMenu = null;
-			return;
-		}
-		if (menu.equals("start")) {
+		} else if(menumode.equals("localmultiplayer")) {
+			gameMode = gameModes.localMultiplayer;
+			currentMenu = null;
+		} else if(menumode.equals("lanmultiplayer")) {
+			gameMode = gameModes.LANMultiplayer;
+		} else if(menumode.equals("main")) {
 			currentMenu = startMenu;
-		} else {
+		} else if(menumode.equals("options")) {
+//			currentMenu = optionsMenu;
+		}
+		else {
 			currentMenu = null;
 		}
 	}
