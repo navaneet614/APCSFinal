@@ -21,8 +21,15 @@ public class DeathMenu extends Menu {
 
 	@Override
 	public void doButtonAction(String buttonText, GameScreen gameScreen) {
-		// TODO Auto-generated method stub
-
+		if(buttonText.equals("Restart")) {
+			gameScreen.changeMenuMode("singleplayer");
+		} else if(buttonText.equals("Options")) {
+			gameScreen.changeMenuMode("options"); 
+		}else if(buttonText.equals("Main Menu")) {
+			gameScreen.changeMenuMode("main");
+		} else if(buttonText.equals("Quit")) {
+			System.exit(0);
+		}
 	}
 
 }
