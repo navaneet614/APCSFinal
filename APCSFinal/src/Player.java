@@ -27,7 +27,7 @@ public class Player {
 	private int health;
 	private double width;
 	private double height;
-	private PImage character;
+	private PImage character, heart;
 	private boolean alive, jumping, slow;
 	private double vy;
 	private Rectangle boundingRectangle;
@@ -41,14 +41,21 @@ public class Player {
 		vy = 0;
 		boundingRectangle = new Rectangle((int) x, (int) y, (int) w, (int) h);
 		slow = false;
+		health = 3;
 	}
 
 	public void setup(PApplet drawer) {
-		character = drawer.loadImage("character.png");
+		character = ImageLoader.character;
+		heart = ImageLoader.health;
 	}
 
 	public void draw(PApplet drawer) {
-
+		float xSpot = (float) (xCoord);
+		float ySpot = (float) yCoord-25;
+		for(int i = 0; i < health; i++) {
+			drawer.image(heart, xSpot, ySpot, 20,20);
+			xSpot += 20;
+		}
 		drawer.image(character, (float) xCoord, (float) yCoord, (float) width, (float) height);
 //		drawer.point((float)xCoord, (float)yCoord);
 //		 drawer.rect(boundingRectangle.x, boundingRectangle.y,boundingRectangle.width, boundingRectangle.height);
