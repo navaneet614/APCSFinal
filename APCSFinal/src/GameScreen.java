@@ -52,7 +52,14 @@ public class GameScreen extends PApplet {
 			 int y = (int)(Math.random()*(ORIGINAL_HEIGHT-50))/50*50+50;
 			 for(int j = 0;j<Math.random()*densityOfBlocks;j++) 
 			 {
-				 obstacles.add(new Block(i + j*50, y, 50, 50));
+				/* if ( j % 10 == 3 ) 
+				 {
+					 obstacles.add( new FadingBlock( i + j*50, y, 50, 50 ) );
+				 }
+				 else */
+				 {
+					 obstacles.add(new Block(i + j*50, y, 50, 50));
+				 }
 			 }
 			 if ( i % 200 == 0 ) 
 			 {
@@ -109,7 +116,8 @@ public class GameScreen extends PApplet {
 			guy.update(keys, this);
 			guy.draw(this);
 			for (Obstacle o : obstacles) {
-				o.draw(this);
+				//if ( !(o instanceof FadingBlock ) || (o instanceof FadingBlock && !( (FadingBlock) o ).steppedOn(guy)) )
+					o.draw(this);
 			}
 			guy.draw(this);
 //			god.draw(this);
@@ -185,6 +193,11 @@ public class GameScreen extends PApplet {
 				if (obstacles.get(i) instanceof Glue) {
 					guy.setSlow(true);
 				}
+				
+				/*else if ( obstacles.get(i) instanceof FadingBlock ) 
+				{
+					
+				}*/
 
 				else if (obstacles.get(i) instanceof Block) 
 				{
