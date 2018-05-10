@@ -33,8 +33,12 @@ public class Turret extends Obstacle implements ActionListener
 	}
 
 	public int getDamage() 
-	{
-		return 1;
+	{	
+		super.hit();
+		if(canDamage()) {
+			return 1;
+		}
+		return 0;
 	}
 	
 	
@@ -47,10 +51,17 @@ public class Turret extends Obstacle implements ActionListener
 	public void draw( PApplet drawer ) 
 	{
 		super.draw(drawer);
-		for( Bullet b : bullets ) {
-			b.draw(drawer);
-		}
+		GameScreen gs = (GameScreen)drawer;
 		
+		for(int j = 0;j<bullets.size();j++) {
+			Bullet b = bullets.get(j);
+			if(b.getY()<0||b.getY()>gs.ORIGINAL_HEIGHT) {
+				bullets.remove(j);
+			} else {
+				b.draw(drawer);
+			}
+
+		}
 	}
 	
 	public ArrayList<Bullet> bullets() 

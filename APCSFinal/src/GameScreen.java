@@ -22,6 +22,8 @@ public class GameScreen extends PApplet {
 	private int levelLength = 2000 - 50, densityOfBlocks = 2;
 	private StartMenu startMenu;
 	private Menu currentMenu;
+	private PauseMenu pauseMenu;
+	private DeathMenu deathMenu;
 	private Player guy;
 //	private God god;
 	private HashSet<Integer> keys;
@@ -33,6 +35,8 @@ public class GameScreen extends PApplet {
 
 	public GameScreen() {
 		startMenu = new StartMenu();
+		pauseMenu = new PauseMenu();
+		deathMenu = new DeathMenu();
 		currentMenu = startMenu;
 		distanceTranslated = 0;
 		guy = new Player(50, 50, 50, 50);
@@ -46,6 +50,10 @@ public class GameScreen extends PApplet {
 		ImageLoader.loadAllImages(this, "");
 		guy.setup(this);
 //		god.setup(this);
+		
+
+		
+		//rando lvl generation
 		 for(int i = 0;i<=(ORIGINAL_WIDTH+levelLength+50);i+=50)
 		 {
 			 obstacles.add(new Block(i, ORIGINAL_HEIGHT - 50, 50, 50));
@@ -66,44 +74,51 @@ public class GameScreen extends PApplet {
 				 obstacles.add( new Spike( i, y-25, 50, 25 ) );
 			 }
 		 }
-//		obstacles.add(new Block(0, 550, 50, 50));
-//		obstacles.add(new Block(50, 550, 50, 50));
-//		obstacles.add(new Block(100, 550, 50, 50));
-//		
-//		obstacles.add(new Block(200, 450, 50, 50));
-//		obstacles.add(new Block(250, 450, 50, 50));
-//		obstacles.add(new Block(300, 450, 50, 50));
-//		
-//		obstacles.add(new Block(400, 400, 50, 50));
-//		obstacles.add(new Block(450, 400, 50, 50));
-//		obstacles.add(new Block(500, 400, 50, 50));
-//		
-//		obstacles.add(new Block(600, 250, 50, 50));
-//		obstacles.add(new Block(650, 250, 50, 50));
-//		obstacles.add(new Block(700, 250, 50, 50));
-//		
-//		obstacles.add(new Block(800, 150, 50, 50));
-//		obstacles.add(new Block(850, 150, 50, 50));
-//		obstacles.add(new Block(900, 150, 50, 50));
-//		
-//		obstacles.add(new Block(1100, 250, 50, 50));
-//		obstacles.add(new Block(1150, 250, 50, 50));
-//		obstacles.add(new Block(1200, 250, 50, 50));
-//		
-//		obstacles.add(new Block(1300, 400, 50, 50));
-//		obstacles.add(new Block(1350, 400, 50, 50));
-//		obstacles.add(new Block(1400, 400, 50, 50));
-//		
-//		obstacles.add(new Block(1500, 550, 50, 50));
-//		obstacles.add(new Block(1550, 550, 50, 50));
-//		obstacles.add(new Block(1600, 550, 50, 50));
-//		
-//		obstacles.add(new Turret(400, 150, 50, 50, 5 * Math.PI / 4));
-
+		
+//		lvl1();
 		
 		for (Obstacle o : obstacles) {
 			o.setup(this);
 		}
+	}
+	
+	public void lvl1() {
+		obstacles.clear();
+		 
+		for(int i = 0;i<=(ORIGINAL_WIDTH+levelLength+50);i+=50)
+			 obstacles.add(new Block(i, ORIGINAL_HEIGHT - 50, 50, 50));
+		 
+		obstacles.add(new Block(0, 550, 50, 50));
+		obstacles.add(new Block(50, 550, 50, 50));
+		obstacles.add(new Block(100, 550, 50, 50));
+		
+		obstacles.add(new Block(200, 450, 50, 50));
+		obstacles.add(new Block(250, 450, 50, 50));
+		obstacles.add(new Block(300, 450, 50, 50));
+		
+		obstacles.add(new Block(400, 400, 50, 50));
+		obstacles.add(new Block(450, 400, 50, 50));
+		obstacles.add(new Block(500, 400, 50, 50));
+		
+		obstacles.add(new Block(600, 250, 50, 50));
+		obstacles.add(new Block(650, 250, 50, 50));
+		obstacles.add(new Block(700, 250, 50, 50));
+		
+		obstacles.add(new Block(800, 150, 50, 50));
+		obstacles.add(new Block(850, 150, 50, 50));
+		obstacles.add(new Block(900, 150, 50, 50));
+		
+		obstacles.add(new Block(1100, 250, 50, 50));
+		obstacles.add(new Block(1150, 250, 50, 50));
+		obstacles.add(new Block(1200, 250, 50, 50));
+		
+		obstacles.add(new Block(1300, 400, 50, 50));
+		obstacles.add(new Block(1350, 400, 50, 50));
+		obstacles.add(new Block(1400, 400, 50, 50));
+		
+		obstacles.add(new Block(1500, 550, 50, 50));
+		obstacles.add(new Block(1550, 550, 50, 50));
+		obstacles.add(new Block(1600, 550, 50, 50));
 	}
 
 	public void draw() {
@@ -132,6 +147,9 @@ public class GameScreen extends PApplet {
 		 * 
 		 * }
 		 */
+		if(key == 'p'&&currentMenu==null) {
+			currentMenu = pauseMenu;
+		}
 		keys.add(this.keyCode);
 	}
 
@@ -168,6 +186,7 @@ public class GameScreen extends PApplet {
 			gameMode = gameModes.localMultiplayer;
 			currentMenu = null;
 		} else if(menumode.equals("main")) {
+			setup();
 			currentMenu = startMenu;
 		} else if(menumode.equals("options")) {
 //			currentMenu = optionsMenu;
@@ -228,6 +247,18 @@ public class GameScreen extends PApplet {
 					
 					guy.takeDamage(obstacles.get(i).getDamage());
 					}
+				} else {
+					obstacles.get(i).resetNumTimesHit();
+				}
+				if(obstacles.get(i) instanceof Turret) {
+					Turret t = (Turret)(obstacles.get(i));
+					for(int j = 0;j<t.bullets().size();j++) {
+						Bullet b = t.bullets().get(j);
+						if(b.getBoundingRect().intersects(guy.getBoundingRect())) {
+							guy.takeDamage(t.getDamage());
+							t.bullets().remove(j);
+						}
+					}
 				}
 			}
 		
@@ -242,7 +273,6 @@ public class GameScreen extends PApplet {
 	}
 
 	public boolean translate(int x) {
-//		System.out.println(distanceTranslated);
 		if(x<0 && distanceTranslated<=0) {
 			return false;
 		}

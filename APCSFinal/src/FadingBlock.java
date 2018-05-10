@@ -1,5 +1,14 @@
 import processing.core.PApplet;
 
+/**
+ *
+ *  @author Shaunak Bhandarkar
+ * 
+ * The FadingBlock is a special type of Block that gradually fades away
+ * as soon as the Player steps on it. This Obstacle does not affect the
+ * Player's health, but causes him/her to fall. 
+ *
+ */
 public class FadingBlock extends Block 
 {
 

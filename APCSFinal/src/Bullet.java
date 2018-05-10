@@ -14,7 +14,7 @@ import processing.core.*;
  * select the angle from which a Bullet is to be fired.
  * 
  */
-public class Bullet 
+public class Bullet
 {
 	private double xCoord, yCoord;
 	private Rectangle boundingRectangle;

@@ -20,10 +20,6 @@ public class StartMenu extends Menu {
 		doButtons();
 	}
 	
-	public void draw(PApplet drawer) {
-		super.draw(drawer);
-	}
-	
 	private void doButtons() {
 		this.addButton(new Button(350, 200, 150, 50, "Singleplayer", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 		this.addButton(new Button(350, 260, 150, 50, "Multiplayer", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
