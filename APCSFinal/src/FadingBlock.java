@@ -1,3 +1,4 @@
+import processing.core.PApplet;
 
 public class FadingBlock extends Block 
 {
@@ -6,5 +7,19 @@ public class FadingBlock extends Block
 	{
 		super(x, y, width, height);
 	}
+	
+	
+	public boolean steppedOn( Player p ) 
+	{
+		return ( p.getBoundingRect().intersects( this.getBoundRect() ) );
+	}
+	
+	/*public void fade( Player p ) 
+	{
+		if ( steppedOn(p) ) 
+		{
+			
+		}
+	}*/
 
 }
