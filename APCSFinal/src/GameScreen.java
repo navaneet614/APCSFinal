@@ -42,11 +42,17 @@ public class GameScreen extends PApplet {
 		ImageLoader.loadAllImages(this, "");
 		guy.setup(this);
 //		god.setup(this);
-		 for(int i = 0;i<=(ORIGINAL_WIDTH+levelLength+50);i+=50){
+		 for(int i = 0;i<=(ORIGINAL_WIDTH+levelLength+50);i+=50)
+		 {
 			 obstacles.add(new Block(i, ORIGINAL_HEIGHT - 50, 50, 50));
 			 int y = (int)(Math.random()*(ORIGINAL_HEIGHT-50))/50*50+50;
-			 for(int j = 0;j<Math.random()*densityOfBlocks;j++) {
+			 for(int j = 0;j<Math.random()*densityOfBlocks;j++) 
+			 {
 				 obstacles.add(new Block(i + j*50, y, 50, 50));
+			 }
+			 if ( i % 200 == 0 ) 
+			 {
+				 obstacles.add( new Spike( i, y-25, 50, 25 ) );
 			 }
 		 }
 //		obstacles.add(new Block(0, 550, 50, 50));
@@ -172,7 +178,8 @@ public class GameScreen extends PApplet {
 					guy.setSlow(true);
 				}
 
-				if (obstacles.get(i) instanceof Block) {
+				else if (obstacles.get(i) instanceof Block) 
+				{
 					int offset = 20;
 					if (gRect.intersectsLine(oRect.getX() + offset, oRect.getY(), oRect.getMaxX() - offset,
 							oRect.getY())) {
@@ -198,6 +205,10 @@ public class GameScreen extends PApplet {
 						guy.cancelJump();
 						guy.setY(oRect.getMaxY());
 					}
+				}
+				else if ( obstacles.get(i) instanceof Spike ) 
+				{
+					System.out.println( "Hit spike!" );
 				}
 			}
 		}
