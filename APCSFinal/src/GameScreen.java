@@ -15,7 +15,7 @@ public class GameScreen extends PApplet {
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
 	private int distanceTranslated;
-	private enum gameModes {singleplayer, localMultiplayer, LANMultiplayer}
+	private enum gameModes {singleplayer, localMultiplayer}
 	private gameModes gameMode;
 
 	public GameScreen() {
@@ -139,8 +139,6 @@ public class GameScreen extends PApplet {
 		} else if(menumode.equals("localmultiplayer")) {
 			gameMode = gameModes.localMultiplayer;
 			currentMenu = null;
-		} else if(menumode.equals("lanmultiplayer")) {
-			gameMode = gameModes.LANMultiplayer;
 		} else if(menumode.equals("main")) {
 			currentMenu = startMenu;
 		} else if(menumode.equals("options")) {
