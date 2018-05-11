@@ -16,15 +16,15 @@ import processing.core.PApplet;
  *         is the "backbone" of the game.
  *
  */
-public class GameScreen extends PApplet {
+public class GameScreen extends PApplet /*implements Runnable*/{
 	public final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
-	private int levelLength = 2000 - 50, densityOfBlocks = 2;
+	private int levelLength = 2000 - 50, densityOfBlocks = 2, LVL_NUM = 3;
 	private StartMenu startMenu;
 	private Menu currentMenu;
 	private PauseMenu pauseMenu;
 	private DeathMenu deathMenu;
 	private Player guy;
-	 private God god;
+	private God god;
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
 	private int distanceTranslated;
@@ -34,6 +34,8 @@ public class GameScreen extends PApplet {
 	}
 
 	private gameModes gameMode;
+	private Thread thread;
+	private boolean running;
 
 	public GameScreen() {
 		startMenu = new StartMenu();
@@ -42,30 +44,31 @@ public class GameScreen extends PApplet {
 		currentMenu = startMenu;
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
-		 god = new God(450, 100, 120, 140, 30);
+		god = new God(450, 100, 120, 140, 30);
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
 	}
 
-	public void reset() {
-		distanceTranslated = 0;
-		guy = new Player(50, 450, 50, 50);
-		guy.setup(this);
-		// god = new God(450, 100, 120, 140);
-		keys.clear();
-		obstacles.clear();
-		doLvl(0);
-	}
-
 	public void setup() {
-
+		this.frameRate(60);
+//		noLoop();
 		ImageLoader.loadAllImages(this, "");
 		guy.setup(this);
 		// god.setup(this);
 		for (Obstacle o : obstacles) {
 			o.setup(this);
 		}
-		doLvl(3);
+		doLvl(LVL_NUM);
+	}
+	
+	public void reset() {
+		distanceTranslated = 0;
+		guy = new Player(50, 450, 50, 50);
+		guy.setup(this);
+		god = new God(450, 100, 120, 140, 30);
+		keys.clear();
+		obstacles.clear();
+		doLvl(LVL_NUM);
 	}
 
 	public void doLvl(int lvlNum) {
@@ -123,7 +126,7 @@ public class GameScreen extends PApplet {
 			obstacles.add(new Block(1400, 450, 50, 50));
 			obstacles.add(new Block(1450, 450, 50, 50));
 			obstacles.add(new Block(1500, 450, 50, 50));
-			
+
 			obstacles.add(new Block(1600, 550, 50, 50));
 			obstacles.add(new Block(1650, 550, 50, 50));
 			obstacles.add(new Block(1700, 550, 50, 50));
@@ -143,138 +146,135 @@ public class GameScreen extends PApplet {
 			obstacles.add(new Block(2400, 150, 50, 50));
 			obstacles.add(new Block(2450, 150, 50, 50));
 			obstacles.add(new Block(2500, 150, 50, 50));
-			
-//			obstacles.add(new Block(1600, 550, 50, 50));
-//			obstacles.add(new Block(1650, 550, 50, 50));
-//			obstacles.add(new Block(1700, 550, 50, 50));
+
+			// obstacles.add(new Block(1600, 550, 50, 50));
+			// obstacles.add(new Block(1650, 550, 50, 50));
+			// obstacles.add(new Block(1700, 550, 50, 50));
+		} else if (lvlNum == 2) {
+			obstacles.add(new Block(200, ORIGINAL_HEIGHT - 100, 50, 50));
+			obstacles.add(new Block(350, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(500, ORIGINAL_HEIGHT - 300, 50, 50));
+			obstacles.add(new Block(650, ORIGINAL_HEIGHT - 400, 50, 50));
+			obstacles.add(new Block(800, ORIGINAL_HEIGHT - 300, 50, 50));
+			obstacles.add(new Block(950, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(1100, ORIGINAL_HEIGHT - 100, 50, 50));
+			obstacles.add(new Block(1250, ORIGINAL_HEIGHT - 100, 50, 50));
+			obstacles.add(new Block(1400, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(1550, ORIGINAL_HEIGHT - 300, 50, 50));
+			obstacles.add(new Block(1700, ORIGINAL_HEIGHT - 400, 50, 50));
+			obstacles.add(new Block(1850, ORIGINAL_HEIGHT - 300, 50, 50));
+			obstacles.add(new Block(2000, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(2150, ORIGINAL_HEIGHT - 100, 50, 50));
+			obstacles.add(new Block(2300, ORIGINAL_HEIGHT - 100, 50, 50));
+			obstacles.add(new Block(2450, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(2600, ORIGINAL_HEIGHT - 300, 50, 50));
+		} else if (lvlNum == 3) {
+			obstacles.add(new Block(200, ORIGINAL_HEIGHT - 100, 50, 50));
+			obstacles.add(new Block(100, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(200, ORIGINAL_HEIGHT - 300, 50, 50));
+			obstacles.add(new Block(100, ORIGINAL_HEIGHT - 400, 50, 50));
+
+			obstacles.add(new Block(300, ORIGINAL_HEIGHT - 500, 50, 50));
+			obstacles.add(new Block(350, ORIGINAL_HEIGHT - 500, 50, 50));
+
+			obstacles.add(new Block(550, ORIGINAL_HEIGHT - 450, 50, 50));
+			obstacles.add(new Block(600, ORIGINAL_HEIGHT - 450, 50, 50));
+
+			obstacles.add(new Block(800, ORIGINAL_HEIGHT - 400, 50, 50));
+			obstacles.add(new Block(850, ORIGINAL_HEIGHT - 400, 50, 50));
+
+			obstacles.add(new Block(1050, ORIGINAL_HEIGHT - 450, 50, 50));
+			obstacles.add(new Block(1100, ORIGINAL_HEIGHT - 450, 50, 50));
+
+			obstacles.add(new Block(1300, ORIGINAL_HEIGHT - 500, 50, 50));
+			obstacles.add(new Block(1350, ORIGINAL_HEIGHT - 500, 50, 50));
+
+			obstacles.add(new Block(1550, ORIGINAL_HEIGHT - 450, 50, 50));
+			obstacles.add(new Block(1600, ORIGINAL_HEIGHT - 450, 50, 50));
+
+			obstacles.add(new Block(1800, ORIGINAL_HEIGHT - 400, 50, 50));
+			obstacles.add(new Block(1850, ORIGINAL_HEIGHT - 400, 50, 50));
+
+			obstacles.add(new Block(2050, ORIGINAL_HEIGHT - 450, 50, 50));
+			obstacles.add(new Block(2100, ORIGINAL_HEIGHT - 450, 50, 50));
+
+			obstacles.add(new Block(2300, ORIGINAL_HEIGHT - 500, 50, 50));
+			obstacles.add(new Block(2350, ORIGINAL_HEIGHT - 500, 50, 50));
+
+			obstacles.add(new Block(350, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(500, ORIGINAL_HEIGHT - 300, 50, 50));
+
+			obstacles.add(new Block(650, ORIGINAL_HEIGHT - 100, 50, 50));
+			obstacles.add(new Block(650, ORIGINAL_HEIGHT - 150, 50, 50));
+			obstacles.add(new Block(650, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(650, ORIGINAL_HEIGHT - 250, 50, 50));
+			obstacles.add(new Block(650, ORIGINAL_HEIGHT - 300, 50, 50));
+			obstacles.add(new Block(650, ORIGINAL_HEIGHT - 350, 50, 50));
+
+			obstacles.add(new Block(1250, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(1300, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(1350, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(1400, ORIGINAL_HEIGHT - 200, 50, 50));
+
+			obstacles.add(new Block(2250, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(2300, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(2350, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(2400, ORIGINAL_HEIGHT - 200, 50, 50));
+
 		}
-		else if (lvlNum == 2) {
-			obstacles.add(new Block(200,ORIGINAL_HEIGHT-100, 50, 50));
-			obstacles.add(new Block(350,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(500,ORIGINAL_HEIGHT-300, 50, 50));
-			obstacles.add(new Block(650,ORIGINAL_HEIGHT-400, 50, 50));
-			obstacles.add(new Block(800,ORIGINAL_HEIGHT-300, 50, 50));
-			obstacles.add(new Block(950,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(1100,ORIGINAL_HEIGHT-100, 50, 50));
-			obstacles.add(new Block(1250,ORIGINAL_HEIGHT-100, 50, 50));
-			obstacles.add(new Block(1400,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(1550,ORIGINAL_HEIGHT-300, 50, 50));
-			obstacles.add(new Block(1700,ORIGINAL_HEIGHT-400, 50, 50));
-			obstacles.add(new Block(1850,ORIGINAL_HEIGHT-300, 50, 50));
-			obstacles.add(new Block(2000,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(2150,ORIGINAL_HEIGHT-100, 50, 50));
-			obstacles.add(new Block(2300,ORIGINAL_HEIGHT-100, 50, 50));
-			obstacles.add(new Block(2450,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(2600,ORIGINAL_HEIGHT-300, 50, 50));
-		} 
-		else if(lvlNum == 3) {
-			obstacles.add(new Block(200,ORIGINAL_HEIGHT-100, 50, 50));
-			obstacles.add(new Block(100,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(200,ORIGINAL_HEIGHT-300, 50, 50));
-			obstacles.add(new Block(100,ORIGINAL_HEIGHT-400, 50, 50));
-			
-			obstacles.add(new Block(300,ORIGINAL_HEIGHT-500, 50, 50));
-			obstacles.add(new Block(350,ORIGINAL_HEIGHT-500, 50, 50));
-			
-			obstacles.add(new Block(550,ORIGINAL_HEIGHT-450, 50, 50));
-			obstacles.add(new Block(600,ORIGINAL_HEIGHT-450, 50, 50));
-			
-			obstacles.add(new Block(800,ORIGINAL_HEIGHT-400, 50, 50));
-			obstacles.add(new Block(850,ORIGINAL_HEIGHT-400, 50, 50));
-			
-			obstacles.add(new Block(1050,ORIGINAL_HEIGHT-450, 50, 50));
-			obstacles.add(new Block(1100,ORIGINAL_HEIGHT-450, 50, 50));
-			
-			obstacles.add(new Block(1300,ORIGINAL_HEIGHT-500, 50, 50));
-			obstacles.add(new Block(1350,ORIGINAL_HEIGHT-500, 50, 50));
-			
-			obstacles.add(new Block(1550,ORIGINAL_HEIGHT-450, 50, 50));
-			obstacles.add(new Block(1600,ORIGINAL_HEIGHT-450, 50, 50));
-			
-			obstacles.add(new Block(1800,ORIGINAL_HEIGHT-400, 50, 50));
-			obstacles.add(new Block(1850,ORIGINAL_HEIGHT-400, 50, 50));
-			
-			obstacles.add(new Block(2050,ORIGINAL_HEIGHT-450, 50, 50));
-			obstacles.add(new Block(2100,ORIGINAL_HEIGHT-450, 50, 50));
-			
-			obstacles.add(new Block(2300,ORIGINAL_HEIGHT-500, 50, 50));
-			obstacles.add(new Block(2350,ORIGINAL_HEIGHT-500, 50, 50));
-			
-			obstacles.add(new Block(350,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(500,ORIGINAL_HEIGHT-300, 50, 50));
-			
-			obstacles.add(new Block(650,ORIGINAL_HEIGHT-100, 50, 50));
-			obstacles.add(new Block(650,ORIGINAL_HEIGHT-150, 50, 50));
-			obstacles.add(new Block(650,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(650,ORIGINAL_HEIGHT-250, 50, 50));
-			obstacles.add(new Block(650,ORIGINAL_HEIGHT-300, 50, 50));
-			obstacles.add(new Block(650,ORIGINAL_HEIGHT-350, 50, 50));
-			
-			
-			obstacles.add(new Block(1250,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(1300,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(1350,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(1400,ORIGINAL_HEIGHT-200, 50, 50));
-			
-			obstacles.add(new Block(2250,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(2300,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(2350,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(2400,ORIGINAL_HEIGHT-200, 50, 50));
-			
-			
-			
-			
+
+	}
+	
+	private void update() {
+		if (guy.hearts() <= 0) {
+			currentMenu = deathMenu;
 		}
-		
+		if(currentMenu == null) {
+			hitDetection();
+			guy.update(keys, this);
+		}
 	}
 
 	public void draw() {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
-		if (guy.hearts() <= 0) {
-			currentMenu = deathMenu;
-		}
+		update();
 		if (currentMenu != null) {
 			currentMenu.draw(this);
 		} else if (currentMenu == null) {
-			
-			if(god.canPlace()) {
-			fill(Color.GRAY.getRGB());
-			rect(0, 0, 800, 100);
-			
-			line(75, 0, 75, 100);
-			image(ImageLoader.spike, 10, 50,50,50);
-			
-			line(150, 0, 150, 100);
-			image(ImageLoader.glue, 85, 50,50,50);
-			
-			line(225, 0, 225, 100);
-			image(ImageLoader.turret, 160, 50,50,50);
-			
-			fill(0);
-			textSize(15);
-			line(700, 0, 700, 100);
-			text("Block Limit", 750, 10);
-			textSize(25);
-			text(god.getAmountOfObstacles(), 750, 50);
-			
-			
-			textSize(15);
-			line(600, 0, 600, 100);
-			text("Blocks Placed", 650, 10);
-			textSize(25);
-			text(god.getPlacedObstacles(), 650, 50);
-			
-			
-			}
-			else {
-			hitDetection();
-			guy.update(keys, this);
-			guy.draw(this);
-			//guy.draw(this);
-			// god.draw(this);
-			}
-			
+
+//			if (god.canPlace()) {
+//				fill(Color.GRAY.getRGB());
+//				rect(0, 0, 800, 100);
+//
+//				line(75, 0, 75, 100);
+//				image(ImageLoader.spike, 10, 50, 50, 50);
+//
+//				line(150, 0, 150, 100);
+//				image(ImageLoader.glue, 85, 50, 50, 50);
+//
+//				line(225, 0, 225, 100);
+//				image(ImageLoader.turret, 160, 50, 50, 50);
+//
+//				fill(0);
+//				textSize(15);
+//				line(700, 0, 700, 100);
+//				text("Block Limit", 750, 10);
+//				textSize(25);
+//				text(god.getAmountOfObstacles(), 750, 50);
+//
+//				textSize(15);
+//				line(600, 0, 600, 100);
+//				text("Blocks Placed", 650, 10);
+//				textSize(25);
+//				text(god.getPlacedObstacles(), 650, 50);
+//
+//			} else {
+				guy.draw(this);
+				// guy.draw(this);
+				// god.draw(this);
+//			}
+
 			for (Obstacle o : obstacles) {
 				o.draw(this);
 			}
@@ -292,13 +292,12 @@ public class GameScreen extends PApplet {
 		int x = 0;
 		if (key == 'p' && currentMenu == null) {
 			currentMenu = pauseMenu;
-		}
-		else if(key == 'd' && god.canPlace()) {
+		} else if (key == 'd' && god.canPlace()) {
 			System.out.println("here");
-			x+=10;
+			x += 10;
 			translate(x);
-		}else if(key == 'a' && god.canPlace()) {
-			x-=10;
+		} else if (key == 'a' && god.canPlace()) {
+			x -= 10;
 			translate(x);
 		}
 		keys.add(this.keyCode);
@@ -329,11 +328,11 @@ public class GameScreen extends PApplet {
 	}
 
 	public void changeMenuMode(String menumode) {
-//		System.out.println(menumode);
+		// System.out.println(menumode);
 		if (menumode.equals("singleplayer")) {
 			gameMode = gameModes.singleplayer;
 			currentMenu = null;
-//			reset();
+			// reset();
 		} else if (menumode.equals("localmultiplayer")) {
 			gameMode = gameModes.localMultiplayer;
 			currentMenu = null;
@@ -436,8 +435,55 @@ public class GameScreen extends PApplet {
 		distanceTranslated += x;
 		return true;
 	}
-	
+
 	public void placeObjects() {
-		
+
 	}
+	
+//	public synchronized void start() {
+//		running = true;
+//		thread = new Thread(this);
+//		thread.start();
+//	}
+//	
+//	public synchronized void stop() {
+//		running = false;
+//		try {
+//			thread.join();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	@Override
+//	public void run() {
+//		long initialTime = System.nanoTime();
+//		double amountOfTicks = 60.0;
+//		double ns = 1000000000 / amountOfTicks;
+//		double delta = 0;
+//		long timer = System.currentTimeMillis();
+//		int updates = 0;
+//		int frames = 0;
+//		while(running){
+//			long now = System.nanoTime();
+//			delta += (now - initialTime) / ns;
+//			initialTime = now;
+//			while(delta >= 1){
+//				update();
+//				updates++;
+//				delta--;
+//			}
+//			draw();
+//			frames++;
+//					
+//			if(System.currentTimeMillis() - timer > 1000){
+//				timer += 1000;
+//				System.out.println("FPS: " + frames + " TICKS: " + updates);
+//				frames = 0;
+//				updates = 0;
+//			}
+//		}
+//		stop();
+//	}
 }
