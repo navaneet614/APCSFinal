@@ -65,7 +65,7 @@ public class GameScreen extends PApplet {
 		for (Obstacle o : obstacles) {
 			o.setup(this);
 		}
-		doLvl(0);
+		doLvl(3);
 	}
 
 	public void doLvl(int lvlNum) {
@@ -112,22 +112,117 @@ public class GameScreen extends PApplet {
 			obstacles.add(new Block(850, 150, 50, 50));
 			obstacles.add(new Block(900, 150, 50, 50));
 
+			obstacles.add(new Block(1000, 250, 50, 50));
+			obstacles.add(new Block(1050, 250, 50, 50));
 			obstacles.add(new Block(1100, 250, 50, 50));
-			obstacles.add(new Block(1150, 250, 50, 50));
-			obstacles.add(new Block(1200, 250, 50, 50));
 
+			obstacles.add(new Block(1200, 400, 50, 50));
+			obstacles.add(new Block(1250, 400, 50, 50));
 			obstacles.add(new Block(1300, 400, 50, 50));
-			obstacles.add(new Block(1350, 400, 50, 50));
-			obstacles.add(new Block(1400, 400, 50, 50));
 
-			obstacles.add(new Block(1500, 550, 50, 50));
-			obstacles.add(new Block(1550, 550, 50, 50));
+			obstacles.add(new Block(1400, 450, 50, 50));
+			obstacles.add(new Block(1450, 450, 50, 50));
+			obstacles.add(new Block(1500, 450, 50, 50));
+			
 			obstacles.add(new Block(1600, 550, 50, 50));
+			obstacles.add(new Block(1650, 550, 50, 50));
+			obstacles.add(new Block(1700, 550, 50, 50));
+
+			obstacles.add(new Block(1800, 450, 50, 50));
+			obstacles.add(new Block(1850, 450, 50, 50));
+			obstacles.add(new Block(1900, 450, 50, 50));
+
+			obstacles.add(new Block(2000, 400, 50, 50));
+			obstacles.add(new Block(2050, 400, 50, 50));
+			obstacles.add(new Block(2100, 400, 50, 50));
+
+			obstacles.add(new Block(2200, 250, 50, 50));
+			obstacles.add(new Block(2250, 250, 50, 50));
+			obstacles.add(new Block(2300, 250, 50, 50));
+
+			obstacles.add(new Block(2400, 150, 50, 50));
+			obstacles.add(new Block(2450, 150, 50, 50));
+			obstacles.add(new Block(2500, 150, 50, 50));
+			
+//			obstacles.add(new Block(1600, 550, 50, 50));
+//			obstacles.add(new Block(1650, 550, 50, 50));
+//			obstacles.add(new Block(1700, 550, 50, 50));
 		}
 		else if (lvlNum == 2) {
-			
+			obstacles.add(new Block(200,ORIGINAL_HEIGHT-100, 50, 50));
+			obstacles.add(new Block(350,ORIGINAL_HEIGHT-200, 50, 50));
+			obstacles.add(new Block(500,ORIGINAL_HEIGHT-300, 50, 50));
+			obstacles.add(new Block(650,ORIGINAL_HEIGHT-400, 50, 50));
+			obstacles.add(new Block(800,ORIGINAL_HEIGHT-300, 50, 50));
+			obstacles.add(new Block(950,ORIGINAL_HEIGHT-200, 50, 50));
+			obstacles.add(new Block(1100,ORIGINAL_HEIGHT-100, 50, 50));
+			obstacles.add(new Block(1250,ORIGINAL_HEIGHT-100, 50, 50));
+			obstacles.add(new Block(1400,ORIGINAL_HEIGHT-200, 50, 50));
+			obstacles.add(new Block(1550,ORIGINAL_HEIGHT-300, 50, 50));
+			obstacles.add(new Block(1700,ORIGINAL_HEIGHT-400, 50, 50));
+			obstacles.add(new Block(1850,ORIGINAL_HEIGHT-300, 50, 50));
+			obstacles.add(new Block(2000,ORIGINAL_HEIGHT-200, 50, 50));
+			obstacles.add(new Block(2150,ORIGINAL_HEIGHT-100, 50, 50));
+			obstacles.add(new Block(2300,ORIGINAL_HEIGHT-100, 50, 50));
+			obstacles.add(new Block(2450,ORIGINAL_HEIGHT-200, 50, 50));
+			obstacles.add(new Block(2600,ORIGINAL_HEIGHT-300, 50, 50));
 		} 
 		else if(lvlNum == 3) {
+			obstacles.add(new Block(200,ORIGINAL_HEIGHT-100, 50, 50));
+			obstacles.add(new Block(100,ORIGINAL_HEIGHT-200, 50, 50));
+			obstacles.add(new Block(200,ORIGINAL_HEIGHT-300, 50, 50));
+			obstacles.add(new Block(100,ORIGINAL_HEIGHT-400, 50, 50));
+			
+			obstacles.add(new Block(300,ORIGINAL_HEIGHT-500, 50, 50));
+			obstacles.add(new Block(350,ORIGINAL_HEIGHT-500, 50, 50));
+			
+			obstacles.add(new Block(550,ORIGINAL_HEIGHT-450, 50, 50));
+			obstacles.add(new Block(600,ORIGINAL_HEIGHT-450, 50, 50));
+			
+			obstacles.add(new Block(800,ORIGINAL_HEIGHT-400, 50, 50));
+			obstacles.add(new Block(850,ORIGINAL_HEIGHT-400, 50, 50));
+			
+			obstacles.add(new Block(1050,ORIGINAL_HEIGHT-450, 50, 50));
+			obstacles.add(new Block(1100,ORIGINAL_HEIGHT-450, 50, 50));
+			
+			obstacles.add(new Block(1300,ORIGINAL_HEIGHT-500, 50, 50));
+			obstacles.add(new Block(1350,ORIGINAL_HEIGHT-500, 50, 50));
+			
+			obstacles.add(new Block(1550,ORIGINAL_HEIGHT-450, 50, 50));
+			obstacles.add(new Block(1600,ORIGINAL_HEIGHT-450, 50, 50));
+			
+			obstacles.add(new Block(1800,ORIGINAL_HEIGHT-400, 50, 50));
+			obstacles.add(new Block(1850,ORIGINAL_HEIGHT-400, 50, 50));
+			
+			obstacles.add(new Block(2050,ORIGINAL_HEIGHT-450, 50, 50));
+			obstacles.add(new Block(2100,ORIGINAL_HEIGHT-450, 50, 50));
+			
+			obstacles.add(new Block(2300,ORIGINAL_HEIGHT-500, 50, 50));
+			obstacles.add(new Block(2350,ORIGINAL_HEIGHT-500, 50, 50));
+			
+			obstacles.add(new Block(350,ORIGINAL_HEIGHT-200, 50, 50));
+			obstacles.add(new Block(500,ORIGINAL_HEIGHT-300, 50, 50));
+			
+			obstacles.add(new Block(650,ORIGINAL_HEIGHT-100, 50, 50));
+			obstacles.add(new Block(650,ORIGINAL_HEIGHT-150, 50, 50));
+			obstacles.add(new Block(650,ORIGINAL_HEIGHT-200, 50, 50));
+			obstacles.add(new Block(650,ORIGINAL_HEIGHT-250, 50, 50));
+			obstacles.add(new Block(650,ORIGINAL_HEIGHT-300, 50, 50));
+			obstacles.add(new Block(650,ORIGINAL_HEIGHT-350, 50, 50));
+			
+			
+			obstacles.add(new Block(1250,ORIGINAL_HEIGHT-200, 50, 50));
+			obstacles.add(new Block(1300,ORIGINAL_HEIGHT-200, 50, 50));
+			obstacles.add(new Block(1350,ORIGINAL_HEIGHT-200, 50, 50));
+			obstacles.add(new Block(1400,ORIGINAL_HEIGHT-200, 50, 50));
+			
+			obstacles.add(new Block(2250,ORIGINAL_HEIGHT-200, 50, 50));
+			obstacles.add(new Block(2300,ORIGINAL_HEIGHT-200, 50, 50));
+			obstacles.add(new Block(2350,ORIGINAL_HEIGHT-200, 50, 50));
+			obstacles.add(new Block(2400,ORIGINAL_HEIGHT-200, 50, 50));
+			
+			
+			
 			
 		}
 		
