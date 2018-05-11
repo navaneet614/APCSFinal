@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.ArrayList;
 
 import processing.core.*;
@@ -36,7 +37,10 @@ public class God
 	
 	public void draw(PApplet drawer) 
 	{
-		drawer.image(character, (float)xCoord, (float)yCoord, (float) width, (float) height);
+		
+		
+		
+		
 	}
 	
 	public void place() {
@@ -46,6 +50,15 @@ public class God
 	public boolean canPlace() {
 		return amountOfObstacles > placedObstacles;
 	}
+	
+	public int getAmountOfObstacles() {
+		return amountOfObstacles;
+	}
+	
+	public int getPlacedObstacles() {
+		return placedObstacles;
+	}
+	
 	
 	
 //	public void throwObstacle( Obstacle ob, float startX, float startY ) 

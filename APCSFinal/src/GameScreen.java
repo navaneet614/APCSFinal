@@ -24,7 +24,7 @@ public class GameScreen extends PApplet {
 	private PauseMenu pauseMenu;
 	private DeathMenu deathMenu;
 	private Player guy;
-	// private God god;
+	 private God god;
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
 	private int distanceTranslated;
@@ -42,7 +42,7 @@ public class GameScreen extends PApplet {
 		currentMenu = startMenu;
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
-		// god = new God(450, 100, 120, 140);
+		 god = new God(450, 100, 120, 140, 30);
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
 	}
@@ -237,16 +237,47 @@ public class GameScreen extends PApplet {
 		if (currentMenu != null) {
 			currentMenu.draw(this);
 		} else if (currentMenu == null) {
+			
+			if(god.canPlace()) {
+			fill(Color.GRAY.getRGB());
+			rect(0, 0, 800, 100);
+			
+			line(75, 0, 75, 100);
+			image(ImageLoader.spike, 10, 50,50,50);
+			
+			line(150, 0, 150, 100);
+			image(ImageLoader.glue, 85, 50,50,50);
+			
+			line(225, 0, 225, 100);
+			image(ImageLoader.turret, 160, 50,50,50);
+			
+			fill(0);
+			textSize(15);
+			line(700, 0, 700, 100);
+			text("Block Limit", 750, 10);
+			textSize(25);
+			text(god.getAmountOfObstacles(), 750, 50);
+			
+			
+			textSize(15);
+			line(600, 0, 600, 100);
+			text("Blocks Placed", 650, 10);
+			textSize(25);
+			text(god.getPlacedObstacles(), 650, 50);
+			
+			
+			}
+			else {
 			hitDetection();
 			guy.update(keys, this);
 			guy.draw(this);
+			//guy.draw(this);
+			// god.draw(this);
+			}
+			
 			for (Obstacle o : obstacles) {
-				// if ( !(o instanceof FadingBlock ) || (o instanceof FadingBlock && !(
-				// (FadingBlock) o ).steppedOn(guy)) )
 				o.draw(this);
 			}
-			guy.draw(this);
-			// god.draw(this);
 		}
 	}
 
@@ -258,8 +289,17 @@ public class GameScreen extends PApplet {
 		 * 
 		 * }
 		 */
+		int x = 0;
 		if (key == 'p' && currentMenu == null) {
 			currentMenu = pauseMenu;
+		}
+		else if(key == 'd' && god.canPlace()) {
+			System.out.println("here");
+			x+=10;
+			translate(x);
+		}else if(key == 'a' && god.canPlace()) {
+			x-=10;
+			translate(x);
 		}
 		keys.add(this.keyCode);
 	}
@@ -395,5 +435,9 @@ public class GameScreen extends PApplet {
 		}
 		distanceTranslated += x;
 		return true;
+	}
+	
+	public void placeObjects() {
+		
 	}
 }
