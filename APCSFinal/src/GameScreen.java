@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.io.*;
 
 import processing.core.PApplet;
 
@@ -28,6 +29,8 @@ public class GameScreen extends PApplet /*implements Runnable*/{
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
 	private int distanceTranslated;
+	//ObjectOutputStream out = null;		use when needed (for serializable)
+	//ObjectInputStream in = null;
 
 	private enum gameModes {
 		singleplayer, localMultiplayer
