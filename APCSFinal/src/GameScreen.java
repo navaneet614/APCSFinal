@@ -18,6 +18,7 @@ import processing.core.PApplet;
  *
  */
 public class GameScreen extends PApplet {
+	private  int LVL_NUM = 0;
 	public final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
 	private int levelLength = 2000 - 50, densityOfBlocks = 2;
 	private StartMenu startMenu;
@@ -52,6 +53,7 @@ public class GameScreen extends PApplet {
 		obstacles = new ArrayList<Obstacle>();
 		godScreen = new GodScreen(0,0,800,100,god);
 		mouseP = new Point(0,0);
+		LVL_NUM = 3;
 	}
 
 	public void reset() {
