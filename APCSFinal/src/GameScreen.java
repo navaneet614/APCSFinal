@@ -61,7 +61,7 @@ public class GameScreen extends PApplet {
 		// god = new God(450, 100, 120, 140);
 		keys.clear();
 		obstacles.clear();
-		doLvl(0);
+		doLvl(LVL_NUM);
 	}
 
 	public void setup() {
@@ -73,7 +73,7 @@ public class GameScreen extends PApplet {
 		for (Obstacle o : obstacles) {
 			o.setup(this);
 		}
-		doLvl(3);
+	doLvl(LVL_NUM);
 	}
 
 	public void doLvl(int lvlNum) {
@@ -248,8 +248,7 @@ public class GameScreen extends PApplet {
 			
 			if(god.canPlace()) {
 			godScreen.draw(this);
-			}
-			else {
+			}else {
 			translate(-distanceTranslated);
 			hitDetection();
 			guy.update(keys, this);
