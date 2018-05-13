@@ -95,5 +95,9 @@ public abstract class Obstacle
 	public double getY() {
 		return y;
 	}
+	
+	public PImage getPic() {
+		return pic;
+	}
 
 }

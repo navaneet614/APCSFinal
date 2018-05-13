@@ -1,5 +1,6 @@
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,11 +24,13 @@ public class GameScreen extends PApplet {
 	private Menu currentMenu;
 	private PauseMenu pauseMenu;
 	private DeathMenu deathMenu;
+	private GodScreen godScreen;
 	private Player guy;
 	 private God god;
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
 	private int distanceTranslated;
+	private Point mouseP;
 
 	private enum gameModes {
 		singleplayer, localMultiplayer
@@ -45,6 +48,8 @@ public class GameScreen extends PApplet {
 		 god = new God(450, 100, 120, 140, 30);
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
+		godScreen = new GodScreen(0,0,800,100,god);
+		mouseP = new Point(0,0);
 	}
 
 	public void reset() {
@@ -234,38 +239,12 @@ public class GameScreen extends PApplet {
 		if (guy.hearts() <= 0) {
 			currentMenu = deathMenu;
 		}
-		if (currentMenu != null) {
+		if (currentMenu != null && !currentMenu.equals(godScreen)) {
 			currentMenu.draw(this);
-		} else if (currentMenu == null) {
+		} else if (currentMenu == null || currentMenu.equals(godScreen)) {
 			
 			if(god.canPlace()) {
-			fill(Color.GRAY.getRGB());
-			rect(0, 0, 800, 100);
-			
-			line(75, 0, 75, 100);
-			image(ImageLoader.spike, 10, 50,50,50);
-			
-			line(150, 0, 150, 100);
-			image(ImageLoader.glue, 85, 50,50,50);
-			
-			line(225, 0, 225, 100);
-			image(ImageLoader.turret, 160, 50,50,50);
-			
-			fill(0);
-			textSize(15);
-			line(700, 0, 700, 100);
-			text("Block Limit", 750, 10);
-			textSize(25);
-			text(god.getAmountOfObstacles(), 750, 50);
-			
-			
-			textSize(15);
-			line(600, 0, 600, 100);
-			text("Blocks Placed", 650, 10);
-			textSize(25);
-			text(god.getPlacedObstacles(), 650, 50);
-			
-			
+			godScreen.draw(this);
 			}
 			else {
 			hitDetection();
@@ -313,13 +292,42 @@ public class GameScreen extends PApplet {
 		if (currentMenu != null) {
 			String buttonText = currentMenu.checkIfButtonsPressed((int) (mouseX / (width / ORIGINAL_WIDTH)),
 					(int) (mouseY / (height / ORIGINAL_HEIGHT)));
+
 			if (buttonText == null) {
 				return;
 			}
 			currentMenu.doButtonAction(buttonText, this);
+			System.out.println("DOTH THIS WORKETH?");
 		}
-
 	}
+	
+	public void mouseClicked() {
+		mouseP.setLocation(mouseX, mouseY);
+		System.out.println( " " + mouseP.getX() + " " + mouseP.getY() + godScreen.getDragging());
+		addObstacle();
+	}
+	
+	public void addObstacle() {
+		if(currentMenu.equals(godScreen)&& godScreen.getDragging()) {
+			Spike spike = null;
+		for(Obstacle o : obstacles) {
+			if(o.getBoundRect().contains(mouseP)) {
+				System.out.println("SUP");
+				System.out.println(o.getBoundRect().getX());
+				godScreen.setDragging(false);
+				god.place();
+				String x = godScreen.getObstacleType();
+				if(x.equals("spike")) {
+					spike = new Spike((float)o.getX(), (float)o.getY()-50, 50, 50);
+				}
+			}
+		}
+		if(spike!=null)
+		obstacles.add(spike);
+	}
+	}
+	
+	
 
 	public void mouseMoved() {
 		if (currentMenu != null) {
@@ -332,7 +340,7 @@ public class GameScreen extends PApplet {
 //		System.out.println(menumode);
 		if (menumode.equals("singleplayer")) {
 			gameMode = gameModes.singleplayer;
-			currentMenu = null;
+			currentMenu = godScreen;
 //			reset();
 		} else if (menumode.equals("localmultiplayer")) {
 			gameMode = gameModes.localMultiplayer;
