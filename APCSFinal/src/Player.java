@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.HashSet;
 
+import java.io.*;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -18,7 +20,13 @@ import processing.core.PImage;
  * graphical object.
  *
  */
-public class Player {
+public class Player implements Serializable
+{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6984109521635763440L;	// just in case ID is needed
 
 	public final double GRAVITY = 1.05, JUMP_HEIGHT = 20;
 

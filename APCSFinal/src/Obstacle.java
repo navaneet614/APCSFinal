@@ -1,5 +1,6 @@
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.io.*;
 
 import processing.core.*;
 
@@ -14,8 +15,12 @@ import processing.core.*;
  * identifying the boundaries of a given Obstacle.
  *
  */
-public abstract class Obstacle 
+public abstract class Obstacle implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8120679457409731224L;  // need this serialID just in case
 	private float x;
 	private float y;
 	private double width, height;
