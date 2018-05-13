@@ -20,19 +20,19 @@ import processing.core.PApplet;
  */
 public class GameScreen extends PApplet {
 	public final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
-	private int levelLength = 2000 - 50, densityOfBlocks = 2;
+	private int levelLength = 2000 - 50, densityOfBlocks = 2, LVL_NUM;
 	private StartMenu startMenu;
 	private Menu currentMenu;
 	private PauseMenu pauseMenu;
 	private DeathMenu deathMenu;
 	private GodScreen godScreen;
 	private Player guy;
-	 private God god;
+	private God god;
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
 	private int distanceTranslated;
-	//ObjectOutputStream out = null;		use when needed (for serializable)
-	//ObjectInputStream in = null;
+	// ObjectOutputStream out = null; use when needed (for serializable)
+	// ObjectInputStream in = null;
 	private Point mouseP;
 
 	private enum gameModes {
@@ -40,8 +40,6 @@ public class GameScreen extends PApplet {
 	}
 
 	private gameModes gameMode;
-	private Thread thread;
-	private boolean running;
 
 	public GameScreen() {
 		startMenu = new StartMenu();
@@ -53,8 +51,9 @@ public class GameScreen extends PApplet {
 		god = new God(450, 100, 120, 140, 30);
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
-		godScreen = new GodScreen(0,0,800,100,god);
-		mouseP = new Point(0,0);
+		godScreen = new GodScreen(0, 0, 800, 100, god);
+		mouseP = new Point(0, 0);
+		LVL_NUM = 3;
 	}
 
 	public void reset() {
@@ -64,19 +63,17 @@ public class GameScreen extends PApplet {
 		// god = new God(450, 100, 120, 140);
 		keys.clear();
 		obstacles.clear();
-		doLvl(0);
+		doLvl(LVL_NUM);
 	}
 
 	public void setup() {
-		this.frameRate(60);
-//		noLoop();
 		ImageLoader.loadAllImages(this, "");
 		guy.setup(this);
 		// god.setup(this);
 		for (Obstacle o : obstacles) {
 			o.setup(this);
 		}
-		doLvl(3);
+		doLvl(LVL_NUM);
 	}
 
 	public void doLvl(int lvlNum) {
@@ -134,7 +131,7 @@ public class GameScreen extends PApplet {
 			obstacles.add(new Block(1400, 450, 50, 50));
 			obstacles.add(new Block(1450, 450, 50, 50));
 			obstacles.add(new Block(1500, 450, 50, 50));
-			
+
 			obstacles.add(new Block(1600, 550, 50, 50));
 			obstacles.add(new Block(1650, 550, 50, 50));
 			obstacles.add(new Block(1700, 550, 50, 50));
@@ -154,89 +151,83 @@ public class GameScreen extends PApplet {
 			obstacles.add(new Block(2400, 150, 50, 50));
 			obstacles.add(new Block(2450, 150, 50, 50));
 			obstacles.add(new Block(2500, 150, 50, 50));
-			
-//			obstacles.add(new Block(1600, 550, 50, 50));
-//			obstacles.add(new Block(1650, 550, 50, 50));
-//			obstacles.add(new Block(1700, 550, 50, 50));
+
+			// obstacles.add(new Block(1600, 550, 50, 50));
+			// obstacles.add(new Block(1650, 550, 50, 50));
+			// obstacles.add(new Block(1700, 550, 50, 50));
+		} else if (lvlNum == 2) {
+			obstacles.add(new Block(200, ORIGINAL_HEIGHT - 100, 50, 50));
+			obstacles.add(new Block(350, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(500, ORIGINAL_HEIGHT - 300, 50, 50));
+			obstacles.add(new Block(650, ORIGINAL_HEIGHT - 400, 50, 50));
+			obstacles.add(new Block(800, ORIGINAL_HEIGHT - 300, 50, 50));
+			obstacles.add(new Block(950, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(1100, ORIGINAL_HEIGHT - 100, 50, 50));
+			obstacles.add(new Block(1250, ORIGINAL_HEIGHT - 100, 50, 50));
+			obstacles.add(new Block(1400, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(1550, ORIGINAL_HEIGHT - 300, 50, 50));
+			obstacles.add(new Block(1700, ORIGINAL_HEIGHT - 400, 50, 50));
+			obstacles.add(new Block(1850, ORIGINAL_HEIGHT - 300, 50, 50));
+			obstacles.add(new Block(2000, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(2150, ORIGINAL_HEIGHT - 100, 50, 50));
+			obstacles.add(new Block(2300, ORIGINAL_HEIGHT - 100, 50, 50));
+			obstacles.add(new Block(2450, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(2600, ORIGINAL_HEIGHT - 300, 50, 50));
+		} else if (lvlNum == 3) {
+			obstacles.add(new Block(200, ORIGINAL_HEIGHT - 100, 50, 50));
+			obstacles.add(new Block(100, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(200, ORIGINAL_HEIGHT - 300, 50, 50));
+			obstacles.add(new Block(100, ORIGINAL_HEIGHT - 400, 50, 50));
+
+			obstacles.add(new Block(300, ORIGINAL_HEIGHT - 500, 50, 50));
+			obstacles.add(new Block(350, ORIGINAL_HEIGHT - 500, 50, 50));
+
+			obstacles.add(new Block(550, ORIGINAL_HEIGHT - 450, 50, 50));
+			obstacles.add(new Block(600, ORIGINAL_HEIGHT - 450, 50, 50));
+
+			obstacles.add(new Block(800, ORIGINAL_HEIGHT - 400, 50, 50));
+			obstacles.add(new Block(850, ORIGINAL_HEIGHT - 400, 50, 50));
+
+			obstacles.add(new Block(1050, ORIGINAL_HEIGHT - 450, 50, 50));
+			obstacles.add(new Block(1100, ORIGINAL_HEIGHT - 450, 50, 50));
+
+			obstacles.add(new Block(1300, ORIGINAL_HEIGHT - 500, 50, 50));
+			obstacles.add(new Block(1350, ORIGINAL_HEIGHT - 500, 50, 50));
+
+			obstacles.add(new Block(1550, ORIGINAL_HEIGHT - 450, 50, 50));
+			obstacles.add(new Block(1600, ORIGINAL_HEIGHT - 450, 50, 50));
+
+			obstacles.add(new Block(1800, ORIGINAL_HEIGHT - 400, 50, 50));
+			obstacles.add(new Block(1850, ORIGINAL_HEIGHT - 400, 50, 50));
+
+			obstacles.add(new Block(2050, ORIGINAL_HEIGHT - 450, 50, 50));
+			obstacles.add(new Block(2100, ORIGINAL_HEIGHT - 450, 50, 50));
+
+			obstacles.add(new Block(2300, ORIGINAL_HEIGHT - 500, 50, 50));
+			obstacles.add(new Block(2350, ORIGINAL_HEIGHT - 500, 50, 50));
+
+			obstacles.add(new Block(350, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(500, ORIGINAL_HEIGHT - 300, 50, 50));
+
+			obstacles.add(new Block(650, ORIGINAL_HEIGHT - 100, 50, 50));
+			obstacles.add(new Block(650, ORIGINAL_HEIGHT - 150, 50, 50));
+			obstacles.add(new Block(650, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(650, ORIGINAL_HEIGHT - 250, 50, 50));
+			obstacles.add(new Block(650, ORIGINAL_HEIGHT - 300, 50, 50));
+			obstacles.add(new Block(650, ORIGINAL_HEIGHT - 350, 50, 50));
+
+			obstacles.add(new Block(1250, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(1300, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(1350, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(1400, ORIGINAL_HEIGHT - 200, 50, 50));
+
+			obstacles.add(new Block(2250, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(2300, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(2350, ORIGINAL_HEIGHT - 200, 50, 50));
+			obstacles.add(new Block(2400, ORIGINAL_HEIGHT - 200, 50, 50));
+
 		}
-		else if (lvlNum == 2) {
-			obstacles.add(new Block(200,ORIGINAL_HEIGHT-100, 50, 50));
-			obstacles.add(new Block(350,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(500,ORIGINAL_HEIGHT-300, 50, 50));
-			obstacles.add(new Block(650,ORIGINAL_HEIGHT-400, 50, 50));
-			obstacles.add(new Block(800,ORIGINAL_HEIGHT-300, 50, 50));
-			obstacles.add(new Block(950,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(1100,ORIGINAL_HEIGHT-100, 50, 50));
-			obstacles.add(new Block(1250,ORIGINAL_HEIGHT-100, 50, 50));
-			obstacles.add(new Block(1400,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(1550,ORIGINAL_HEIGHT-300, 50, 50));
-			obstacles.add(new Block(1700,ORIGINAL_HEIGHT-400, 50, 50));
-			obstacles.add(new Block(1850,ORIGINAL_HEIGHT-300, 50, 50));
-			obstacles.add(new Block(2000,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(2150,ORIGINAL_HEIGHT-100, 50, 50));
-			obstacles.add(new Block(2300,ORIGINAL_HEIGHT-100, 50, 50));
-			obstacles.add(new Block(2450,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(2600,ORIGINAL_HEIGHT-300, 50, 50));
-		} 
-		else if(lvlNum == 3) {
-			obstacles.add(new Block(200,ORIGINAL_HEIGHT-100, 50, 50));
-			obstacles.add(new Block(100,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(200,ORIGINAL_HEIGHT-300, 50, 50));
-			obstacles.add(new Block(100,ORIGINAL_HEIGHT-400, 50, 50));
-			
-			obstacles.add(new Block(300,ORIGINAL_HEIGHT-500, 50, 50));
-			obstacles.add(new Block(350,ORIGINAL_HEIGHT-500, 50, 50));
-			
-			obstacles.add(new Block(550,ORIGINAL_HEIGHT-450, 50, 50));
-			obstacles.add(new Block(600,ORIGINAL_HEIGHT-450, 50, 50));
-			
-			obstacles.add(new Block(800,ORIGINAL_HEIGHT-400, 50, 50));
-			obstacles.add(new Block(850,ORIGINAL_HEIGHT-400, 50, 50));
-			
-			obstacles.add(new Block(1050,ORIGINAL_HEIGHT-450, 50, 50));
-			obstacles.add(new Block(1100,ORIGINAL_HEIGHT-450, 50, 50));
-			
-			obstacles.add(new Block(1300,ORIGINAL_HEIGHT-500, 50, 50));
-			obstacles.add(new Block(1350,ORIGINAL_HEIGHT-500, 50, 50));
-			
-			obstacles.add(new Block(1550,ORIGINAL_HEIGHT-450, 50, 50));
-			obstacles.add(new Block(1600,ORIGINAL_HEIGHT-450, 50, 50));
-			
-			obstacles.add(new Block(1800,ORIGINAL_HEIGHT-400, 50, 50));
-			obstacles.add(new Block(1850,ORIGINAL_HEIGHT-400, 50, 50));
-			
-			obstacles.add(new Block(2050,ORIGINAL_HEIGHT-450, 50, 50));
-			obstacles.add(new Block(2100,ORIGINAL_HEIGHT-450, 50, 50));
-			
-			obstacles.add(new Block(2300,ORIGINAL_HEIGHT-500, 50, 50));
-			obstacles.add(new Block(2350,ORIGINAL_HEIGHT-500, 50, 50));
-			
-			obstacles.add(new Block(350,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(500,ORIGINAL_HEIGHT-300, 50, 50));
-			
-			obstacles.add(new Block(650,ORIGINAL_HEIGHT-100, 50, 50));
-			obstacles.add(new Block(650,ORIGINAL_HEIGHT-150, 50, 50));
-			obstacles.add(new Block(650,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(650,ORIGINAL_HEIGHT-250, 50, 50));
-			obstacles.add(new Block(650,ORIGINAL_HEIGHT-300, 50, 50));
-			obstacles.add(new Block(650,ORIGINAL_HEIGHT-350, 50, 50));
-			
-			
-			obstacles.add(new Block(1250,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(1300,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(1350,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(1400,ORIGINAL_HEIGHT-200, 50, 50));
-			
-			obstacles.add(new Block(2250,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(2300,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(2350,ORIGINAL_HEIGHT-200, 50, 50));
-			obstacles.add(new Block(2400,ORIGINAL_HEIGHT-200, 50, 50));
-			
-			
-			
-			
-		}
-		
+
 	}
 
 	public void draw() {
@@ -248,18 +239,18 @@ public class GameScreen extends PApplet {
 		if (currentMenu != null && !currentMenu.equals(godScreen)) {
 			currentMenu.draw(this);
 		} else if (currentMenu == null || currentMenu.equals(godScreen)) {
-			
-			if(god.canPlace()) {
-			godScreen.draw(this);
+
+			if (god.canPlace()) {
+				godScreen.draw(this);
+			} else {
+				currentMenu = null;
+				hitDetection();
+				guy.update(keys, this);
+				guy.draw(this);
+				// guy.draw(this);
+				// god.draw(this);
 			}
-			else {
-			hitDetection();
-			guy.update(keys, this);
-			guy.draw(this);
-			//guy.draw(this);
-			// god.draw(this);
-			}
-			
+
 			for (Obstacle o : obstacles) {
 				o.draw(this);
 			}
@@ -267,23 +258,15 @@ public class GameScreen extends PApplet {
 	}
 
 	public void keyPressed() {
-		/*
-		 * char v = key; if(Character.toUpperCase(v) == 'A') { guy.moveDirection(-6); }
-		 * if(Character.toUpperCase(v) == 'D') { guy.moveDirection(6); }
-		 * if(Character.toUpperCase(v)== 'W') { guy.jump(50);
-		 * 
-		 * }
-		 */
 		int x = 0;
-		if (key == 'p' && currentMenu == null) {
+		if (key == 'p' && currentMenu == null || currentMenu == godScreen) {
 			currentMenu = pauseMenu;
-		}
-		else if(key == 'd' && god.canPlace()) {
+		} else if (key == 'd' && god.canPlace()) {
 			System.out.println("here");
-			x+=10;
+			x += 10;
 			translate(x);
-		}else if(key == 'a' && god.canPlace()) {
-			x-=10;
+		} else if (key == 'a' && god.canPlace()) {
+			x -= 10;
 			translate(x);
 		}
 		keys.add(this.keyCode);
@@ -306,63 +289,60 @@ public class GameScreen extends PApplet {
 			System.out.println("DOTH THIS WORKETH?");
 		}
 	}
-	
+
 	public void mouseClicked() {
 		mouseP.setLocation(mouseX, mouseY);
-		System.out.println( " " + mouseP.getX() + " " + mouseP.getY() + godScreen.getDragging());
+		System.out.println(" " + mouseP.getX() + " " + mouseP.getY() + godScreen.getDragging());
 		addObstacle();
 	}
-	
+
 	public void addObstacle() {
-		if(currentMenu.equals(godScreen)&& godScreen.getDragging()) {
+		if (currentMenu.equals(godScreen) && godScreen.getDragging()) {
 			Spike spike = null;
-		for(Obstacle o : obstacles) {
-			if(o.getBoundRect().contains(mouseP)) {
-				System.out.println("SUP");
-				System.out.println(o.getBoundRect().getX());
-				godScreen.setDragging(false);
-				god.place();
-				String x = godScreen.getObstacleType();
-				if(x.equals("spike")) {
-					spike = new Spike((float)o.getX(), (float)o.getY()-50, 50, 50);
+			for (Obstacle o : obstacles) {
+				if (o.getBoundRect().contains(mouseP)) {
+					System.out.println("SUP");
+					System.out.println(o.getBoundRect().getX());
+					godScreen.setDragging(false);
+					god.place();
+					String x = godScreen.getObstacleType();
+					if (x.equals("spike")) {
+						spike = new Spike((float) o.getX(), (float) o.getY() - 50, 50, 50);
+					}
 				}
 			}
-		}
-		if(spike!=null)
-		obstacles.add(spike);
+			if (spike != null)
+				obstacles.add(spike);
 			Glue glue = null;
 			Turret turret = null;
-		for(Obstacle o : obstacles) {
-			if(o.getBoundRect().contains(mouseP)) {
-				System.out.println("SUP");
-				System.out.println(o.getBoundRect().getX());
-				godScreen.setDragging(false);
-				god.place();
-				String x = godScreen.getObstacleType();
-				if(x.equals("spike")) {
-					spike = new Spike((float)o.getX(), (float)o.getY()-50, 50, 50);
-				}else if(x.equals("glue")) {
-					glue = new Glue((float)o.getX(), (float)o.getY(), 50, 05);
-				}else if(x.equals("turret")) {
-					turret = new Turret((float)o.getX(), (float)o.getY()-50, 50, 50, Math.PI);
+			for (Obstacle o : obstacles) {
+				if (o.getBoundRect().contains(mouseP)) {
+					System.out.println("SUP");
+					System.out.println(o.getBoundRect().getX());
+					godScreen.setDragging(false);
+					god.place();
+					String x = godScreen.getObstacleType();
+					if (x.equals("spike")) {
+						spike = new Spike((float) o.getX(), (float) o.getY() - 50, 50, 50);
+					} else if (x.equals("glue")) {
+						glue = new Glue((float) o.getX(), (float) o.getY(), 50, 05);
+					} else if (x.equals("turret")) {
+						turret = new Turret((float) o.getX(), (float) o.getY() - 50, 50, 50, Math.PI);
+					}
 				}
 			}
-		}
-		if(spike!=null) {
-		obstacles.add(spike);
-		spike = null;
-		}
-		else if(glue!= null) {
-			obstacles.add(glue);
-			glue = null;
-		}else if(turret!=null) {
-			obstacles.add(turret);
-			turret = null;
+			if (spike != null) {
+				obstacles.add(spike);
+				spike = null;
+			} else if (glue != null) {
+				obstacles.add(glue);
+				glue = null;
+			} else if (turret != null) {
+				obstacles.add(turret);
+				turret = null;
+			}
 		}
 	}
-	}
-	
-	
 
 	public void mouseMoved() {
 		if (currentMenu != null) {
@@ -372,11 +352,11 @@ public class GameScreen extends PApplet {
 	}
 
 	public void changeMenuMode(String menumode) {
-//		System.out.println(menumode);
+		// System.out.println(menumode);
 		if (menumode.equals("singleplayer")) {
 			gameMode = gameModes.singleplayer;
 			currentMenu = godScreen;
-//			reset();
+			// reset();
 		} else if (menumode.equals("localmultiplayer")) {
 			gameMode = gameModes.localMultiplayer;
 			currentMenu = null;
@@ -479,8 +459,8 @@ public class GameScreen extends PApplet {
 		distanceTranslated += x;
 		return true;
 	}
-	
+
 	public void placeObjects() {
-		
+
 	}
 }
