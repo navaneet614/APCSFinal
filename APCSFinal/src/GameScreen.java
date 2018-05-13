@@ -250,6 +250,7 @@ public class GameScreen extends PApplet {
 			godScreen.draw(this);
 			}
 			else {
+			translate(-distanceTranslated);
 			hitDetection();
 			guy.update(keys, this);
 			guy.draw(this);
