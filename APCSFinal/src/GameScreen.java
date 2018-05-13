@@ -313,6 +313,8 @@ public class GameScreen extends PApplet {
 	public void addObstacle() {
 		if(currentMenu.equals(godScreen)&& godScreen.getDragging()) {
 			Spike spike = null;
+			Glue glue = null;
+			Turret turret = null;
 		for(Obstacle o : obstacles) {
 			if(o.getBoundRect().contains(mouseP)) {
 				System.out.println("SUP");
@@ -322,11 +324,24 @@ public class GameScreen extends PApplet {
 				String x = godScreen.getObstacleType();
 				if(x.equals("spike")) {
 					spike = new Spike((float)o.getX(), (float)o.getY()-50, 50, 50);
+				}else if(x.equals("glue")) {
+					glue = new Glue((float)o.getX(), (float)o.getY(), 50, 05);
+				}else if(x.equals("turret")) {
+					turret = new Turret((float)o.getX(), (float)o.getY()-50, 50, 50, Math.PI);
 				}
 			}
 		}
-		if(spike!=null)
+		if(spike!=null) {
 		obstacles.add(spike);
+		spike = null;
+		}
+		else if(glue!= null) {
+			obstacles.add(glue);
+			glue = null;
+		}else if(turret!=null) {
+			obstacles.add(turret);
+			turret = null;
+		}
 	}
 	}
 	
