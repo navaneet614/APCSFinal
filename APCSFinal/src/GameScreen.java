@@ -37,6 +37,8 @@ public class GameScreen extends PApplet {
 	}
 
 	private gameModes gameMode;
+	private Thread thread;
+	private boolean running;
 
 	public GameScreen() {
 		startMenu = new StartMenu();
@@ -45,7 +47,7 @@ public class GameScreen extends PApplet {
 		currentMenu = startMenu;
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
-		 god = new God(450, 100, 120, 140, 30);
+		god = new God(450, 100, 120, 140, 30);
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
 		godScreen = new GodScreen(0,0,800,100,god);
@@ -63,7 +65,8 @@ public class GameScreen extends PApplet {
 	}
 
 	public void setup() {
-
+		this.frameRate(60);
+//		noLoop();
 		ImageLoader.loadAllImages(this, "");
 		guy.setup(this);
 		// god.setup(this);
