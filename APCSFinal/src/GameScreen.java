@@ -4,6 +4,11 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import menus.*;
+import obstacles.*;
+import utilities.*;
+
 import java.io.*;
 
 import processing.core.PApplet;
