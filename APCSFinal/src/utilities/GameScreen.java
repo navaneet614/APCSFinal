@@ -48,7 +48,7 @@ public class GameScreen extends PApplet {
 	private God god;
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
-	private int distanceTranslated;
+	private double distanceTranslated;
 	private Rectangle mouseP;
 
 	private enum gameModes {
@@ -77,7 +77,7 @@ public class GameScreen extends PApplet {
 	}
 
 	public void reset(boolean fullClear) {
-		distanceTranslated = 0;
+		translate(-distanceTranslated);
 		guy = new Player(50, 450, 50, 50);
 		guy.setup(this);
 		god = new God(450, 100, 120, 140, 15);
@@ -278,7 +278,8 @@ public class GameScreen extends PApplet {
 	public void draw() {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
-		 System.out.println("FPS:" + frameRate);
+//		 System.out.println("FPS:" + frameRate);
+		System.out.println(this.distanceTranslated);
 		// if (guy.hearts() <= 0) {
 		// currentMenu = deathMenu;
 		// }
@@ -602,7 +603,7 @@ public class GameScreen extends PApplet {
 		// System.out.println(guy.getX() + guy.getWidth());
 	}
 
-	public boolean translate(int x) {
+	public boolean translate(double x) {
 		if (x < 0 && distanceTranslated <= 0) {
 			return false;
 		} else if (x > 0 && distanceTranslated >= levelLength) {
