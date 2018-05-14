@@ -1,3 +1,4 @@
+package utilities;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -5,6 +6,20 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import menus.DeathMenu;
+import menus.DifficultyMenu;
+import menus.GodScreen;
+import menus.LevelMenu;
+import menus.Menu;
+import menus.MultiplayerMenu;
+import menus.PauseMenu;
+import menus.StartMenu;
+import obstacles.Block;
+import obstacles.Bullet;
+import obstacles.Glue;
+import obstacles.Obstacle;
+import obstacles.Spike;
+import obstacles.Turret;
 import processing.core.PApplet;
 
 /**

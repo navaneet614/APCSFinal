@@ -1,3 +1,4 @@
+package obstacles;
 import java.awt.Rectangle;
 
 import processing.core.*;

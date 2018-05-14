@@ -1,3 +1,6 @@
+package obstacles;
+import utilities.ImageLoader;
+
 /**
  * 
  * @author Shaunak Bhandarkar

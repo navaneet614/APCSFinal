@@ -1,3 +1,4 @@
+package utilities;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.HashSet;

@@ -1,5 +1,8 @@
+package utilities;
 import java.awt.Color;
 
+import menus.Button;
+import obstacles.Obstacle;
 import processing.core.PApplet;
 
 public class ClickableObstacle extends Button {

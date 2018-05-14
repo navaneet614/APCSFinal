@@ -1,6 +1,8 @@
+package menus;
 import java.awt.Color;
 
 import processing.core.PApplet;
+import utilities.GameScreen;
 
 public class DifficultyMenu extends Menu {
 	public DifficultyMenu() {

@@ -1,4 +1,7 @@
+package menus;
 import java.awt.Color;
+
+import utilities.GameScreen;
 
 public class MultiplayerMenu extends Menu {
 
