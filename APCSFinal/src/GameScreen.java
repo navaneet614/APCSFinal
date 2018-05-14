@@ -27,8 +27,9 @@ public class GameScreen extends PApplet {
 	private MultiplayerMenu multiplayerMenu;
 	private DeathMenu deathMenu;
 	private GodScreen godScreen;
+	private DifficultyMenu diffMenu;
 	private Player guy;
-	 private God god;
+	private God god;
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
 	private int distanceTranslated;
@@ -46,6 +47,7 @@ public class GameScreen extends PApplet {
 		pauseMenu = new PauseMenu();
 		deathMenu = new DeathMenu();
 		multiplayerMenu = new MultiplayerMenu();
+		diffMenu =  new DifficultyMenu();
 		currentMenu = startMenu;
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
@@ -55,7 +57,7 @@ public class GameScreen extends PApplet {
 		godScreen = new GodScreen(0,0,800,100,god);
 		mouseP = new Rectangle(0,0,1,1);
 		LVL_NUM = 3;
-		inGameMenu = godScreen;
+		inGameMenu = diffMenu;
 	}
 
 	public void reset() {
@@ -68,7 +70,7 @@ public class GameScreen extends PApplet {
 		doLvl(LVL_NUM);
 		godScreen = new GodScreen(0,0,800,100,god);
 		currentMenu = null;
-		inGameMenu = godScreen;
+		inGameMenu = diffMenu;
 		setupBlocks();
 	}
 
@@ -264,6 +266,7 @@ public class GameScreen extends PApplet {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
 		//System.out.println("FPS:" + frameRate);
+		System.out.println(inGameMenu.getClass());
 		if (guy.hearts() <= 0) {
 			currentMenu = deathMenu;
 		}
@@ -271,23 +274,25 @@ public class GameScreen extends PApplet {
 			currentMenu.draw(this);
 		} else if (currentMenu == null) {
 
-			if (inGameMenu != null && gameMode.equals(gameModes.localMultiplayer)) {
+			if (inGameMenu != null) {
 				if (!god.canPlace() && inGameMenu instanceof GodScreen) {
 					inGameMenu = null;
 					translate(-distanceTranslated);
 
-				} else
+				}else
 					inGameMenu.draw(this);
 			} else if (gameMode.equals(gameModes.singleplayer)) {
 					this.simpleAI();
-				inGameMenu = null;
+					inGameMenu = null;
+			}
+			
+			if (!(inGameMenu instanceof DifficultyMenu) || !(inGameMenu instanceof LevelMenu)) {
+				for (Obstacle o : obstacles) {
+					o.draw(this);
+				}
 			}
 
-			for (Obstacle o : obstacles) {
-				o.draw(this);
-			}
-
-			if (inGameMenu == null) {
+			if (!(inGameMenu instanceof GodScreen)) {
 				hitDetection();
 				guy.update(keys, this);
 				guy.draw(this);
@@ -325,6 +330,7 @@ public class GameScreen extends PApplet {
 	}
 	
 	public void simpleAI() {
+		
 		int hu,kadaba;
 		while(god.canPlace()) {
 			hu = (int)(Math.random()*obstacles.size());
@@ -440,7 +446,6 @@ public class GameScreen extends PApplet {
 	}
 
 	public void changeMenuMode(String menumode) {
-//		System.out.println(menumode);
 		if (menumode.equals("singleplayer")) {
 			gameMode = gameModes.singleplayer;
 			reset();
@@ -454,7 +459,6 @@ public class GameScreen extends PApplet {
 			reset();
 			currentMenu = startMenu;
 		} else if (menumode.equals("options")) {
-			// currentMenu = optionsMenu;
 		} else if(menumode.equals("resume")){
 			currentMenu = null;
 		}else if (menumode.equals("multiplayer")) {
