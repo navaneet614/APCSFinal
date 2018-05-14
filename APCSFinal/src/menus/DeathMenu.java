@@ -1,6 +1,8 @@
+package menus;
 import java.awt.Color;
 
 import processing.core.PApplet;
+import utilities.GameScreen;
 /**
  * 
  * @author Navaneet Kadaba
@@ -24,8 +26,7 @@ public class DeathMenu extends Menu {
 	@Override
 	public void doButtonAction(String buttonText, GameScreen gameScreen) {
 		if(buttonText.equals("Restart")) {
-			System.out.println("here");
-			gameScreen.changeMenuMode("singleplayer");
+			gameScreen.changeMenuMode("restart");
 		} else if(buttonText.equals("Options")) {
 			gameScreen.changeMenuMode("options"); 
 		}else if(buttonText.equals("Main Menu")) {

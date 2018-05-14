@@ -1,11 +1,19 @@
+package menus;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import obstacles.Glue;
+import obstacles.Spike;
+import obstacles.Turret;
 import processing.core.PApplet;
+import utilities.ClickableObstacle;
+import utilities.GameScreen;
+import utilities.God;
+import utilities.ImageLoader;
 
 public class GodScreen extends Menu {
 	private float x, y, width, height;
-	private ClickableObject spike, glue, turret;
+	private ClickableObstacle spike, glue, turret;
 	private God god;
 	private boolean drawSpike, drawGlue, drawTurret, dragging;
 
@@ -14,9 +22,9 @@ public class GodScreen extends Menu {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		spike = new ClickableObject(x, y, width / 4, height, new Spike(x, y, 50, 50), "Spikes");
-		glue = new ClickableObject(x + width / 4, y, width / 4, height, new Glue(x, y, 50, 50), "Glue");
-		turret = new ClickableObject(x + width / 2, y, width / 4, height, new Turret(x, y, 50, 50, 180), "Turrets");
+		spike = new ClickableObstacle(x, y, width / 4, height, new Spike(x, y, 50, 50), "Spikes");
+		glue = new ClickableObstacle(x + width / 4, y, width / 4, height, new Glue(x, y, 50, 50), "Glue");
+		turret = new ClickableObstacle(x + width / 2, y, width / 4, height, new Turret(x, y, 50, 50, 180), "Turrets");
 		addButton(spike);
 		addButton(glue);
 		addButton(turret);
@@ -46,14 +54,17 @@ public class GodScreen extends Menu {
 
 		if (dragging) {
 			if (drawSpike) {
-				drawer.image(ImageLoader.spike, drawer.mouseX - 10, drawer.mouseY, 50, 50);
+				drawer.image(ImageLoader.spike, (drawer.mouseX / (drawer.width / 800f)), (drawer.mouseY / (drawer.height / 600f)), 50, 40);
 			} else if (drawGlue) {
-				drawer.image(ImageLoader.glue, drawer.mouseX - 10, drawer.mouseY, 50, 10);
+				drawer.image(ImageLoader.glue, (drawer.mouseX / (drawer.width / 800f)), (drawer.mouseY / (drawer.height / 600f)), 50, 10);
 			} else if (drawTurret) {
-				drawer.image(ImageLoader.turret, drawer.mouseX - 10, drawer.mouseY, 50, 50);
+				drawer.image(ImageLoader.turret, (drawer.mouseX / (drawer.width / 800f)), (drawer.mouseY / (drawer.height / 600f)), 50, 50);
 			}
 		}
+		
+		
 	}
+	
 
 	@Override
 	public void doButtonAction(String buttonText, GameScreen gameScreen) {

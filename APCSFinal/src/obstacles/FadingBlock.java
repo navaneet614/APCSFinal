@@ -1,4 +1,6 @@
+package obstacles;
 import processing.core.PApplet;
+import utilities.Player;
 
 /**
  *

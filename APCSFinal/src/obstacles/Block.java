@@ -1,3 +1,7 @@
+package obstacles;
+import processing.core.PApplet;
+import utilities.ImageLoader;
+
 /**
  * 
  * @author Shaunak Bhandarkar
@@ -10,10 +14,24 @@
  */
 public class Block extends Obstacle 
 {
-
+	private boolean stuffOnTop;
 	public Block(float x, float y, double width, double height) 
 	{
 		super(x, y, ImageLoader.block ,width,height);
+		stuffOnTop = false;
+	}
+	
+	public void draw(PApplet drawer) {
+		super.draw(drawer);
+//		drawer.text(stuffOnTop + "", (float)this.getX() + 25, (float)this.getY() + 25);
+	}
+	
+	public void setStuffOnTop(boolean x) {
+		stuffOnTop = x;
+	}
+	
+	public boolean getStuffOnTop() {
+		return stuffOnTop;
 	}
 	
 	public int getDamage() 

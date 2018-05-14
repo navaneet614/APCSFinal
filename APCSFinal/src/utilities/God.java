@@ -1,3 +1,4 @@
+package utilities;
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -36,11 +37,7 @@ public class God
 	}
 	
 	public void draw(PApplet drawer) 
-	{
-		
-		
-		
-		
+	{	
 	}
 	
 	public void place() {
@@ -57,6 +54,10 @@ public class God
 	
 	public int getPlacedObstacles() {
 		return placedObstacles;
+	}
+	
+	public void setObstacleAmount(int x) {
+		amountOfObstacles = x;
 	}
 	
 	

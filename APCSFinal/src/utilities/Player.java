@@ -1,3 +1,4 @@
+package utilities;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.HashSet;
@@ -151,7 +152,7 @@ public class Player implements Serializable
 			if (key == PApplet.UP) {
 				jump();
 			} else if (key == PApplet.DOWN) {
-				// god.throwObstacle(new LightningBolt(), 0, (float) Math.random() * 601);
+				
 			} else if (key == PApplet.LEFT && getX() > 0) {
 				if (xCoord > gameScreen.ORIGINAL_WIDTH * 1 / 4) {
 					moveLeft();

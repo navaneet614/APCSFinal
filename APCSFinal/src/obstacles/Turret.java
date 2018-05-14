@@ -1,8 +1,12 @@
+package obstacles;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import processing.core.*;
+import utilities.GameScreen;
+import utilities.ImageLoader;
+
 import javax.swing.Timer;
 
 /**
@@ -35,16 +39,16 @@ public class Turret extends Obstacle implements ActionListener
 	public int getDamage() 
 	{	
 		super.hit();
-		if(canDamage()) {
-			return 1;
-		}
+//		if(canDamage()) {
+//			return 1;
+//		}
 		return 0;
 	}
 	
 	
 	public void shoot() 
 	{
-		bullets.add(new Bullet(getX()+getWidth()/2, getY()+getHeight()/2, angle));
+		bullets.add(new Bullet(getX()-getWidth()/8 - 15, getY()+getHeight()/2, angle));
 		//angle+=0.7;
 	}
 	
@@ -71,8 +75,8 @@ public class Turret extends Obstacle implements ActionListener
 
 	public void actionPerformed(ActionEvent e) 
 	{
-		count++;
-		if ( count % 100 == 0) 
+
+		if ( count % 300 == 0) 
 		{
 			shoot();
 		}
@@ -80,6 +84,7 @@ public class Turret extends Obstacle implements ActionListener
 		{
 			b.shoot();
 		}
+		count++;
 		
 	}
 

@@ -1,3 +1,4 @@
+package utilities;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -25,7 +26,7 @@ public class ImageLoader {
 		platform = p.loadImage(locationOfResources + "platform.png");
 		player_walk = p.loadImage(locationOfResources + "player_walk.gif");
 		spike = p.loadImage(locationOfResources + "spike.png");
-		turret = p.loadImage(locationOfResources + "turret.png");
+		turret = p.loadImage(locationOfResources + "turret2.png");
 	
 		
 	}
