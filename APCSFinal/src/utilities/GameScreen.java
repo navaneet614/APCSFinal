@@ -16,8 +16,10 @@ import menus.PauseMenu;
 import menus.StartMenu;
 import obstacles.Block;
 import obstacles.Bullet;
+import obstacles.Office;
 import obstacles.Glue;
 import obstacles.Obstacle;
+import obstacles.Office;
 import obstacles.Spike;
 import obstacles.Turret;
 import processing.core.PApplet;
@@ -34,8 +36,8 @@ import processing.core.PApplet;
  */
 public class GameScreen extends PApplet {
 	private int lvlNum = 0;
-	public final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
-	private int levelLength = 2000 - 50, densityOfBlocks = 2;
+	public static final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
+	private static int levelLength = 2000 - 50, densityOfBlocks = 2;
 	private StartMenu startMenu;
 	private Menu currentMenu, inGameMenu;
 	private PauseMenu pauseMenu;
@@ -50,6 +52,7 @@ public class GameScreen extends PApplet {
 	private ArrayList<Obstacle> obstacles;
 	private double distanceTranslated;
 	private Rectangle mouseP;
+	private Office office;
 
 	private enum gameModes {
 		singleplayer, localMultiplayer, onlineMultiplayer
@@ -74,6 +77,7 @@ public class GameScreen extends PApplet {
 		lvlNum = 3;
 		currentMenu = startMenu;
 		inGameMenu = null;
+		office = new Office();
 	}
 
 	public void reset(boolean fullClear) {
@@ -98,6 +102,7 @@ public class GameScreen extends PApplet {
 		// noLoop();
 		ImageLoader.loadAllImages(this, "");
 		guy.setup(this);
+		office.setup(this);
 		// god.setup(this);
 		for (Obstacle o : obstacles) {
 			o.setup(this);
@@ -329,6 +334,11 @@ public class GameScreen extends PApplet {
 				} else
 					inGameMenu.draw(this);
 			} else {
+				if ( guy.getX() > levelLength - ORIGINAL_WIDTH ) 
+				{
+					office.setX(500);
+					office.draw(this);
+				}
 				hitDetection();
 				guy.update(keys, this);
 				guy.draw(this);
@@ -620,6 +630,11 @@ public class GameScreen extends PApplet {
 		}
 		distanceTranslated += x;
 		return true;
+	}
+	
+	public static int getLevelLength() 
+	{
+		return levelLength;
 	}
 
 }
