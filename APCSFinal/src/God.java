@@ -36,11 +36,7 @@ public class God
 	}
 	
 	public void draw(PApplet drawer) 
-	{
-		
-		
-		
-		
+	{	
 	}
 	
 	public void place() {

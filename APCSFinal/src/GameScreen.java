@@ -84,7 +84,7 @@ public class GameScreen extends PApplet {
 	}
 	
 	public void settings() {
-		size(800,550);
+		size(800,600);
 	}
 
 	public void doLvl(int lvlNum) {
@@ -250,7 +250,7 @@ public class GameScreen extends PApplet {
 	public void draw() {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
-		System.out.println("FPS:" + frameRate);
+		//System.out.println("FPS:" + frameRate);
 		if (guy.hearts() <= 0) {
 			currentMenu = deathMenu;
 		}
@@ -265,16 +265,19 @@ public class GameScreen extends PApplet {
 
 				} else
 					inGameMenu.draw(this);
+			} else if (gameMode.equals(gameModes.singleplayer)) {
+				simpleAI();
+				inGameMenu = null;
 			}
-			
+
 			for (Obstacle o : obstacles) {
 				o.draw(this);
 			}
-			
-			if(inGameMenu == null) {
-			hitDetection();
-			guy.update(keys, this);
-			guy.draw(this);
+
+			if (inGameMenu == null) {
+				hitDetection();
+				guy.update(keys, this);
+				guy.draw(this);
 			}
 		}
 			
@@ -313,7 +316,25 @@ public class GameScreen extends PApplet {
 	}
 	
 	public void simpleAI() {
-		
+		int hu,kadaba;
+		while(god.canPlace()) {
+			hu = (int)(Math.random()*obstacles.size());
+			if(obstacles.get(hu) instanceof Block) {
+				Block vandevoorde = (Block)obstacles.get(hu);
+				if(!vandevoorde.getStuffOnTop()) {
+					kadaba = (int)(Math.random()*3);
+					if(kadaba == 0) {
+						obstacles.add( new Spike((float)obstacles.get(hu).getX(), (float)obstacles.get(hu).getY()-30, 50, 30));
+					}else if(kadaba == 1) {
+						obstacles.add( new Glue((float)obstacles.get(hu).getX(), (float)obstacles.get(hu).getY()-10, 50, 10));
+					}else {
+						obstacles.add( new Turret((float)obstacles.get(hu).getX(), (float)obstacles.get(hu).getY()-50, 50, 50, Math.PI));
+					}
+					
+					god.place();
+				}
+			}
+		}
 	}
 
 	public void mousePressed() {
