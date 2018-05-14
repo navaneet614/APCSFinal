@@ -49,7 +49,7 @@ public class GameScreen extends PApplet {
 		currentMenu = startMenu;
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
-		god = new God(450, 100, 120, 140, 5);
+		god = new God(450, 100, 120, 140, 15);
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
 		godScreen = new GodScreen(0,0,800,100,god);
@@ -62,13 +62,14 @@ public class GameScreen extends PApplet {
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
 		guy.setup(this);
-		god = new God(450, 100, 120, 140, 5);
+		god = new God(450, 100, 120, 140, 15);
 		keys.clear();
 		obstacles.clear();
 		doLvl(LVL_NUM);
 		godScreen = new GodScreen(0,0,800,100,god);
 		currentMenu = null;
 		inGameMenu = godScreen;
+		setupBlocks();
 	}
 
 	public void setup() {
@@ -80,7 +81,19 @@ public class GameScreen extends PApplet {
 		for (Obstacle o : obstacles) {
 			o.setup(this);
 		}
-	doLvl(LVL_NUM);
+		doLvl(LVL_NUM);
+		setupBlocks();
+	}
+	
+	private void setupBlocks() {
+		for(Obstacle o : obstacles) {
+			for(Obstacle ob : obstacles) {
+				if(o instanceof Block && Math.abs(ob.getY()-o.getY() - o.getHeight())<.1 && Math.abs(ob.getX()-o.getX())<.1) {
+					Block hu = (Block) o;
+					hu.setStuffOnTop(true);
+				}
+			}
+		}
 	}
 	
 	public void settings() {
@@ -266,7 +279,7 @@ public class GameScreen extends PApplet {
 				} else
 					inGameMenu.draw(this);
 			} else if (gameMode.equals(gameModes.singleplayer)) {
-				simpleAI();
+					this.simpleAI();
 				inGameMenu = null;
 			}
 
@@ -280,11 +293,7 @@ public class GameScreen extends PApplet {
 				guy.draw(this);
 			}
 		}
-			
-			
-			
 
-		
 	}
 	
 
@@ -301,7 +310,7 @@ public class GameScreen extends PApplet {
 			currentMenu = pauseMenu;
 		}
 		else if(key == 'd' && god.canPlace()) {
-			System.out.println("here");
+//			System.out.println("here");
 			
 			translate(10);
 		}else if(key == 'a' && god.canPlace()) {
@@ -319,6 +328,9 @@ public class GameScreen extends PApplet {
 		int hu,kadaba;
 		while(god.canPlace()) {
 			hu = (int)(Math.random()*obstacles.size());
+			if(obstacles.get(hu).getX()>this.levelLength - 50 || Math.abs(obstacles.get(hu).getX() - guy.getX())<15) {
+				continue;
+			}
 			if(obstacles.get(hu) instanceof Block) {
 				Block vandevoorde = (Block)obstacles.get(hu);
 				if(!vandevoorde.getStuffOnTop()) {
@@ -330,7 +342,7 @@ public class GameScreen extends PApplet {
 					}else {
 						obstacles.add( new Turret((float)obstacles.get(hu).getX(), (float)obstacles.get(hu).getY()-50, 50, 50, Math.PI));
 					}
-					
+					vandevoorde.setStuffOnTop(true);
 					god.place();
 				}
 			}
@@ -510,6 +522,15 @@ public class GameScreen extends PApplet {
 					if (b.getBoundingRect().intersects(guy.getBoundingRect())) {
 						guy.takeDamage(b.getDamage());
 						t.bullets().remove(j);
+					} else {
+						for(Obstacle o:obstacles) {
+							if(o instanceof Block) {
+								Block block = (Block) o;
+								if(block.getBoundRect().intersects(b.getBoundingRect())) {
+									t.bullets().remove(j);
+								}
+							}
+						}
 					}
 				}
 			}

@@ -71,8 +71,8 @@ public class Turret extends Obstacle implements ActionListener
 
 	public void actionPerformed(ActionEvent e) 
 	{
-		count++;
-		if ( count % 500 == 0) 
+
+		if ( count % 300 == 0) 
 		{
 			shoot();
 		}
@@ -80,6 +80,7 @@ public class Turret extends Obstacle implements ActionListener
 		{
 			b.shoot();
 		}
+		count++;
 		
 	}
 

@@ -10,8 +10,7 @@ import processing.core.*;
  * The Bullet class is essential to Obstacles such as Turret, as
  * it enables bullets to be fired from the given source. A Bullet
  * starts at a specified location, and fire at a constant velocity,
- * going in a straight line indefinitely. Moreover, the user can 
- * select the angle from which a Bullet is to be fired.
+ * going in a straight line indefinitely.
  * 
  */
 public class Bullet

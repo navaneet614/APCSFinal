@@ -5,7 +5,7 @@ import processing.core.PApplet;
 
 public class GodScreen extends Menu {
 	private float x, y, width, height;
-	private ClickableObject spike, glue, turret;
+	private ClickableObstacle spike, glue, turret;
 	private God god;
 	private boolean drawSpike, drawGlue, drawTurret, dragging;
 
@@ -14,9 +14,9 @@ public class GodScreen extends Menu {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		spike = new ClickableObject(x, y, width / 4, height, new Spike(x, y, 50, 50), "Spikes");
-		glue = new ClickableObject(x + width / 4, y, width / 4, height, new Glue(x, y, 50, 50), "Glue");
-		turret = new ClickableObject(x + width / 2, y, width / 4, height, new Turret(x, y, 50, 50, 180), "Turrets");
+		spike = new ClickableObstacle(x, y, width / 4, height, new Spike(x, y, 50, 50), "Spikes");
+		glue = new ClickableObstacle(x + width / 4, y, width / 4, height, new Glue(x, y, 50, 50), "Glue");
+		turret = new ClickableObstacle(x + width / 2, y, width / 4, height, new Turret(x, y, 50, 50, 180), "Turrets");
 		addButton(spike);
 		addButton(glue);
 		addButton(turret);
