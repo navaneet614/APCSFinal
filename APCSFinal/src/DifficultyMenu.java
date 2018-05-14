@@ -10,7 +10,7 @@ public class DifficultyMenu extends Menu {
 		this.addButton(new Button(325, 200, 150, 50, "Easy", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 		this.addButton(new Button(325, 260, 150, 50, "Not Easy", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 		this.addButton(new Button(325, 320, 150, 50, "Really Not Easy", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 380, 150, 50, "Bacl", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 380, 150, 50, "Back", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 	}
 	
 	
