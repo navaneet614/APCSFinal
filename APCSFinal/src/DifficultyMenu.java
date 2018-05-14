@@ -1,5 +1,7 @@
 import java.awt.Color;
 
+import processing.core.PApplet;
+
 public class DifficultyMenu extends Menu {
 	public DifficultyMenu() {
 		doButtons();
@@ -21,8 +23,16 @@ public class DifficultyMenu extends Menu {
 			gameScreen.changeMenuMode("medium"); 
 		}else if(buttonText.equals("Really Not Easy")) {
 			gameScreen.changeMenuMode("hard");
-		} else if(buttonText.equals("Main Menu")) {
-			gameScreen.changeMenuMode("main");
+		} else if(buttonText.equals("Back")) {
+			gameScreen.changeMenuMode("backtolevelmenu");
 		}
+	}
+	
+	public void draw(PApplet drawer) {
+		super.draw(drawer);
+		drawer.textFont(drawer.createFont("Georgia", 20));
+		drawer.textSize(20);
+		drawer.textAlign(PApplet.CENTER, PApplet.CENTER);
+		drawer.text("Difficulty Select", 400, 100);
 	}
 }

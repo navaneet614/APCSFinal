@@ -61,22 +61,25 @@ public class GameScreen extends PApplet {
 		inGameMenu = null;
 	}
 
-	public void reset() {
+	public void reset(boolean fullClear) {
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
 		guy.setup(this);
 		god = new God(450, 100, 120, 140, 15);
 		keys.clear();
-		obstacles.clear();
-		doLvl();
-		godScreen = new GodScreen(0, 0, 800, 100, god);
-		currentMenu = levelMenu;
+		currentMenu = null;
 		inGameMenu = null;
-		setupBlocks();
+		if (fullClear) {
+			obstacles.clear();
+			doLvl();
+			godScreen = new GodScreen(0, 0, 800, 100, god);
+			currentMenu = levelMenu;
+			setupBlocks();
+		}
 	}
 
 	public void setup() {
-		this.frameRate(60);
+//		this.frameRate(60);
 		// noLoop();
 		ImageLoader.loadAllImages(this, "");
 		guy.setup(this);
@@ -260,7 +263,7 @@ public class GameScreen extends PApplet {
 	public void draw() {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
-		// System.out.println("FPS:" + frameRate);
+		 System.out.println("FPS:" + frameRate);
 		// if (guy.hearts() <= 0) {
 		// currentMenu = deathMenu;
 		// }
@@ -463,15 +466,15 @@ public class GameScreen extends PApplet {
 	public void changeMenuMode(String menumode) {
 		if (menumode.equals("singleplayer")) {
 			gameMode = gameModes.singleplayer;
-			reset();
+			reset(true);
 		} else if (menumode.equals("localmultiplayer")) {
 			gameMode = gameModes.localMultiplayer;
-			reset();
+			reset(true);
 		} else if (menumode.equals("onlinemultiplayer")) {
 			gameMode = gameModes.onlineMultiplayer;
 			currentMenu = null;
 		} else if (menumode.equals("main")) {
-			reset();
+			reset(true);
 			currentMenu = startMenu;
 		} else if (menumode.equals("options")) {
 
@@ -495,6 +498,10 @@ public class GameScreen extends PApplet {
 			currentMenu = null;
 			god.setObstacleAmount(25);
 			inGameMenu = godScreen;
+		} else if (menumode.equals("backtolevelmenu")) {
+			currentMenu = this.levelMenu;
+		} else if (menumode.equals("restart")) {
+			reset(false);
 		} else {
 			currentMenu = null;
 		}
