@@ -22,8 +22,9 @@ public class GameScreen extends PApplet {
 	public final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
 	private int levelLength = 2000 - 50, densityOfBlocks = 2;
 	private StartMenu startMenu;
-	private Menu currentMenu;
+	private Menu currentMenu, inGameMenu;
 	private PauseMenu pauseMenu;
+	private MultiplayerMenu multiplayerMenu;
 	private DeathMenu deathMenu;
 	private GodScreen godScreen;
 	private Player guy;
@@ -31,39 +32,43 @@ public class GameScreen extends PApplet {
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
 	private int distanceTranslated;
-	private Point mouseP;
+	private Rectangle mouseP;
 
 	private enum gameModes {
-		singleplayer, localMultiplayer
+		singleplayer, localMultiplayer, onlineMultiplayer
 	}
 
 	private gameModes gameMode;
-	private Thread thread;
-	private boolean running;
 
+	
 	public GameScreen() {
 		startMenu = new StartMenu();
 		pauseMenu = new PauseMenu();
 		deathMenu = new DeathMenu();
+		multiplayerMenu = new MultiplayerMenu();
 		currentMenu = startMenu;
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
-		god = new God(450, 100, 120, 140, 30);
+		god = new God(450, 100, 120, 140, 5);
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
 		godScreen = new GodScreen(0,0,800,100,god);
-		mouseP = new Point(0,0);
+		mouseP = new Rectangle(0,0,1,1);
 		LVL_NUM = 3;
+		inGameMenu = godScreen;
 	}
 
 	public void reset() {
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
 		guy.setup(this);
-		// god = new God(450, 100, 120, 140);
+		god = new God(450, 100, 120, 140, 5);
 		keys.clear();
 		obstacles.clear();
 		doLvl(LVL_NUM);
+		godScreen = new GodScreen(0,0,800,100,god);
+		currentMenu = null;
+		inGameMenu = godScreen;
 	}
 
 	public void setup() {
@@ -76,6 +81,10 @@ public class GameScreen extends PApplet {
 			o.setup(this);
 		}
 	doLvl(LVL_NUM);
+	}
+	
+	public void settings() {
+		size(800,550);
 	}
 
 	public void doLvl(int lvlNum) {
@@ -241,29 +250,40 @@ public class GameScreen extends PApplet {
 	public void draw() {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
+		System.out.println("FPS:" + frameRate);
 		if (guy.hearts() <= 0) {
 			currentMenu = deathMenu;
 		}
-		if (currentMenu != null && !currentMenu.equals(godScreen)) {
+		if (currentMenu != null) {
 			currentMenu.draw(this);
-		} else if (currentMenu == null || currentMenu.equals(godScreen)) {
-			
-			if(god.canPlace()) {
-			godScreen.draw(this);
-			}else {
-			translate(-distanceTranslated);
-			hitDetection();
-			guy.update(keys, this);
-			guy.draw(this);
-			//guy.draw(this);
-			// god.draw(this);
+		} else if (currentMenu == null) {
+
+			if (inGameMenu != null && gameMode.equals(gameModes.localMultiplayer)) {
+				if (!god.canPlace() && inGameMenu instanceof GodScreen) {
+					inGameMenu = null;
+					translate(-distanceTranslated);
+
+				} else
+					inGameMenu.draw(this);
 			}
 			
 			for (Obstacle o : obstacles) {
 				o.draw(this);
 			}
+			
+			if(inGameMenu == null) {
+			hitDetection();
+			guy.update(keys, this);
+			guy.draw(this);
+			}
 		}
+			
+			
+			
+
+		
 	}
+	
 
 	public void keyPressed() {
 		/*
@@ -273,17 +293,16 @@ public class GameScreen extends PApplet {
 		 * 
 		 * }
 		 */
-		int x = 0;
+		
 		if (key == 'p' && currentMenu == null) {
 			currentMenu = pauseMenu;
 		}
 		else if(key == 'd' && god.canPlace()) {
 			System.out.println("here");
-			x+=10;
-			translate(x);
+			
+			translate(10);
 		}else if(key == 'a' && god.canPlace()) {
-			x-=10;
-			translate(x);
+			translate(-10);
 		}
 		keys.add(this.keyCode);
 	}
@@ -291,6 +310,10 @@ public class GameScreen extends PApplet {
 	public void keyReleased() {
 		keys.remove(this.keyCode);
 
+	}
+	
+	public void simpleAI() {
+		
 	}
 
 	public void mousePressed() {
@@ -302,35 +325,55 @@ public class GameScreen extends PApplet {
 				return;
 			}
 			currentMenu.doButtonAction(buttonText, this);
-			System.out.println("DOTH THIS WORKETH?");
+			
+		}
+		 if (inGameMenu != null) {
+			String buttonText = inGameMenu.checkIfButtonsPressed((int) (mouseX / (width / ORIGINAL_WIDTH)),
+					(int) (mouseY / (height / ORIGINAL_HEIGHT)));
+
+			if (buttonText == null) {
+				return;
+			}
+			inGameMenu.doButtonAction(buttonText, this);
+			
 		}
 	}
 	
 	public void mouseClicked() {
-		mouseP.setLocation(mouseX, mouseY);
-		System.out.println( " " + mouseP.getX() + " " + mouseP.getY() + godScreen.getDragging());
+		mouseP.setLocation((int)(mouseX / (width / ORIGINAL_WIDTH)), (int)(mouseY / (height / ORIGINAL_HEIGHT)));
+		//System.out.println( " " + mouseP.getX() + " " + mouseP.getY() + godScreen.getDragging());
 		addObstacle();
 	}
 	
 	public void addObstacle() {
-		if(currentMenu.equals(godScreen)&& godScreen.getDragging()) {
+		if(godScreen.getDragging()) {
 			Spike spike = null;
 			Glue glue = null;
 			Turret turret = null;
 		for(Obstacle o : obstacles) {
-			if(o.getBoundRect().contains(mouseP)) {
-				System.out.println("SUP");
-				System.out.println(o.getBoundRect().getX());
+			if(o.getBoundRect().contains(mouseP) && o instanceof Block) {
+				
 				godScreen.setDragging(false);
-				god.place();
 				String x = godScreen.getObstacleType();
+				
+				Block bee = (Block)o;
+				if(!bee.getStuffOnTop()) {
 				if(x.equals("spike")) {
-					spike = new Spike((float)o.getX(), (float)o.getY()-50, 50, 50);
+					spike = new Spike((float)o.getX(), (float)o.getY()-30, 50, 30);
 				}else if(x.equals("glue")) {
-					glue = new Glue((float)o.getX(), (float)o.getY(), 50, 05);
+					glue = new Glue((float)o.getX(), (float)o.getY()-10, 50, 10);
 				}else if(x.equals("turret")) {
 					turret = new Turret((float)o.getX(), (float)o.getY()-50, 50, 50, Math.PI);
 				}
+				god.place();
+				bee.setStuffOnTop(true);
+				}
+				else {
+					spike = null;
+					glue = null;
+					turret = null;
+				}
+				
 			}
 		}
 		if(spike!=null) {
@@ -344,7 +387,9 @@ public class GameScreen extends PApplet {
 			obstacles.add(turret);
 			turret = null;
 		}
-	}
+		
+		
+		}
 	}
 	
 	
@@ -354,23 +399,34 @@ public class GameScreen extends PApplet {
 			currentMenu.updateButtons((int) (mouseX / (width / ORIGINAL_WIDTH)),
 					(int) (mouseY / (height / ORIGINAL_HEIGHT)));
 		}
+		
+		if (inGameMenu != null) {
+			inGameMenu.updateButtons((int) (mouseX / (width / ORIGINAL_WIDTH)),
+					(int) (mouseY / (height / ORIGINAL_HEIGHT)));
+		}
 	}
 
 	public void changeMenuMode(String menumode) {
 //		System.out.println(menumode);
 		if (menumode.equals("singleplayer")) {
 			gameMode = gameModes.singleplayer;
-			currentMenu = godScreen;
-//			reset();
+			reset();
 		} else if (menumode.equals("localmultiplayer")) {
 			gameMode = gameModes.localMultiplayer;
+			reset();
+		} else if (menumode.equals("onlinemultiplayer")) {
+			gameMode = gameModes.onlineMultiplayer;
 			currentMenu = null;
-		} else if (menumode.equals("main")) {
+		}else if (menumode.equals("main")) {
 			reset();
 			currentMenu = startMenu;
 		} else if (menumode.equals("options")) {
 			// currentMenu = optionsMenu;
-		} else {
+		} else if(menumode.equals("resume")){
+			currentMenu = null;
+		}else if (menumode.equals("multiplayer")) {
+			currentMenu = multiplayerMenu;
+		}else {
 			currentMenu = null;
 		}
 	}
@@ -424,20 +480,21 @@ public class GameScreen extends PApplet {
 				}
 			} else {
 				obstacles.get(i).resetNumTimesHit();
+				guy.setSlow(false);
 			}
 			if (obstacles.get(i) instanceof Turret) {
 				Turret t = (Turret) (obstacles.get(i));
 				for (int j = 0; j < t.bullets().size(); j++) {
 					Bullet b = t.bullets().get(j);
 					if (b.getBoundingRect().intersects(guy.getBoundingRect())) {
-						guy.takeDamage(t.getDamage());
+						guy.takeDamage(b.getDamage());
 						t.bullets().remove(j);
 					}
 				}
 			}
 		}
 
-		guy.setSlow(false);
+		
 		if (gRect.intersectsLine(0, ORIGINAL_HEIGHT, ORIGINAL_WIDTH, ORIGINAL_HEIGHT)) {
 			guy.setVY(0);
 			guy.setY(ORIGINAL_HEIGHT - guy.getHeight());
@@ -465,7 +522,5 @@ public class GameScreen extends PApplet {
 		return true;
 	}
 	
-	public void placeObjects() {
-		
-	}
+	
 }

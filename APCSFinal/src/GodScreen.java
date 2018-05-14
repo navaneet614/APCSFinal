@@ -46,14 +46,17 @@ public class GodScreen extends Menu {
 
 		if (dragging) {
 			if (drawSpike) {
-				drawer.image(ImageLoader.spike, drawer.mouseX - 10, drawer.mouseY, 50, 50);
+				drawer.image(ImageLoader.spike, (drawer.mouseX / (drawer.width / 800f)), (drawer.mouseY / (drawer.height / 600f)), 50, 40);
 			} else if (drawGlue) {
-				drawer.image(ImageLoader.glue, drawer.mouseX - 10, drawer.mouseY, 50, 10);
+				drawer.image(ImageLoader.glue, (drawer.mouseX / (drawer.width / 800f)), (drawer.mouseY / (drawer.height / 600f)), 50, 10);
 			} else if (drawTurret) {
-				drawer.image(ImageLoader.turret, drawer.mouseX - 10, drawer.mouseY, 50, 50);
+				drawer.image(ImageLoader.turret, (drawer.mouseX / (drawer.width / 800f)), (drawer.mouseY / (drawer.height / 600f)), 50, 50);
 			}
 		}
+		
+		
 	}
+	
 
 	@Override
 	public void doButtonAction(String buttonText, GameScreen gameScreen) {

@@ -32,7 +32,7 @@ public class StartMenu extends Menu {
 		if(buttonText.equals("Singleplayer")) {
 			gameScreen.changeMenuMode("singleplayer");
 		} else if(buttonText.equals("Multiplayer")) {
-			gameScreen.changeMenuMode("localmultiplayer"); 
+			gameScreen.changeMenuMode("multiplayer"); 
 		}else if(buttonText.equals("Options")) {
 			gameScreen.changeMenuMode("options");
 		} else if(buttonText.equals("Quit")) {

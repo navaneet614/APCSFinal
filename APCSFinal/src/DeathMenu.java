@@ -24,7 +24,7 @@ public class DeathMenu extends Menu {
 	@Override
 	public void doButtonAction(String buttonText, GameScreen gameScreen) {
 		if(buttonText.equals("Restart")) {
-			System.out.println("here");
+//			if(gameScreen.)
 			gameScreen.changeMenuMode("singleplayer");
 		} else if(buttonText.equals("Options")) {
 			gameScreen.changeMenuMode("options"); 

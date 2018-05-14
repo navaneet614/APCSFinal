@@ -35,16 +35,16 @@ public class Turret extends Obstacle implements ActionListener
 	public int getDamage() 
 	{	
 		super.hit();
-		if(canDamage()) {
-			return 1;
-		}
+//		if(canDamage()) {
+//			return 1;
+//		}
 		return 0;
 	}
 	
 	
 	public void shoot() 
 	{
-		bullets.add(new Bullet(getX()+getWidth()/2, getY()+getHeight()/2, angle));
+		bullets.add(new Bullet(getX()-getWidth()/8 - 15, getY()+getHeight()/2, angle));
 		//angle+=0.7;
 	}
 	
@@ -72,7 +72,7 @@ public class Turret extends Obstacle implements ActionListener
 	public void actionPerformed(ActionEvent e) 
 	{
 		count++;
-		if ( count % 100 == 0) 
+		if ( count % 500 == 0) 
 		{
 			shoot();
 		}

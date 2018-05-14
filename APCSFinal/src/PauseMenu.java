@@ -22,7 +22,7 @@ public class PauseMenu extends Menu {
 	@Override
 	public void doButtonAction(String buttonText, GameScreen gameScreen) {
 		if(buttonText.equals("Resume")) {
-			gameScreen.changeMenuMode("singleplayer");
+			gameScreen.changeMenuMode("resume");
 		} else if(buttonText.equals("Options")) {
 			gameScreen.changeMenuMode("options"); 
 		}else if(buttonText.equals("Main Menu")) {

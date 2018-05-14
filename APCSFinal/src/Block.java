@@ -10,10 +10,19 @@
  */
 public class Block extends Obstacle 
 {
-
+	private boolean stuffOnTop;
 	public Block(float x, float y, double width, double height) 
 	{
 		super(x, y, ImageLoader.block ,width,height);
+		stuffOnTop = false;
+	}
+	
+	public void setStuffOnTop(boolean x) {
+		stuffOnTop = x;
+	}
+	
+	public boolean getStuffOnTop() {
+		return stuffOnTop;
 	}
 	
 	public int getDamage() 

@@ -78,4 +78,8 @@ public class Bullet
 	{
 		yCoord = y;
 	}
+	
+	public int getDamage() {
+		return 1;
+	}
 }
