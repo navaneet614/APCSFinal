@@ -92,7 +92,7 @@ public class GameScreen extends PApplet {
 			for (Obstacle ob : obstacles) {
 				if (o instanceof Block && Math.abs(ob.getY() - o.getY() - o.getHeight()) < .1
 						&& Math.abs(ob.getX() - o.getX()) < .1) {
-					Block hu = (Block) o;
+					Block hu = (Block) ob;
 					hu.setStuffOnTop(true);
 				}
 			}
@@ -413,12 +413,10 @@ public class GameScreen extends PApplet {
 			Turret turret = null;
 			for (Obstacle o : obstacles) {
 				if (o.getBoundRect().contains(mouseP) && o instanceof Block) {
-
-					godScreen.setDragging(false);
 					String x = godScreen.getObstacleType();
-
 					Block bee = (Block) o;
 					if (!bee.getStuffOnTop()) {
+						godScreen.setDragging(false);
 						if (x.equals("spike")) {
 							spike = new Spike((float) o.getX(), (float) o.getY() - 30, 50, 30);
 						} else if (x.equals("glue")) {
@@ -485,20 +483,19 @@ public class GameScreen extends PApplet {
 			this.lvlNum = Integer.parseInt(menumode.charAt(menumode.length() - 1) + "");
 			this.doLvl();
 			currentMenu = difficultyMenu;
-		} else if(menumode.equals("easy")) {
+		} else if (menumode.equals("easy")) {
 			currentMenu = null;
 			god.setObstacleAmount(10);
 			inGameMenu = godScreen;
-		}else if(menumode.equals("medium")) {
+		} else if (menumode.equals("medium")) {
 			currentMenu = null;
 			god.setObstacleAmount(15);
 			inGameMenu = godScreen;
-		}else if(menumode.equals("hard")) {
+		} else if (menumode.equals("hard")) {
 			currentMenu = null;
 			god.setObstacleAmount(25);
 			inGameMenu = godScreen;
-		}
-		else {
+		} else {
 			currentMenu = null;
 		}
 	}

@@ -21,7 +21,7 @@ public class Block extends Obstacle
 	
 	public void draw(PApplet drawer) {
 		super.draw(drawer);
-		drawer.text(stuffOnTop + "", (float)this.getX() + 25, (float)this.getY() + 25);
+//		drawer.text(stuffOnTop + "", (float)this.getX() + 25, (float)this.getY() + 25);
 	}
 	
 	public void setStuffOnTop(boolean x) {
