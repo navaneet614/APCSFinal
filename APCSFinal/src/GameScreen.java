@@ -27,7 +27,8 @@ public class GameScreen extends PApplet {
 	private MultiplayerMenu multiplayerMenu;
 	private DeathMenu deathMenu;
 	private GodScreen godScreen;
-	private DifficultyMenu diffMenu;
+	private LevelMenu levelMenu;
+	private DifficultyMenu difficultyMenu;
 	private Player guy;
 	private God god;
 	private HashSet<Integer> keys;
@@ -46,7 +47,8 @@ public class GameScreen extends PApplet {
 		pauseMenu = new PauseMenu();
 		deathMenu = new DeathMenu();
 		multiplayerMenu = new MultiplayerMenu();
-		diffMenu = new DifficultyMenu();
+		levelMenu = new LevelMenu();
+		difficultyMenu = new DifficultyMenu();
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
 		god = new God(450, 100, 120, 140, 15);
@@ -68,7 +70,7 @@ public class GameScreen extends PApplet {
 		obstacles.clear();
 		doLvl();
 		godScreen = new GodScreen(0, 0, 800, 100, god);
-		currentMenu = diffMenu;
+		currentMenu = levelMenu;
 		inGameMenu = null;
 		setupBlocks();
 	}
@@ -482,9 +484,21 @@ public class GameScreen extends PApplet {
 		} else if (menumode.startsWith("level")) {
 			this.lvlNum = Integer.parseInt(menumode.charAt(menumode.length() - 1) + "");
 			this.doLvl();
+			currentMenu = difficultyMenu;
+		} else if(menumode.equals("easy")) {
 			currentMenu = null;
+			god.setObstacleAmount(10);
 			inGameMenu = godScreen;
-		} else {
+		}else if(menumode.equals("medium")) {
+			currentMenu = null;
+			god.setObstacleAmount(15);
+			inGameMenu = godScreen;
+		}else if(menumode.equals("hard")) {
+			currentMenu = null;
+			god.setObstacleAmount(25);
+			inGameMenu = godScreen;
+		}
+		else {
 			currentMenu = null;
 		}
 	}

@@ -1,7 +1,6 @@
 import java.awt.Color;
 
 public class DifficultyMenu extends Menu {
-	
 	public DifficultyMenu() {
 		doButtons();
 	}
@@ -17,14 +16,13 @@ public class DifficultyMenu extends Menu {
 	
 	public void doButtonAction(String buttonText, GameScreen gameScreen) {
 		if(buttonText.equals("Easy")) {
-			gameScreen.changeMenuMode("level1");
+			gameScreen.changeMenuMode("easy");
 		} else if(buttonText.equals("Not Easy")) {
-			gameScreen.changeMenuMode("level2"); 
+			gameScreen.changeMenuMode("medium"); 
 		}else if(buttonText.equals("Really Not Easy")) {
-			gameScreen.changeMenuMode("level3");
-		} else if(buttonText.equals("Back")) {
+			gameScreen.changeMenuMode("hard");
+		} else if(buttonText.equals("Main Menu")) {
 			gameScreen.changeMenuMode("main");
 		}
 	}
-
 }

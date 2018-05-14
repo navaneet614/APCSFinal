@@ -55,6 +55,10 @@ public class God
 		return placedObstacles;
 	}
 	
+	public void setObstacleAmount(int x) {
+		amountOfObstacles = x;
+	}
+	
 	
 	
 //	public void throwObstacle( Obstacle ob, float startX, float startY ) 
