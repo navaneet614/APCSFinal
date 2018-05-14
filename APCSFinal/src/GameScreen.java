@@ -257,7 +257,7 @@ public class GameScreen extends PApplet {
 			guy.update(keys, this);
 			guy.draw(this);
 			//guy.draw(this);
-			// god.draw(this);
+			god.draw(this);
 			}
 			
 			for (Obstacle o : obstacles) {
