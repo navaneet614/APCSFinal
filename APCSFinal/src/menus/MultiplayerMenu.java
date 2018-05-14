@@ -12,7 +12,7 @@ public class MultiplayerMenu extends Menu {
 	private void doButtons() {
 		this.addButton(new Button(325, 200, 150, 50, "Local", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 		this.addButton(new Button(325, 260, 150, 50, "Online", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 320, 150, 50, "Main Menu", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 320, 150, 50, "Back", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 	}
 	
 	public void doButtonAction(String buttonText, GameScreen gameScreen) {
@@ -20,7 +20,7 @@ public class MultiplayerMenu extends Menu {
 			gameScreen.changeMenuMode("localmultiplayer");
 		} else if(buttonText.equals("Online")) {
 			gameScreen.changeMenuMode("onlinemultiplayer"); 
-		}else if(buttonText.equals("Main Menu")) {
+		}else if(buttonText.equals("Back")) {
 			gameScreen.changeMenuMode("main");
 		}
 
