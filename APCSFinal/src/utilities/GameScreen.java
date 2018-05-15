@@ -297,7 +297,7 @@ public class GameScreen extends PApplet {
 	public void draw() {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
-		System.out.println("FPS:" + frameRate);
+		 System.out.println("FPS:" + frameRate);
 		// System.out.println(this.distanceTranslated);
 		// if (guy.hearts() <= 0) {
 		// currentMenu = deathMenu;
@@ -353,13 +353,18 @@ public class GameScreen extends PApplet {
 					guy.draw(this);
 				}
 			} else {
-				hitDetection();
-				guy.update(keys, this);
+//				thread("update");
+				update();
 				guy.draw(this);
-				if (guy.hearts() <= 0) {
-					currentMenu = deathMenu;
-				}
 			}
+		}
+	}
+
+	public void update() {
+		hitDetection();
+		guy.update(keys, this);
+		if (guy.hearts() <= 0) {
+			currentMenu = deathMenu;
 		}
 	}
 
@@ -675,7 +680,7 @@ public class GameScreen extends PApplet {
 				}
 			}
 		}
-		if(inGameMenu instanceof GodScreen) {
+		if (inGameMenu instanceof GodScreen) {
 			guy.setX(guy.getX() - x);
 		}
 		distanceTranslated += x;
