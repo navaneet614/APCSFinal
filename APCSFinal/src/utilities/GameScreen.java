@@ -119,7 +119,8 @@ public class GameScreen extends PApplet {
 	}
 
 	public void settings() {
-		size(800, 600, FX2D);
+		size(800, 600);
+//		this.getSurface().setResizable(true);
 		// fullScreen(P2D);
 	}
 
@@ -328,6 +329,7 @@ public class GameScreen extends PApplet {
 		// guy.draw(this);
 		// }
 		// }
+		
 
 		if (currentMenu != null) {
 			currentMenu.draw(this);
@@ -376,9 +378,9 @@ public class GameScreen extends PApplet {
 
 		if ((key == 'p' || key == ' ') && currentMenu == null) {
 			currentMenu = pauseMenu;
-		} else if (key == 'd' && god.canPlace()) {
+		} else if (key == 'd' && inGameMenu instanceof GodScreen) {
 			translate(10);
-		} else if (key == 'a' && god.canPlace()) {
+		} else if (key == 'a' && inGameMenu instanceof GodScreen) {
 			translate(-10);
 		}
 		keys.add(this.keyCode);
@@ -515,7 +517,10 @@ public class GameScreen extends PApplet {
 				god.place();
 			}
 			if (canPlaceBlock && mouseY > 100 && x.equals("block")) {
-				obstacles.add(new Block((float) mouseX - mouseX % 50, (float) mouseY - mouseY % 50, 50, 50));
+				if(keyPressed) {
+					return;
+				}
+				obstacles.add(new Block((float) (mouseX - mouseX % (50)), (float) mouseY - mouseY % 50, 50, 50));
 				god.place();
 			}
 		}
@@ -558,15 +563,15 @@ public class GameScreen extends PApplet {
 			currentMenu = difficultyMenu;
 		} else if (menumode.equals("easy")) {
 			currentMenu = null;
-			god.setObstacleAmount(10);
+			god.setObstacleAmount(7);
 			inGameMenu = godScreen;
 		} else if (menumode.equals("medium")) {
 			currentMenu = null;
-			god.setObstacleAmount(15);
+			god.setObstacleAmount(12);
 			inGameMenu = godScreen;
 		} else if (menumode.equals("hard")) {
 			currentMenu = null;
-			god.setObstacleAmount(25);
+			god.setObstacleAmount(20);
 			inGameMenu = godScreen;
 		} else if (menumode.equals("backtolevelmenu")) {
 			currentMenu = this.levelMenu;
@@ -677,15 +682,7 @@ public class GameScreen extends PApplet {
 				}
 			}
 		}
-		if (inGameMenu instanceof GodScreen) {
-			guy.setX(guy.getX() - x);
-		}
 		distanceTranslated += x;
 		return true;
 	}
-
-	public static int getLevelLength() {
-		return levelLength;
-	}
-
 }
