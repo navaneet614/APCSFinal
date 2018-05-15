@@ -112,7 +112,7 @@ public class GameScreen extends PApplet {
 	public void setup() {
 		// this.frameRate(60);
 		// noLoop();
-		ImageLoader.loadAllImages(this, "");
+		ImageLoader.loadAllImages(this, "resources/");
 		guy.setup(this);
 		// god.setup(this);
 		for (Obstacle o : obstacles) {
@@ -345,14 +345,14 @@ public class GameScreen extends PApplet {
 					inGameMenu = null;
 				} else if (!god.canPlace()) {
 					inGameMenu = null;
+					guy = new Player(50, 450, 50, 50);
+					guy.setup(this);
 					translate(-distanceTranslated);
-				} else
+				} else {
 					inGameMenu.draw(this);
+					guy.draw(this);
+				}
 			} else {
-				// if(office.getX()>=650 && office.getX()<=ORIGINAL_WIDTH)
-				// {
-				// }
-
 				hitDetection();
 				guy.update(keys, this);
 				guy.draw(this);
@@ -674,6 +674,9 @@ public class GameScreen extends PApplet {
 					b.setX((float) (b.getX() - x));
 				}
 			}
+		}
+		if(inGameMenu instanceof GodScreen) {
+			guy.setX(guy.getX() - x);
 		}
 		distanceTranslated += x;
 		return true;
