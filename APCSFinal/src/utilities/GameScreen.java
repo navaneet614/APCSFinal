@@ -110,6 +110,7 @@ public class GameScreen extends PApplet {
 	}
 
 	public void setup() {
+//		surface.setResizable(true);
 		// this.frameRate(60);
 		// noLoop();
 		ImageLoader.loadAllImages(this, "resources/");
@@ -135,7 +136,8 @@ public class GameScreen extends PApplet {
 	}
 
 	public void settings() {
-		size(800, 600);
+//		size(800, 600, P2D);
+		fullScreen(P2D);
 	}
 
 	public void doLvl() {
@@ -350,7 +352,7 @@ public class GameScreen extends PApplet {
 					translate(-distanceTranslated);
 				} else {
 					inGameMenu.draw(this);
-					guy.draw(this);
+//					guy.draw(this);
 				}
 			} else {
 //				thread("update");
