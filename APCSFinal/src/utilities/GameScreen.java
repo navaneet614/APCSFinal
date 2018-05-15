@@ -78,7 +78,7 @@ public class GameScreen extends PApplet {
 		lvlNum = 3;
 		currentMenu = startMenu;
 		inGameMenu = null;
-		office = new Office();
+		office = new Office(2750, 500);
 	}
 
 	public void reset(boolean fullClear) {
@@ -89,6 +89,12 @@ public class GameScreen extends PApplet {
 		keys.clear();
 		currentMenu = null;
 		inGameMenu = null;
+		for(Obstacle o:obstacles) {
+			if(o instanceof Turret) {
+				Turret t = (Turret) o;
+				t.bullets().clear();
+			}
+		}
 		if (fullClear) {
 			obstacles.clear();
 			doLvl();
@@ -284,8 +290,8 @@ public class GameScreen extends PApplet {
 	public void draw() {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
-//		 System.out.println("FPS:" + frameRate);
-		System.out.println(this.distanceTranslated);
+		 System.out.println("FPS:" + frameRate);
+//		System.out.println(this.distanceTranslated);
 		// if (guy.hearts() <= 0) {
 		// currentMenu = deathMenu;
 		// }
@@ -323,7 +329,8 @@ public class GameScreen extends PApplet {
 			currentMenu.draw(this);
 		} else {
 			for (Obstacle o : obstacles) {
-				o.draw(this);
+//				if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
+					o.draw(this);
 			}
 			if (inGameMenu != null) {
 				if (gameMode.equals(gameModes.singleplayer)) {
@@ -335,11 +342,11 @@ public class GameScreen extends PApplet {
 				} else
 					inGameMenu.draw(this);
 			} else {
-				if ( guy.getX() > levelLength - ORIGINAL_WIDTH ) 
-				{
-					office.setX(500);
+//				if(office.getX()>=650 && office.getX()<=ORIGINAL_WIDTH)
+//				{
 					office.draw(this);
-				}
+//				}
+	
 				hitDetection();
 				guy.update(keys, this);
 				guy.draw(this);
@@ -608,7 +615,7 @@ public class GameScreen extends PApplet {
 						for (Obstacle o : obstacles) {
 							if (o instanceof Block) {
 								Block block = (Block) o;
-								if (block.getBoundRect().intersects(b.getBoundingRect())) {
+								if (block.getBoundRect().intersects(b.getBoundingRect()) && t.bullets().size()!=0) {
 									t.bullets().remove(j);
 								}
 							}
@@ -641,6 +648,7 @@ public class GameScreen extends PApplet {
 				}
 			}
 		}
+		office.setX((float)( office.getX() - x));
 		distanceTranslated += x;
 		return true;
 	}

@@ -15,13 +15,19 @@ public class Office
 	private PShape myOffice;
 	private float officeX, officeY;
 	private float scale;
+	
+	
+	public Office(float x, float y) {
+		officeX = x;
+		officeY = y;
+	}
 
 	public void setup(PApplet drawer) {
 	  
-	  scale = 1.0f;
+	  scale = .5f;
 
-	  officeX = 900;	// initial values so that office is off the screen
-	  officeY = 100;
+//	  officeX = 900;	// initial values so that office is off the screen
+//	  officeY = 100;
 	  // Creating the PShape as a square. The
 	  // numeric arguments are similar to rect().
 	  myOffice = drawer.createShape(drawer.GROUP);		// myHouse PShape consists of all these other PShapes
