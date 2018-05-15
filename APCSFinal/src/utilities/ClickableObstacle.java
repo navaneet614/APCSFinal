@@ -5,6 +5,14 @@ import menus.Button;
 import obstacles.Obstacle;
 import processing.core.PApplet;
 
+/**
+ * 
+ * @author William Hu
+ * 
+ * The ClickableObstacle is a Button that represents an Obstacle,
+ * which helps with placing Obstacles in the mulitplayer mode.
+ *
+ */
 public class ClickableObstacle extends Button {
 	private Obstacle obstacle;
 	private float x,y,width,height;

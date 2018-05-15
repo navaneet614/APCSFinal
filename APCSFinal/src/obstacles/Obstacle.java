@@ -8,7 +8,7 @@ import processing.core.*;
 
 /**
  * 
- * @author William Hu
+ * @author Shaunak Bhandarkar
  * 
  * The abstract superclass Obstacle provides 
  * the framework for all Obstacles in the game.

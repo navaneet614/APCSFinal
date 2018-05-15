@@ -15,6 +15,15 @@ import utilities.GameScreen;
 import utilities.God;
 import utilities.ImageLoader;
 
+/**
+ * 
+ * @author William Hu
+ * 
+ * In multiplayer mode, this is the second user's GUI, which 
+ * allows him or her to select and place up to 10 obstacles
+ * in the given stage.
+ *
+ */
 public class GodScreen extends Menu {
 	private float x, y, width, height;
 	private ClickableObstacle spike, glue, turret, mine, block;

@@ -4,6 +4,14 @@ import java.awt.Color;
 import processing.core.PApplet;
 import utilities.GameScreen;
 
+/**
+ * 
+ * @author Navaneet Kadaba
+ * 
+ * This Menu is displayed before the user plays a level for him
+ * or her to select the difficulty of the given level.
+ *
+ */
 public class DifficultyMenu extends Menu {
 	public DifficultyMenu() {
 		doButtons();

@@ -3,6 +3,13 @@ import java.awt.Color;
 
 import utilities.GameScreen;
 
+/**
+ * 
+ * @author Navaneet Kadaba
+ * 
+ * This Menu allows the user to choose between local and online multiplayer modes.
+ *
+ */
 public class MultiplayerMenu extends Menu {
 
 	public MultiplayerMenu() {

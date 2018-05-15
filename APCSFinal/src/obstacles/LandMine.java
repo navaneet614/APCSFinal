@@ -3,6 +3,14 @@ package obstacles;
 import processing.core.PApplet;
 import utilities.ImageLoader;
 
+/**
+ * 
+ * @author Shaunak Bhandarkar
+ * 
+ * The LandMine is an Obstacle that can kill the Player if
+ * he steps on it.
+ *
+ */
 public class LandMine extends Obstacle {
 	private boolean setOff;
 	public LandMine(float x, float y, double width, double height) {
