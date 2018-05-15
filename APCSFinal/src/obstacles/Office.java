@@ -1,5 +1,7 @@
 package obstacles;
 
+import java.awt.Color;
+
 import processing.core.PApplet;
 import processing.core.PShape;
 import utilities.GameScreen;
@@ -95,6 +97,12 @@ public class Office
 
 		drawer.shape(myOffice, officeX, officeY);
 		
+		drawer.fill(Color.BLUE.getRGB());
+		drawer.rect(officeX, officeY, 100, 100);
+		
 		drawer.popMatrix();
+		
+//		drawer.fill(Color.BLUE.getRGB());
+//		drawer.ellipse(officeX, officeY, 100, 100);
 	}
 }

@@ -89,11 +89,11 @@ public class GameScreen extends PApplet {
 		keys.clear();
 		currentMenu = null;
 		inGameMenu = null;
-		for(Obstacle o:obstacles) {
-			if(o instanceof Turret) {
+		for (Obstacle o : obstacles) {
+			if (o instanceof Turret) {
 				Turret t = (Turret) o;
 				t.bullets().clear();
-			}else if(o instanceof LandMine) {
+			} else if (o instanceof LandMine) {
 				LandMine tempMine = (LandMine) o;
 				tempMine.turnOn();
 			}
@@ -108,7 +108,7 @@ public class GameScreen extends PApplet {
 	}
 
 	public void setup() {
-//		this.frameRate(60);
+		// this.frameRate(60);
 		// noLoop();
 		ImageLoader.loadAllImages(this, "");
 		guy.setup(this);
@@ -294,8 +294,8 @@ public class GameScreen extends PApplet {
 	public void draw() {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
-		 System.out.println("FPS:" + frameRate);
-//		System.out.println(this.distanceTranslated);
+		//System.out.println("FPS:" + frameRate);
+		// System.out.println(this.distanceTranslated);
 		// if (guy.hearts() <= 0) {
 		// currentMenu = deathMenu;
 		// }
@@ -333,8 +333,8 @@ public class GameScreen extends PApplet {
 			currentMenu.draw(this);
 		} else {
 			for (Obstacle o : obstacles) {
-//				if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
-					o.draw(this);
+				// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
+				o.draw(this);
 			}
 			if (inGameMenu != null) {
 				if (gameMode.equals(gameModes.singleplayer)) {
@@ -346,11 +346,11 @@ public class GameScreen extends PApplet {
 				} else
 					inGameMenu.draw(this);
 			} else {
-//				if(office.getX()>=650 && office.getX()<=ORIGINAL_WIDTH)
-//				{
-					office.draw(this);
-//				}
-	
+				// if(office.getX()>=650 && office.getX()<=ORIGINAL_WIDTH)
+				// {
+				office.draw(this);
+				// }
+
 				hitDetection();
 				guy.update(keys, this);
 				guy.draw(this);
@@ -388,12 +388,11 @@ public class GameScreen extends PApplet {
 	}
 
 	public void simpleAI() {
-		//setupBlocks();
+		// setupBlocks();
 		int hu, kadaba;
 		while (god.canPlace()) {
 			hu = (int) (Math.random() * obstacles.size());
-			if (obstacles.get(hu).getX() > this.levelLength - 50
-					|| Math.abs(obstacles.get(hu).getX() - guy.getX()) < 15) {
+			if (obstacles.get(hu).getX() > this.levelLength - 50 || obstacles.get(hu).getX() < 100) {
 				continue;
 			}
 			if (obstacles.get(hu) instanceof Block) {
@@ -406,12 +405,12 @@ public class GameScreen extends PApplet {
 					} else if (kadaba == 1) {
 						obstacles.add(new Glue((float) obstacles.get(hu).getX(), (float) obstacles.get(hu).getY() - 10,
 								50, 20));
-					} else if(kadaba == 2) {
+					} else if (kadaba == 2) {
 						obstacles.add(new Turret((float) obstacles.get(hu).getX(),
 								(float) obstacles.get(hu).getY() - 50, 50, 50, Math.PI));
-					} else if(kadaba == 3) {
-						obstacles.add(new LandMine((float) obstacles.get(hu).getX(), (float) obstacles.get(hu).getY() - 25,
-								25, 25));
+					} else if (kadaba == 3) {
+						obstacles.add(new LandMine((float) obstacles.get(hu).getX(),
+								(float) obstacles.get(hu).getY() - 25, 25, 25));
 					}
 					vandevoorde.setStuffOnTop(true);
 					god.place();
@@ -456,6 +455,7 @@ public class GameScreen extends PApplet {
 			Glue glue = null;
 			Turret turret = null;
 			LandMine mine = null;
+			boolean canPlaceBlock = true;
 			for (Obstacle o : obstacles) {
 				if (o.getBoundRect().contains(mouseP) && o instanceof Block) {
 					String x = godScreen.getObstacleType();
@@ -468,10 +468,10 @@ public class GameScreen extends PApplet {
 							glue = new Glue((float) o.getX(), (float) o.getY() - 10, 50, 10);
 						} else if (x.equals("turret")) {
 							turret = new Turret((float) o.getX(), (float) o.getY() - 50, 50, 50, Math.PI);
-						}else if(x.equals("mine")) {
+						} else if (x.equals("mine")) {
 							mine = new LandMine((float) o.getX(), (float) o.getY() - 25, 25, 25);
 						}
-						god.place();
+						
 						bee.setStuffOnTop(true);
 					} else {
 						spike = null;
@@ -479,23 +479,33 @@ public class GameScreen extends PApplet {
 						turret = null;
 						mine = null;
 					}
-
+				}
+				if (o.getBoundRect().contains(mouseP)) {
+					canPlaceBlock = false;
+					System.out.println("AM I ACTUALLY BEING PLACED?");
 				}
 			}
 			if (spike != null) {
 				obstacles.add(spike);
 				spike = null;
+				god.place();
 			} else if (glue != null) {
 				obstacles.add(glue);
 				glue = null;
+				god.place();
 			} else if (turret != null) {
 				obstacles.add(turret);
 				turret = null;
-			}else if(mine != null) {
+				god.place();
+			} else if (mine != null) {
 				obstacles.add(mine);
 				mine = null;
+				god.place();
 			}
-
+			if (canPlaceBlock && mouseY > 100) {
+				obstacles.add(new Block((float) mouseX - mouseX % 50, (float) mouseY - mouseY % 50, 50, 50));
+				god.place();
+			}
 		}
 	}
 
@@ -594,18 +604,17 @@ public class GameScreen extends PApplet {
 						guy.cancelJump();
 						guy.setY(oRect.getMaxY());
 					}
-				} 
-				 else {
+				} else {
 
 					guy.takeDamage(obstacles.get(i).getDamage());
-					if(obstacles.get(i)instanceof LandMine) {
-						 LandMine tempMine = (LandMine)obstacles.get(i);
-						 tempMine.setOff();
+					if (obstacles.get(i) instanceof LandMine) {
+						LandMine tempMine = (LandMine) obstacles.get(i);
+						tempMine.setOff();
 					}
 				}
 			} else {
 				obstacles.get(i).resetNumTimesHit();
-				
+
 			}
 			if (obstacles.get(i) instanceof Turret) {
 				Turret t = (Turret) (obstacles.get(i));
@@ -618,7 +627,7 @@ public class GameScreen extends PApplet {
 						for (Obstacle o : obstacles) {
 							if (o instanceof Block) {
 								Block block = (Block) o;
-								if (block.getBoundRect().intersects(b.getBoundingRect()) && t.bullets().size()!=0) {
+								if (block.getBoundRect().intersects(b.getBoundingRect()) && t.bullets().size() != 0) {
 									t.bullets().remove(j);
 								}
 							}
@@ -626,7 +635,7 @@ public class GameScreen extends PApplet {
 					}
 				}
 			}
-			
+
 		}
 
 		if (gRect.intersectsLine(0, ORIGINAL_HEIGHT, ORIGINAL_WIDTH, ORIGINAL_HEIGHT)) {
@@ -652,13 +661,12 @@ public class GameScreen extends PApplet {
 				}
 			}
 		}
-		office.setX((float)( office.getX() - x));
+		office.setX((float) (office.getX() - x));
 		distanceTranslated += x;
 		return true;
 	}
-	
-	public static int getLevelLength() 
-	{
+
+	public static int getLevelLength() {
 		return levelLength;
 	}
 

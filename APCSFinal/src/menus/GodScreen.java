@@ -2,6 +2,7 @@ package menus;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import obstacles.Block;
 import obstacles.Glue;
 import obstacles.Spike;
 import obstacles.Turret;
@@ -14,9 +15,9 @@ import utilities.ImageLoader;
 
 public class GodScreen extends Menu {
 	private float x, y, width, height;
-	private ClickableObstacle spike, glue, turret, mine;
+	private ClickableObstacle spike, glue, turret, mine, block;
 	private God god;
-	private boolean drawSpike, drawGlue, drawTurret, dragging, drawMine;
+	private boolean drawSpike, drawGlue, drawTurret, dragging, drawMine, drawBlock;
 
 	public GodScreen(float x, float y, float width, float height, God god) {
 		this.x = x;
@@ -27,10 +28,12 @@ public class GodScreen extends Menu {
 		glue = new ClickableObstacle(x + width / 8, y, width / 8, height, new Glue(x, y, 50, 50), "Glue");
 		turret = new ClickableObstacle(x + width / 4, y, width / 8, height, new Turret(x, y, 50, 50, 180), "Turrets");
 		mine = new ClickableObstacle(x + 3*width / 8, y, width / 8, height, new LandMine(x, y, 25, 25), "Mine");
+		block = new ClickableObstacle(x + width/2, y, width / 8, height, new Block(x, y, 50, 50), "Block");
 		addButton(spike);
 		addButton(glue);
 		addButton(turret);
 		addButton(mine);
+		addButton(block);
 		this.god = god;
 		dragging = false;
 	}
@@ -42,6 +45,7 @@ public class GodScreen extends Menu {
 		glue.draw(drawer);
 		turret.draw(drawer);
 		mine.draw(drawer);
+		block.draw(drawer);
 
 		drawer.fill(0);
 		drawer.textSize(15);
@@ -65,6 +69,8 @@ public class GodScreen extends Menu {
 				drawer.image(ImageLoader.turret, (drawer.mouseX / (drawer.width / 800f)), (drawer.mouseY / (drawer.height / 600f)), 50, 50);
 			}else if(drawMine) {
 				drawer.image(ImageLoader.mine, (drawer.mouseX / (drawer.width / 800f)), (drawer.mouseY / (drawer.height / 600f)), 25, 25);
+			}else if(drawBlock) {
+				drawer.image(ImageLoader.block, (drawer.mouseX / (drawer.width / 800f)), (drawer.mouseY / (drawer.height / 600f)), 50, 50);
 			}
 		}
 		
@@ -79,21 +85,31 @@ public class GodScreen extends Menu {
 			drawGlue = false;
 			drawTurret = false;
 			drawMine = false;
+			drawBlock = false;
 		} else if (buttonText.equals("Glue")) {
 			drawGlue = true;
 			drawSpike = false;
 			drawTurret = false;
 			drawMine = false;
+			drawBlock = false;
 		} else if (buttonText.equals("Turrets")) {
 			drawTurret = true;
 			drawSpike = false;
 			drawGlue = false;
 			drawMine = false;
+			drawBlock = false;
 		}else if(buttonText.equals("Mine")) {
 			drawSpike = false;
 			drawGlue = false;
 			drawTurret = false;
 			drawMine = true;
+			drawBlock = false;
+		}else if(buttonText.equals("Block")) {
+			drawBlock = true;
+			drawSpike = false;
+			drawGlue = false;
+			drawTurret = false;
+			drawMine = false;
 		}
 		dragging = true;
 
@@ -106,6 +122,8 @@ public class GodScreen extends Menu {
 			return "glue";
 		else if(drawMine) {
 			return "mine";
+		}else if(drawBlock) {
+			return "block";
 		}
 			return "turret";
 	}
