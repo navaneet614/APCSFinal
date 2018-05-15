@@ -107,8 +107,7 @@ public class GameScreen extends PApplet {
 
 	public void setup() {
 		// surface.setResizable(true);
-		// this.frameRate(60);
-		// noLoop();
+		this.frameRate(60);
 		ImageLoader.loadAllImages(this, "resources/");
 		guy.setup(this);
 		// god.setup(this);
@@ -120,7 +119,7 @@ public class GameScreen extends PApplet {
 	}
 
 	public void settings() {
-		size(800, 600, P2D);
+		size(800, 600, FX2D);
 		// fullScreen(P2D);
 	}
 
