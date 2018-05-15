@@ -289,15 +289,15 @@ public class GameScreen extends PApplet {
 			obstacles.add(new Block(2400, ORIGINAL_HEIGHT - 200, 50, 50));
 
 		}
-		obstacles.add(new FinishHouse(2630,450,ImageLoader.finish,100,100));
+		obstacles.add(new FinishHouse(2630, 450, ImageLoader.finish, 100, 100));
 		this.setupBlocks();
-		
+
 	}
 
 	public void draw() {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
-		//System.out.println("FPS:" + frameRate);
+		System.out.println("FPS:" + frameRate);
 		// System.out.println(this.distanceTranslated);
 		// if (guy.hearts() <= 0) {
 		// currentMenu = deathMenu;
@@ -372,11 +372,9 @@ public class GameScreen extends PApplet {
 		 * }
 		 */
 
-		if (key == 'p' && currentMenu == null) {
+		if ((key == 'p' || key == ' ') && currentMenu == null) {
 			currentMenu = pauseMenu;
 		} else if (key == 'd' && god.canPlace()) {
-			// System.out.println("here");
-
 			translate(10);
 		} else if (key == 'a' && god.canPlace()) {
 			translate(-10);
@@ -448,7 +446,17 @@ public class GameScreen extends PApplet {
 		mouseP.setLocation((int) (mouseX / (width / ORIGINAL_WIDTH)), (int) (mouseY / (height / ORIGINAL_HEIGHT)));
 		// System.out.println( " " + mouseP.getX() + " " + mouseP.getY() +
 		// godScreen.getDragging());
-		addObstacle();
+		if (inGameMenu instanceof GodScreen)
+			addObstacle();
+		// allows player to remove by clicking on
+		// if(currentMenu == null && inGameMenu == null) {
+		// for(int i = 0;i<obstacles.size();i++) {
+		// if(obstacles.get(i).getBoundRect().contains(mouseX, mouseY)) {
+		// obstacles.remove(i);
+		// i--;
+		// }
+		// }
+		// }
 	}
 
 	public void addObstacle() {
@@ -473,7 +481,7 @@ public class GameScreen extends PApplet {
 						} else if (x.equals("mine")) {
 							mine = new LandMine((float) o.getX(), (float) o.getY() - 25, 25, 25);
 						}
-						
+
 						bee.setStuffOnTop(true);
 					} else {
 						spike = null;
@@ -484,7 +492,7 @@ public class GameScreen extends PApplet {
 				}
 				if (o.getBoundRect().contains(mouseP)) {
 					canPlaceBlock = false;
-					System.out.println("AM I ACTUALLY BEING PLACED?");
+					// System.out.println("AM I ACTUALLY BEING PLACED?");
 				}
 			}
 			if (spike != null) {
@@ -606,10 +614,9 @@ public class GameScreen extends PApplet {
 						guy.cancelJump();
 						guy.setY(oRect.getMaxY());
 					}
-				}else if(obstacles.get(i) instanceof FinishHouse) {
+				} else if (obstacles.get(i) instanceof FinishHouse) {
 					currentMenu = finishedLevelMenu;
-				}
-				else {
+				} else {
 
 					guy.takeDamage(obstacles.get(i).getDamage());
 					if (obstacles.get(i) instanceof LandMine) {
@@ -628,12 +635,14 @@ public class GameScreen extends PApplet {
 					if (b.getBoundingRect().intersects(guy.getBoundingRect())) {
 						guy.takeDamage(b.getDamage());
 						t.bullets().remove(j);
+						j--;
 					} else {
 						for (Obstacle o : obstacles) {
 							if (o instanceof Block) {
 								Block block = (Block) o;
 								if (block.getBoundRect().intersects(b.getBoundingRect()) && t.bullets().size() != 0) {
 									t.bullets().remove(j);
+									j--;
 								}
 							}
 						}

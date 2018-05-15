@@ -25,7 +25,7 @@ public class Main {
 		JFrame window = (JFrame) canvas.getFrame();
 
 		window.setName("God's Plan");
-		window.setLocation(10, 10);
+		window.setLocation(100, 100);
 		window.setSize(800, 600);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);

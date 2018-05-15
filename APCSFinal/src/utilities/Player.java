@@ -1,8 +1,8 @@
 package utilities;
+
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.HashSet;
-
 
 import java.io.*;
 
@@ -13,22 +13,19 @@ import processing.core.PImage;
  * 
  * @author William Hu
  * 
- * The Player class is the main class used to 
- * control the actual main character of the game.
- * This involves simulating gravity, as on Earth,
- * moving around, and jumping. It also enables one
- * to check the "boundaries" of a Player to identify
- * whether it is intersecting or overlapping with another
- * graphical object.
+ *         The Player class is the main class used to control the actual main
+ *         character of the game. This involves simulating gravity, as on Earth,
+ *         moving around, and jumping. It also enables one to check the
+ *         "boundaries" of a Player to identify whether it is intersecting or
+ *         overlapping with another graphical object.
  *
  */
-public class Player implements Serializable
-{
+public class Player implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6984109521635763440L;	// just in case ID is needed
+	private static final long serialVersionUID = -6984109521635763440L; // just in case ID is needed
 
 	public final double GRAVITY = 1.05, JUMP_HEIGHT = 20;
 
@@ -61,17 +58,18 @@ public class Player implements Serializable
 
 	public void draw(PApplet drawer) {
 		float xSpot = (float) (xCoord);
-		float ySpot = (float) yCoord-25;
-		for(int i = 0; i < health; i++) {
-			drawer.image(heart, xSpot, ySpot, 20,20);
+		float ySpot = (float) yCoord - 25;
+		for (int i = 0; i < health; i++) {
+			drawer.image(heart, xSpot, ySpot, 20, 20);
 			xSpot += 20;
 		}
 		drawer.image(character, (float) xCoord, (float) yCoord, (float) width, (float) height);
-//		drawer.point((float)xCoord, (float)yCoord);
-//		 drawer.rect(boundingRectangle.x, boundingRectangle.y,boundingRectangle.width, boundingRectangle.height);
+		// drawer.point((float)xCoord, (float)yCoord);
+		// drawer.rect(boundingRectangle.x, boundingRectangle.y,boundingRectangle.width,
+		// boundingRectangle.height);
 
 	}
-	
+
 	public int hearts() {
 		return health;
 	}
@@ -84,13 +82,13 @@ public class Player implements Serializable
 		if (!jumping)
 			jumping = true;
 	}
-	
-	public void cancelJump()
-	{
-		if(jumping) {
+
+	public void cancelJump() {
+		if (jumping) {
 			jumping = false;
 		}
 	}
+
 	public void takeDamage(int damage) {
 		health -= damage;
 		if (health <= 0) {
@@ -109,38 +107,38 @@ public class Player implements Serializable
 	public double getY() {
 		return yCoord;
 	}
-	
+
 	public double getHeight() {
 		return height;
 	}
-	
+
 	public double getWidth() {
 		return width;
 	}
-	
+
 	public void setX(double x) {
 		xCoord = x;
 	}
-	
+
 	public void setY(double y) {
 		yCoord = y;
 	}
-	
+
 	public double getVY() {
 		return vy;
 	}
-	
+
 	public void setVY(double newVY) {
 		vy = GRAVITY;
 	}
-	
+
 	private void moveLeft() {
 		if (slow) {
 			moveDirection(-.5);
 		} else
 			moveDirection(-1);
 	}
-	
+
 	private void moveRight() {
 		if (slow) {
 			moveDirection(.5);
@@ -153,19 +151,19 @@ public class Player implements Serializable
 			if (key == PApplet.UP) {
 				jump();
 			} else if (key == PApplet.DOWN) {
-				
+
 			} else if (key == PApplet.LEFT && getX() > 0) {
 				if (xCoord > gameScreen.ORIGINAL_WIDTH * 1 / 4) {
 					moveLeft();
 				} else {
-					if(!gameScreen.translate(-7))
+					if (!gameScreen.translate(-7))
 						moveLeft();
 				}
 			} else if (key == PApplet.RIGHT && getX() + width < gameScreen.width) {
 				if (xCoord + width < gameScreen.ORIGINAL_WIDTH * 3 / 4) {
 					moveRight();
 				} else {
-					if(!gameScreen.translate(7))
+					if (!gameScreen.translate(7))
 						moveRight();
 				}
 
@@ -177,7 +175,11 @@ public class Player implements Serializable
 	private void act() {
 		boundingRectangle.setLocation((int) xCoord, (int) yCoord);
 		if (jumping) {
-			yCoord -= JUMP_HEIGHT;
+			if (slow) {
+				yCoord -= JUMP_HEIGHT * .8;
+			} else {
+				yCoord -= JUMP_HEIGHT;
+			}
 		}
 		vy += GRAVITY;
 		yCoord += vy;

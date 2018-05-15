@@ -1,4 +1,5 @@
 package obstacles;
+import processing.core.PApplet;
 import utilities.ImageLoader;
 
 /**
@@ -28,6 +29,11 @@ public class Spike extends Obstacle
 			return 1;
 		}
 		return 0;
+	}
+	
+	public void draw(PApplet drawer) {
+		super.draw(drawer);
+		getBoundRect().setBounds((int)(getX() + 10), (int)(getY() + 5), (int)(getWidth() -20), (int)(getHeight() - 10));
 	}
 
 }

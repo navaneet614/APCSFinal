@@ -2,6 +2,8 @@ package menus;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import obstacles.Block;
 import obstacles.Glue;
 import obstacles.Spike;
@@ -17,7 +19,8 @@ public class GodScreen extends Menu {
 	private float x, y, width, height;
 	private ClickableObstacle spike, glue, turret, mine, block;
 	private God god;
-	private boolean drawSpike, drawGlue, drawTurret, dragging, drawMine, drawBlock;
+	private boolean showedPopup, drawSpike, drawGlue, drawTurret, dragging, drawMine, drawBlock;
+	private Button done;
 
 	public GodScreen(float x, float y, float width, float height, God god) {
 		this.x = x;
@@ -34,11 +37,18 @@ public class GodScreen extends Menu {
 		addButton(turret);
 		addButton(mine);
 		addButton(block);
+		done = new Button(x + 5*width / 8, y, width / 8, height, "Done", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE);
+		this.addButton(done);
 		this.god = god;
 		dragging = false;
+		showedPopup = false;
 	}
 
 	public void draw(PApplet drawer) {
+	    if(!showedPopup) {
+		    JOptionPane.showMessageDialog(null,"Please make sure the level you create is possible to complete. If you make it impossible, nobody will like you.");  
+	    	showedPopup = true;
+	    }
 		drawer.fill(Color.LIGHT_GRAY.getRGB());
 		drawer.rect(x, y, width, height);
 		spike.draw(drawer);
@@ -46,6 +56,7 @@ public class GodScreen extends Menu {
 		turret.draw(drawer);
 		mine.draw(drawer);
 		block.draw(drawer);
+		done.draw(drawer);
 
 		drawer.fill(0);
 		drawer.textSize(15);
@@ -110,6 +121,15 @@ public class GodScreen extends Menu {
 			drawGlue = false;
 			drawTurret = false;
 			drawMine = false;
+		} else if(buttonText.equals("Done")) {
+			drawBlock = true;
+			drawSpike = false;
+			drawGlue = false;
+			drawTurret = false;
+			drawMine = false;
+			while(god.canPlace()) {
+				god.place();
+			}
 		}
 		dragging = true;
 
