@@ -4,6 +4,15 @@ import java.awt.Color;
 import processing.core.PApplet;
 import utilities.GameScreen;
 
+/**
+ * 
+ * @author Navaneet Kadaba
+ * 
+ * This Menu is displayed before the user can play the game
+ * so that he or she can choose one of the three levels 
+ * offered.
+ *
+ */
 public class LevelMenu extends Menu {
 	
 	public LevelMenu() {

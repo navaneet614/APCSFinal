@@ -1,6 +1,6 @@
 -- HEADER --
 God’s Plan - By William Hu, Shaunak Bhandarkar, Navaneet Kadaba
-05-3-18
+05-15-18
 
 
 
@@ -19,11 +19,12 @@ Maybe you’ve shown your faith, or proven yourself, and passed God’s test. No
 --------------------------------------
 --INSTRUCTIONS--
 Keyboard Actions:
-        W - Moves character up
-        A - Moves character left 
-        S -  Moves character down
-        D - Moves character right
-        Spacebar - Pauses the game
+        Up Arrow - Character jumps
+        Left Arrow - Moves character left 
+        Right Arrow - Moves character right
+        Spacebar or p - Pauses the game
+        A - Scrolls the screen left in God mode
+        D - Scrolls the screen right in God mode
 
 
 
@@ -66,24 +67,35 @@ Stretch features:
 
 -- CLASS LIST --
 Menu - is all the panels
-* OnDeathMenu 
+* DeathMenu 
 * PauseMenu 
 * StartMenu
-GamePanel - has the game
+* DifficultyMenu
+* FinishedLevelMenu
+* GodScreen
+* LevelMenu
+* MultiplayerMenu
+Button - Represents a clickable button
+        * ClickableObstacle - A Button that represents an Obstacle
+GameScreen - has the game
 Sound - does sound for the game
 Server - makes the server for multiplayer
 Player - represents each player
-God
+God - Keeps track of how many obstacles God has placed
+ImageLoader - Stores all images used to increase efficiency
+Main - Runs the program
 Obstacle (abstract) - represents all obstacles. Inherited by:
 * Spikes
 * Glue
 * Turrets
-* Walls
-
+        * Bullet
+* Block
+* LandMine
+* FinishHouse
 
 
 
 -- RESPONSIBILITY LIST --
-Navaneet - getting networking and multiplayer done
-Shaunak - game design & music, sound
-William - game design & incorporating textures, format
+Navaneet - in charge of menu, buttons, and the game screen
+Shaunak - God of making obstacles, javadoc-ing, and READMe's
+William - in charge of creating God, Player, and the UML

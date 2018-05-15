@@ -7,7 +7,7 @@ import utilities.GameScreen;
  * 
  * @author Navaneet Kadaba
  * 
- * This class represents the menu that will be displayed when the character dies
+ * This class represents the menu that will be displayed when the character dies.
  *
  */
 public class DeathMenu extends Menu {

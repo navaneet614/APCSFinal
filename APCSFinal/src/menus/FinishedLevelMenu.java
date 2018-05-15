@@ -5,6 +5,13 @@ import java.awt.Color;
 import processing.core.PApplet;
 import utilities.GameScreen;
 
+/**
+ * 
+ * @author Navaneet Kadaba
+ * 
+ * This menu is displayed when the Player reaches the end of a given level.
+ *
+ */
 public class FinishedLevelMenu extends Menu {
 
 	public FinishedLevelMenu() {
