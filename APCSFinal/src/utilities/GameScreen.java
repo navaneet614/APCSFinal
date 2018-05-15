@@ -8,6 +8,7 @@ import java.util.HashSet;
 
 import menus.DeathMenu;
 import menus.DifficultyMenu;
+import menus.FinishedLevelMenu;
 import menus.GodScreen;
 import menus.LevelMenu;
 import menus.Menu;
@@ -16,6 +17,7 @@ import menus.PauseMenu;
 import menus.StartMenu;
 import obstacles.Block;
 import obstacles.Bullet;
+import obstacles.FinishHouse;
 import obstacles.Office;
 import obstacles.Glue;
 import obstacles.LandMine;
@@ -47,13 +49,13 @@ public class GameScreen extends PApplet {
 	private GodScreen godScreen;
 	private LevelMenu levelMenu;
 	private DifficultyMenu difficultyMenu;
+	private FinishedLevelMenu finishedLevelMenu;
 	private Player guy;
 	private God god;
 	private HashSet<Integer> keys;
 	private ArrayList<Obstacle> obstacles;
 	private double distanceTranslated;
 	private Rectangle mouseP;
-	private Office office;
 
 	private enum gameModes {
 		singleplayer, localMultiplayer, onlineMultiplayer
@@ -68,6 +70,7 @@ public class GameScreen extends PApplet {
 		multiplayerMenu = new MultiplayerMenu();
 		levelMenu = new LevelMenu();
 		difficultyMenu = new DifficultyMenu();
+		finishedLevelMenu = new FinishedLevelMenu();
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
 		god = new God(450, 100, 120, 140, 15);
@@ -78,7 +81,6 @@ public class GameScreen extends PApplet {
 		lvlNum = 3;
 		currentMenu = startMenu;
 		inGameMenu = null;
-		office = new Office(2750, 500);
 	}
 
 	public void reset(boolean fullClear) {
@@ -112,7 +114,6 @@ public class GameScreen extends PApplet {
 		// noLoop();
 		ImageLoader.loadAllImages(this, "");
 		guy.setup(this);
-		office.setup(this);
 		// god.setup(this);
 		for (Obstacle o : obstacles) {
 			o.setup(this);
@@ -288,7 +289,9 @@ public class GameScreen extends PApplet {
 			obstacles.add(new Block(2400, ORIGINAL_HEIGHT - 200, 50, 50));
 
 		}
+		obstacles.add(new FinishHouse(2630,450,ImageLoader.finish,100,100));
 		this.setupBlocks();
+		
 	}
 
 	public void draw() {
@@ -348,7 +351,6 @@ public class GameScreen extends PApplet {
 			} else {
 				// if(office.getX()>=650 && office.getX()<=ORIGINAL_WIDTH)
 				// {
-				office.draw(this);
 				// }
 
 				hitDetection();
@@ -604,7 +606,11 @@ public class GameScreen extends PApplet {
 						guy.cancelJump();
 						guy.setY(oRect.getMaxY());
 					}
-				} else {
+				}else if(obstacles.get(i) instanceof FinishHouse) {
+					currentMenu = finishedLevelMenu;
+					System.out.println("CON-FUCKING-GRATS!");
+				}
+				else {
 
 					guy.takeDamage(obstacles.get(i).getDamage());
 					if (obstacles.get(i) instanceof LandMine) {
@@ -661,7 +667,6 @@ public class GameScreen extends PApplet {
 				}
 			}
 		}
-		office.setX((float) (office.getX() - x));
 		distanceTranslated += x;
 		return true;
 	}
