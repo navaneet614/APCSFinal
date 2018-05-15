@@ -15,7 +15,7 @@ import processing.core.PImage;
  */
 public class ImageLoader {
 	
-	public static PImage block, character, glue, health, lightningbolt, platform, player_walk, spike, turret;
+	public static PImage block, character, glue, health, lightningbolt, platform, player_walk, spike, turret,mine;
 	
 	public static void loadAllImages(PApplet p, String locationOfResources) {
 		block = p.loadImage(locationOfResources + "block.png");
@@ -27,6 +27,7 @@ public class ImageLoader {
 		player_walk = p.loadImage(locationOfResources + "player_walk.gif");
 		spike = p.loadImage(locationOfResources + "spike.png");
 		turret = p.loadImage(locationOfResources + "turret2.png");
+		mine = p.loadImage(locationOfResources + "mine.png");
 	
 		
 	}

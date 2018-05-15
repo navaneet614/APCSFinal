@@ -18,6 +18,7 @@ import obstacles.Block;
 import obstacles.Bullet;
 import obstacles.Office;
 import obstacles.Glue;
+import obstacles.LandMine;
 import obstacles.Obstacle;
 import obstacles.Office;
 import obstacles.Spike;
@@ -387,16 +388,19 @@ public class GameScreen extends PApplet {
 			if (obstacles.get(hu) instanceof Block) {
 				Block vandevoorde = (Block) obstacles.get(hu);
 				if (!vandevoorde.getStuffOnTop()) {
-					kadaba = (int) (Math.random() * 3);
+					kadaba = (int) (Math.random() * 4);
 					if (kadaba == 0) {
 						obstacles.add(new Spike((float) obstacles.get(hu).getX(), (float) obstacles.get(hu).getY() - 30,
 								50, 30));
 					} else if (kadaba == 1) {
 						obstacles.add(new Glue((float) obstacles.get(hu).getX(), (float) obstacles.get(hu).getY() - 10,
-								50, 10));
-					} else {
+								50, 20));
+					} else if(kadaba == 2) {
 						obstacles.add(new Turret((float) obstacles.get(hu).getX(),
 								(float) obstacles.get(hu).getY() - 50, 50, 50, Math.PI));
+					} else if(kadaba == 3) {
+						obstacles.add(new LandMine((float) obstacles.get(hu).getX(), (float) obstacles.get(hu).getY() - 25,
+								25, 25));
 					}
 					vandevoorde.setStuffOnTop(true);
 					god.place();
@@ -440,6 +444,7 @@ public class GameScreen extends PApplet {
 			Spike spike = null;
 			Glue glue = null;
 			Turret turret = null;
+			LandMine mine = null;
 			for (Obstacle o : obstacles) {
 				if (o.getBoundRect().contains(mouseP) && o instanceof Block) {
 					String x = godScreen.getObstacleType();
@@ -452,6 +457,8 @@ public class GameScreen extends PApplet {
 							glue = new Glue((float) o.getX(), (float) o.getY() - 10, 50, 10);
 						} else if (x.equals("turret")) {
 							turret = new Turret((float) o.getX(), (float) o.getY() - 50, 50, 50, Math.PI);
+						}else if(x.equals("mine")) {
+							mine = new LandMine((float) o.getX(), (float) o.getY() - 25, 25, 25);
 						}
 						god.place();
 						bee.setStuffOnTop(true);
@@ -459,6 +466,7 @@ public class GameScreen extends PApplet {
 						spike = null;
 						glue = null;
 						turret = null;
+						mine = null;
 					}
 
 				}
@@ -472,6 +480,9 @@ public class GameScreen extends PApplet {
 			} else if (turret != null) {
 				obstacles.add(turret);
 				turret = null;
+			}else if(mine != null) {
+				obstacles.add(mine);
+				mine = null;
 			}
 
 		}
@@ -579,6 +590,8 @@ public class GameScreen extends PApplet {
 				} else {
 
 					guy.takeDamage(obstacles.get(i).getDamage());
+					if(obstacles.get(i)instanceof LandMine)
+						obstacles.remove(i);
 				}
 			} else {
 				obstacles.get(i).resetNumTimesHit();
