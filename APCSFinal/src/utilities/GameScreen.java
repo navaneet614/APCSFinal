@@ -608,7 +608,6 @@ public class GameScreen extends PApplet {
 					}
 				}else if(obstacles.get(i) instanceof FinishHouse) {
 					currentMenu = finishedLevelMenu;
-					System.out.println("CON-FUCKING-GRATS!");
 				}
 				else {
 
