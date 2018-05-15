@@ -98,4 +98,4 @@ Obstacle (abstract) - represents all obstacles. Inherited by:
 -- RESPONSIBILITY LIST --
 Navaneet - in charge of menu, buttons, and the game screen
 Shaunak - God of making obstacles, javadoc-ing, and READMe's
-William - in charge of creating God and Player
+William - in charge of creating God, Player, and the UML
