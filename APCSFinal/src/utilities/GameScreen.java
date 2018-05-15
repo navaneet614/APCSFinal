@@ -136,8 +136,8 @@ public class GameScreen extends PApplet {
 	}
 
 	public void settings() {
-//		size(800, 600, P2D);
-		fullScreen(P2D);
+		size(800, 600, P2D);
+//		fullScreen(P2D);
 	}
 
 	public void doLvl() {
