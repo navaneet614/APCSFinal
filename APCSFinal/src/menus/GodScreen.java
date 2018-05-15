@@ -10,7 +10,6 @@ import obstacles.LandMine;
 import obstacles.Spike;
 import obstacles.Turret;
 import processing.core.PApplet;
-import utilities.ClickableObstacle;
 import utilities.GameScreen;
 import utilities.God;
 import utilities.ImageLoader;
