@@ -1,14 +1,14 @@
 package menus;
 import java.awt.Color;
-import java.util.ArrayList;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import obstacles.Block;
 import obstacles.Glue;
+import obstacles.LandMine;
 import obstacles.Spike;
 import obstacles.Turret;
-import obstacles.LandMine;
 import processing.core.PApplet;
 import utilities.ClickableObstacle;
 import utilities.GameScreen;
@@ -46,8 +46,11 @@ public class GodScreen extends Menu {
 
 	public void draw(PApplet drawer) {
 	    if(!showedPopup) {
-		    JOptionPane.showMessageDialog(null,"Please make sure the level you create is possible to complete. If you make it impossible, nobody will like you.");  
-	    	showedPopup = true;
+		    JOptionPane optionPane = new JOptionPane("Please make sure the level you create is possible to complete. If you make it impossible, nobody will like you.");
+		    JDialog dialog = optionPane.createDialog("IMPORTANT MESSAGE");
+		    dialog.setAlwaysOnTop(true);
+		    dialog.setVisible(true);
+		    showedPopup = true;
 	    }
 		drawer.fill(Color.LIGHT_GRAY.getRGB());
 		drawer.rect(x, y, width, height);

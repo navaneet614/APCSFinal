@@ -1,11 +1,9 @@
 package utilities;
 
 import java.awt.Color;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
-
 import menus.DeathMenu;
 import menus.DifficultyMenu;
 import menus.FinishedLevelMenu;
@@ -18,11 +16,9 @@ import menus.StartMenu;
 import obstacles.Block;
 import obstacles.Bullet;
 import obstacles.FinishHouse;
-import obstacles.Office;
 import obstacles.Glue;
 import obstacles.LandMine;
 import obstacles.Obstacle;
-import obstacles.Office;
 import obstacles.Spike;
 import obstacles.Turret;
 import processing.core.PApplet;
@@ -110,7 +106,7 @@ public class GameScreen extends PApplet {
 	}
 
 	public void setup() {
-//		surface.setResizable(true);
+		// surface.setResizable(true);
 		// this.frameRate(60);
 		// noLoop();
 		ImageLoader.loadAllImages(this, "resources/");
@@ -123,6 +119,11 @@ public class GameScreen extends PApplet {
 		setupBlocks();
 	}
 
+	public void settings() {
+		size(800, 600, P2D);
+		// fullScreen(P2D);
+	}
+
 	private void setupBlocks() {
 		for (Obstacle o : obstacles) {
 			for (Obstacle ob : obstacles) {
@@ -133,11 +134,6 @@ public class GameScreen extends PApplet {
 				}
 			}
 		}
-	}
-
-	public void settings() {
-		size(800, 600, P2D);
-//		fullScreen(P2D);
 	}
 
 	public void doLvl() {
@@ -299,7 +295,7 @@ public class GameScreen extends PApplet {
 	public void draw() {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
-		 System.out.println("FPS:" + frameRate);
+		System.out.println("FPS:" + frameRate);
 		// System.out.println(this.distanceTranslated);
 		// if (guy.hearts() <= 0) {
 		// currentMenu = deathMenu;
@@ -352,10 +348,10 @@ public class GameScreen extends PApplet {
 					translate(-distanceTranslated);
 				} else {
 					inGameMenu.draw(this);
-//					guy.draw(this);
+					// guy.draw(this);
 				}
 			} else {
-//				thread("update");
+				// thread("update");
 				update();
 				guy.draw(this);
 			}
@@ -473,9 +469,9 @@ public class GameScreen extends PApplet {
 			Turret turret = null;
 			LandMine mine = null;
 			boolean canPlaceBlock = true;
+			String x = godScreen.getObstacleType();
 			for (Obstacle o : obstacles) {
 				if (o.getBoundRect().contains(mouseP) && o instanceof Block) {
-					String x = godScreen.getObstacleType();
 					Block bee = (Block) o;
 					if (!bee.getStuffOnTop()) {
 						godScreen.setDragging(false);
@@ -519,7 +515,7 @@ public class GameScreen extends PApplet {
 				mine = null;
 				god.place();
 			}
-			if (canPlaceBlock && mouseY > 100) {
+			if (canPlaceBlock && mouseY > 100 && x.equals("block")) {
 				obstacles.add(new Block((float) mouseX - mouseX % 50, (float) mouseY - mouseY % 50, 50, 50));
 				god.place();
 			}
