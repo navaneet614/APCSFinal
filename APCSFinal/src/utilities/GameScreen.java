@@ -93,6 +93,9 @@ public class GameScreen extends PApplet {
 			if(o instanceof Turret) {
 				Turret t = (Turret) o;
 				t.bullets().clear();
+			}else if(o instanceof LandMine) {
+				LandMine tempMine = (LandMine) o;
+				tempMine.turnOn();
 			}
 		}
 		if (fullClear) {
@@ -115,6 +118,7 @@ public class GameScreen extends PApplet {
 			o.setup(this);
 		}
 		doLvl();
+		setupBlocks();
 	}
 
 	private void setupBlocks() {
@@ -384,7 +388,7 @@ public class GameScreen extends PApplet {
 	}
 
 	public void simpleAI() {
-
+		//setupBlocks();
 		int hu, kadaba;
 		while (god.canPlace()) {
 			hu = (int) (Math.random() * obstacles.size());
@@ -563,13 +567,9 @@ public class GameScreen extends PApplet {
 					guy.setSlow(true);
 				}
 
-				/*
-				 * else if ( obstacles.get(i) instanceof FadingBlock ) {
-				 * 
-				 * }
-				 */
-
 				else if (obstacles.get(i) instanceof Block) {
+					guy.setSlow(false);
+
 					int offset = 20;
 					if (gRect.intersectsLine(oRect.getX() + offset, oRect.getY(), oRect.getMaxX() - offset,
 							oRect.getY())) {
@@ -594,15 +594,18 @@ public class GameScreen extends PApplet {
 						guy.cancelJump();
 						guy.setY(oRect.getMaxY());
 					}
-				} else {
+				} 
+				 else {
 
 					guy.takeDamage(obstacles.get(i).getDamage());
-					if(obstacles.get(i)instanceof LandMine)
-						obstacles.remove(i);
+					if(obstacles.get(i)instanceof LandMine) {
+						 LandMine tempMine = (LandMine)obstacles.get(i);
+						 tempMine.setOff();
+					}
 				}
 			} else {
 				obstacles.get(i).resetNumTimesHit();
-				guy.setSlow(false);
+				
 			}
 			if (obstacles.get(i) instanceof Turret) {
 				Turret t = (Turret) (obstacles.get(i));
@@ -623,6 +626,7 @@ public class GameScreen extends PApplet {
 					}
 				}
 			}
+			
 		}
 
 		if (gRect.intersectsLine(0, ORIGINAL_HEIGHT, ORIGINAL_WIDTH, ORIGINAL_HEIGHT)) {
