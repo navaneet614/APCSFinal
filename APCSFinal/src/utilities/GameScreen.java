@@ -2,6 +2,7 @@ package utilities;
 
 import java.awt.Color;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 import menus.DeathMenu;
@@ -119,8 +120,10 @@ public class GameScreen extends PApplet {
 	}
 
 	public void settings() {
-		size(800, 600);
-//		this.getSurface().setResizable(true);
+		// size(800, 600);
+		size(800, 600, FX2D);
+		// size(800, 600, P2D);
+		// this.getSurface().setResizable(true);
 		// fullScreen(P2D);
 	}
 
@@ -295,7 +298,7 @@ public class GameScreen extends PApplet {
 	public void draw() {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
-		System.out.println("FPS:" + frameRate);
+		// System.out.println("FPS:" + frameRate);
 		// System.out.println(this.distanceTranslated);
 		// if (guy.hearts() <= 0) {
 		// currentMenu = deathMenu;
@@ -329,7 +332,6 @@ public class GameScreen extends PApplet {
 		// guy.draw(this);
 		// }
 		// }
-		
 
 		if (currentMenu != null) {
 			currentMenu.draw(this);
@@ -376,11 +378,13 @@ public class GameScreen extends PApplet {
 		 * }
 		 */
 
-		if ((key == 'p' || key == ' ') && currentMenu == null) {
+		// System.out.println(keyCode == KeyEvent.VK_D);
+
+		if ((keyCode == KeyEvent.VK_P || keyCode == KeyEvent.VK_SPACE) && currentMenu == null) {
 			currentMenu = pauseMenu;
-		} else if (key == 'd' && inGameMenu instanceof GodScreen) {
+		} else if (keyCode == KeyEvent.VK_D && inGameMenu instanceof GodScreen) {
 			translate(10);
-		} else if (key == 'a' && inGameMenu instanceof GodScreen) {
+		} else if (keyCode == KeyEvent.VK_A && inGameMenu instanceof GodScreen) {
 			translate(-10);
 		}
 		keys.add(this.keyCode);
@@ -464,6 +468,9 @@ public class GameScreen extends PApplet {
 	}
 
 	public void addObstacle() {
+		if (keyPressed) {
+			return;
+		}
 		if (godScreen.getDragging()) {
 			Spike spike = null;
 			Glue glue = null;
@@ -517,9 +524,6 @@ public class GameScreen extends PApplet {
 				god.place();
 			}
 			if (canPlaceBlock && mouseY > 100 && x.equals("block")) {
-				if(keyPressed) {
-					return;
-				}
 				obstacles.add(new Block((float) (mouseX - mouseX % (50)), (float) mouseY - mouseY % 50, 50, 50));
 				god.place();
 			}
@@ -577,9 +581,12 @@ public class GameScreen extends PApplet {
 			currentMenu = this.levelMenu;
 		} else if (menumode.equals("restart")) {
 			reset(false);
+		} else if (menumode.equals("quit")) {
+			exit();
 		} else {
 			currentMenu = null;
 		}
+		this.mouseMoved();
 	}
 
 	public void hitDetection() {

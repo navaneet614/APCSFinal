@@ -35,7 +35,6 @@ public class Main {
 //		window.setVisible(true);
 		
 		PApplet.main("utilities.GameScreen");
-
 		
 	}
 }

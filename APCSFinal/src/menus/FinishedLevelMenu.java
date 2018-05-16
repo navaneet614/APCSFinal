@@ -34,7 +34,7 @@ public class FinishedLevelMenu extends Menu {
 		}else if(buttonText.equals("Main Menu")) {
 			gameScreen.changeMenuMode("main");
 		} else if(buttonText.equals("Quit")) {
-			System.exit(0);
+			gameScreen.changeMenuMode("quit");
 		}
 	}
 	

@@ -38,7 +38,7 @@ public class StartMenu extends Menu {
 		}else if(buttonText.equals("Options")) {
 			gameScreen.changeMenuMode("options");
 		} else if(buttonText.equals("Quit")) {
-			System.exit(0);
+			gameScreen.changeMenuMode("quit");
 		}
 	}
 	
