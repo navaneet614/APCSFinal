@@ -152,8 +152,10 @@ public class GodScreen extends Menu {
 			}
 		}
 		else if(buttonText.equals("Undo")) {
-			if(god.getPlacedObstacles()>0)
+			if(god.getPlacedObstacles()>0) {
 				gameScreen.removeObstacle();
+			god.subtractPlacedObstacles();
+			}
 			drawBlock = false;
 			drawSpike = false;
 			drawGlue = false;
