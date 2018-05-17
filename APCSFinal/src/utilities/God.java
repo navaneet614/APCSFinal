@@ -6,7 +6,7 @@ import processing.core.*;
 
 /**
  * 
- * @author Shaunak Bhandarkar
+ * @author William Hu
  * 
  * The God class is what enables the dropping and placing
  * of Obstacles that hinder the Player from reaching the 
@@ -58,6 +58,10 @@ public class God
 	
 	public void setObstacleAmount(int x) {
 		amountOfObstacles = x;
+	}
+	
+	public void subtractPlacedObstacles() {
+		placedObstacles--;
 	}
 	
 	
