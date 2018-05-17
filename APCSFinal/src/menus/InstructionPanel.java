@@ -38,7 +38,7 @@ public class InstructionPanel extends Menu
 				+ "\n or the W, A, and D keys. In case you need to pause your\n marvelous journey, feel free to press the"
 				+ "\n 'p' key. Now, if YOU are playing as the one and only\n God, experience the once-in-a-lifetime opportunity"
 				+ "\n to wield SO MUCH power as you use the mouse (or touchpad)\n to drag and place obstacles in your very own"
-				+ "\n stage!" , 400, 100);
+				+ "\n stage!" , 400, 200);
 	}
 
 }
