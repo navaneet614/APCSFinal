@@ -583,6 +583,7 @@ public class GameScreen extends PApplet {
 			reset(false);
 		} else if (menumode.equals("quit")) {
 			exit();
+			System.exit(0);
 		} else {
 			currentMenu = null;
 		}
