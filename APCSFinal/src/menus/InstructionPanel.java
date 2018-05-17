@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import processing.core.PApplet;
 import utilities.GameScreen;
+import utilities.ImageLoader;
 
 public class InstructionPanel extends Menu
 {
@@ -30,6 +31,7 @@ public class InstructionPanel extends Menu
 	public void draw(PApplet drawer) 
 	{
 		super.draw(drawer);
+		drawer.image( ImageLoader.character, 200, 400 );
 		drawer.textFont(drawer.createFont("Georgia", 20));
 		drawer.textSize(20);
 		drawer.textAlign(PApplet.CENTER, PApplet.CENTER);
