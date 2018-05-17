@@ -25,7 +25,7 @@ public class StartMenu extends Menu {
 	private void doButtons() {
 		this.addButton(new Button(325, 200, 150, 50, "Singleplayer", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 		this.addButton(new Button(325, 260, 150, 50, "Multiplayer", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 320, 150, 50, "Options", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 320, 150, 50, "Instructions", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 		this.addButton(new Button(325, 380, 150, 50, "Quit", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 	}
 
@@ -35,8 +35,8 @@ public class StartMenu extends Menu {
 			gameScreen.changeMenuMode("singleplayer");
 		} else if(buttonText.equals("Multiplayer")) {
 			gameScreen.changeMenuMode("multiplayer"); 
-		}else if(buttonText.equals("Options")) {
-			gameScreen.changeMenuMode("options");
+		}else if(buttonText.equals("Instructions")) {
+			gameScreen.changeMenuMode("instructions");
 		} else if(buttonText.equals("Quit")) {
 			gameScreen.changeMenuMode("quit");
 		}
