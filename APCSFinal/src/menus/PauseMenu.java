@@ -17,7 +17,7 @@ public class PauseMenu extends Menu {
 	
 	private void doButtons() {
 		this.addButton(new Button(325, 200, 150, 50, "Resume", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 260, 150, 50, "Options", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 260, 150, 50, "Instructions", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 		this.addButton(new Button(325, 320, 150, 50, "Main Menu", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 		this.addButton(new Button(325, 380, 150, 50, "Quit", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 	}
@@ -26,8 +26,8 @@ public class PauseMenu extends Menu {
 	public void doButtonAction(String buttonText, GameScreen gameScreen) {
 		if(buttonText.equals("Resume")) {
 			gameScreen.changeMenuMode("resume");
-		} else if(buttonText.equals("Options")) {
-			gameScreen.changeMenuMode("options"); 
+		} else if(buttonText.equals("Instructions")) {
+			gameScreen.changeMenuMode("instructions"); 
 		}else if(buttonText.equals("Main Menu")) {
 			gameScreen.changeMenuMode("main");
 		} else if(buttonText.equals("Quit")) {
