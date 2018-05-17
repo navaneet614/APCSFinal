@@ -403,7 +403,7 @@ public class GameScreen extends PApplet {
 		int hu, kadaba;
 		while (god.canPlace()) {
 			hu = (int) (Math.random() * obstacles.size());
-			if (obstacles.get(hu).getX() > this.levelLength - 50 || obstacles.get(hu).getX() < 100) {
+			if (obstacles.get(hu).getX() > this.levelLength - 200 || obstacles.get(hu).getX() < 200) {
 				continue;
 			}
 			if (obstacles.get(hu) instanceof Block) {
