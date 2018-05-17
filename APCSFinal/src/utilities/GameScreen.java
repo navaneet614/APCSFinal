@@ -9,6 +9,7 @@ import menus.DeathMenu;
 import menus.DifficultyMenu;
 import menus.FinishedLevelMenu;
 import menus.GodScreen;
+import menus.InstructionPanel;
 import menus.LevelMenu;
 import menus.Menu;
 import menus.MultiplayerMenu;
@@ -45,6 +46,7 @@ public class GameScreen extends PApplet {
 	private DeathMenu deathMenu;
 	private GodScreen godScreen;
 	private LevelMenu levelMenu;
+	private InstructionPanel instructions;
 	private DifficultyMenu difficultyMenu;
 	private FinishedLevelMenu finishedLevelMenu;
 	private Player guy;
@@ -68,6 +70,7 @@ public class GameScreen extends PApplet {
 		levelMenu = new LevelMenu();
 		difficultyMenu = new DifficultyMenu();
 		finishedLevelMenu = new FinishedLevelMenu();
+		instructions = new InstructionPanel();
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
 		god = new God(450, 100, 120, 140, 15);
@@ -555,8 +558,8 @@ public class GameScreen extends PApplet {
 		} else if (menumode.equals("main")) {
 			reset(true);
 			currentMenu = startMenu;
-		} else if (menumode.equals("options")) {
-
+		} else if (menumode.equals("instructions")) {
+			currentMenu = instructions;
 		} else if (menumode.equals("resume")) {
 			currentMenu = null;
 		} else if (menumode.equals("multiplayer")) {
