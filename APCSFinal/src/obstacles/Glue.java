@@ -1,4 +1,5 @@
 package obstacles;
+import processing.core.PApplet;
 import utilities.ImageLoader;
 
 /**
@@ -22,6 +23,11 @@ public class Glue extends Obstacle
 	public int getDamage() 
 	{
 		return 0;
+	}
+	
+	public void draw(PApplet drawer) {
+		super.draw(drawer);
+		this.getBoundRect().setBounds((int)getX()+5, (int)getY(), (int)getWidth() -10, (int)getHeight());
 	}
 	
 }

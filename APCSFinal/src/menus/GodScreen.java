@@ -27,26 +27,28 @@ public class GodScreen extends Menu {
 	private float x, y, width, height;
 	private ClickableObstacle spike, glue, turret, mine, block;
 	private God god;
-	private boolean showedPopup, drawSpike, drawGlue, drawTurret, dragging, drawMine, drawBlock;
-	private Button done;
+	private boolean showedPopup, drawSpike, drawGlue, drawTurret, dragging, drawMine, drawBlock,undoMode;
+	private Button done, undo;
 
 	public GodScreen(float x, float y, float width, float height, God god) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		spike = new ClickableObstacle(x, y, width / 8, height, new Spike(x, y, 50, 50), "Spikes");
-		glue = new ClickableObstacle(x + width / 8, y, width / 8, height, new Glue(x, y, 50, 50), "Glue");
-		turret = new ClickableObstacle(x + width / 4, y, width / 8, height, new Turret(x, y, 50, 50, 180), "Turrets");
-		mine = new ClickableObstacle(x + 3*width / 8, y, width / 8, height, new LandMine(x, y, 25, 25), "Mine");
-		block = new ClickableObstacle(x + width/2, y, width / 8, height, new Block(x, y, 50, 50), "Block");
+		spike = new ClickableObstacle(x, y, width / 10, height, new Spike(x, y, 50, 50), "Spikes");
+		glue = new ClickableObstacle(x + width / 10, y, width / 10, height, new Glue(x, y, 50, 50), "Glue");
+		turret = new ClickableObstacle(x + width / 5, y, width / 10, height, new Turret(x, y, 50, 50, 180), "Turrets");
+		mine = new ClickableObstacle(x + 3*width / 10, y, width / 10, height, new LandMine(x, y, 25, 25), "Mine");
+		block = new ClickableObstacle(x + 2*width/5, y, width / 10, height, new Block(x, y, 50, 50), "Block");
 		addButton(spike);
 		addButton(glue);
 		addButton(turret);
 		addButton(mine);
 		addButton(block);
 		done = new Button(x + 5*width / 8, y, width / 8, height, "Done", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE);
+		undo = new Button(x+ width/2, y, width/8, height, "Undo", Color.black,Color.WHITE, Color.LIGHT_GRAY, Color.BLUE);
 		this.addButton(done);
+		this.addButton(undo);
 		this.god = god;
 		dragging = false;
 		showedPopup = false;
@@ -68,6 +70,7 @@ public class GodScreen extends Menu {
 		mine.draw(drawer);
 		block.draw(drawer);
 		done.draw(drawer);
+		undo.draw(drawer);
 
 		drawer.fill(0);
 		drawer.textSize(15);
@@ -76,9 +79,9 @@ public class GodScreen extends Menu {
 		drawer.textSize(25);
 		drawer.text(god.getAmountOfObstacles(), 750, 50);
 
-		drawer.textSize(15);
+		drawer.textSize(12);
 		drawer.line(600, 0, 600, 100);
-		drawer.text("Blocks Placed", 650, 10);
+		drawer.text("Obstacles Placed", 650, 10);
 		drawer.textSize(25);
 		drawer.text(god.getPlacedObstacles(), 650, 50);
 
@@ -108,17 +111,20 @@ public class GodScreen extends Menu {
 			drawTurret = false;
 			drawMine = false;
 			drawBlock = false;
+			undoMode = false;
 		} else if (buttonText.equals("Glue")) {
 			drawGlue = true;
 			drawSpike = false;
 			drawTurret = false;
 			drawMine = false;
 			drawBlock = false;
+			undoMode = false;
 		} else if (buttonText.equals("Turrets")) {
 			drawTurret = true;
 			drawSpike = false;
 			drawGlue = false;
 			drawMine = false;
+			undoMode = false;
 			drawBlock = false;
 		}else if(buttonText.equals("Mine")) {
 			drawSpike = false;
@@ -126,21 +132,34 @@ public class GodScreen extends Menu {
 			drawTurret = false;
 			drawMine = true;
 			drawBlock = false;
+			undoMode = false;
 		}else if(buttonText.equals("Block")) {
 			drawBlock = true;
 			drawSpike = false;
 			drawGlue = false;
 			drawTurret = false;
 			drawMine = false;
+			undoMode = false;
 		} else if(buttonText.equals("Done")) {
 			drawBlock = true;
 			drawSpike = false;
 			drawGlue = false;
 			drawTurret = false;
 			drawMine = false;
+			undoMode = false;
 			while(god.canPlace()) {
 				god.place();
 			}
+		}
+		else if(buttonText.equals("Undo")) {
+			if(god.getPlacedObstacles()>0)
+				gameScreen.removeObstacle();
+			drawBlock = false;
+			drawSpike = false;
+			drawGlue = false;
+			drawTurret = false;
+			drawMine = false;
+			undoMode = true;
 		}
 		dragging = true;
 
@@ -155,8 +174,10 @@ public class GodScreen extends Menu {
 			return "mine";
 		}else if(drawBlock) {
 			return "block";
-		}
+		}else if(drawTurret) {
 			return "turret";
+		}
+		return "";
 	}
 
 	public void setDragging(boolean x) {
