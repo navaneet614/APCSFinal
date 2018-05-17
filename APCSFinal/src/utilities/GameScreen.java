@@ -532,6 +532,10 @@ public class GameScreen extends PApplet {
 			}
 		}
 	}
+	
+	public void removeObstacle() {
+		obstacles.remove(obstacles.size()-1);
+	}
 
 	public void mouseMoved() {
 		if (currentMenu != null) {
