@@ -2,6 +2,7 @@ package utilities;
 
 import java.awt.Color;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.util.HashSet;
 
 import java.io.*;
@@ -148,18 +149,18 @@ public class Player implements Serializable {
 
 	public void update(HashSet<Integer> keys, GameScreen gameScreen) {
 		for (int key : keys) {
-			if (key == PApplet.UP) {
+			if (key == PApplet.UP || key == KeyEvent.VK_W) {
 				jump();
 			} else if (key == PApplet.DOWN) {
 
-			} else if (key == PApplet.LEFT && getX() > 0) {
+			} else if ((key == PApplet.LEFT || key == KeyEvent.VK_A) && getX() > 0) {
 				if (xCoord > gameScreen.ORIGINAL_WIDTH * 1 / 4) {
 					moveLeft();
 				} else {
 					if (!gameScreen.translate(-7))
 						moveLeft();
 				}
-			} else if (key == PApplet.RIGHT && getX() + width < gameScreen.width) {
+			} else if ((key == PApplet.RIGHT || key == KeyEvent.VK_D) && getX()  + width < gameScreen.width) {
 				if (xCoord + width < gameScreen.ORIGINAL_WIDTH * 3 / 4) {
 					moveRight();
 				} else {
