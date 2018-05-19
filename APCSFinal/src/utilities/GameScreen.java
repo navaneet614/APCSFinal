@@ -293,6 +293,10 @@ public class GameScreen extends PApplet {
 			obstacles.add(new Block(2400, ORIGINAL_HEIGHT - 200, 50, 50));
 
 		}
+		else if ( lvlNum == 4 ) 
+		{
+			
+		}
 		obstacles.add(new FinishHouse(2630, 450, ImageLoader.finish, 100, 100));
 		this.setupBlocks();
 
@@ -417,8 +421,16 @@ public class GameScreen extends PApplet {
 						obstacles.add(new Glue((float) obstacles.get(hu).getX(), (float) obstacles.get(hu).getY() - 10,
 								50, 20));
 					} else if (kadaba == 2) {
-						obstacles.add(new Turret((float) obstacles.get(hu).getX(),
+						if ( lvlNum == 4 ) 
+						{
+							obstacles.add(new Turret((float) obstacles.get(hu).getX(),
+									(float) obstacles.get(hu).getY() - 50, 50, 50, 5*Math.PI/4));
+						}
+						else 
+						{
+							obstacles.add(new Turret((float) obstacles.get(hu).getX(),
 								(float) obstacles.get(hu).getY() - 50, 50, 50, Math.PI));
+						}
 					} else if (kadaba == 3) {
 						obstacles.add(new LandMine((float) obstacles.get(hu).getX(),
 								(float) obstacles.get(hu).getY() - 25, 25, 25));
