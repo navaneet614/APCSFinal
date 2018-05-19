@@ -619,11 +619,24 @@ public class GameScreen extends PApplet {
 
 				if (obstacles.get(i) instanceof Glue) {
 					guy.setSlow(true);
+				} 
+				else if(obstacles.get(i) instanceof Spike || obstacles.get(i) instanceof Turret) {
+					guy.takeDamage(obstacles.get(i).getDamage());
+					double temp = (guy.getX() - obstacles.get(i).getBoundRect().getCenterX());
+//					temp = 30;
+					if(temp<0) {
+						guy.moveDirection((temp+guy.getWidth()));
+
+					} else {
+						guy.moveDirection(temp);
+					}
+					temp = (guy.getY() - obstacles.get(i).getBoundRect().getCenterY());
+					guy.setY(guy.getY() + temp);
+					guy.setTintRed();
 				}
 
 				else if (obstacles.get(i) instanceof Block) {
 					guy.setSlow(false);
-
 					int offset = 20;
 					if (gRect.intersectsLine(oRect.getX() + offset, oRect.getY(), oRect.getMaxX() - offset,
 							oRect.getY())) {
@@ -650,7 +663,8 @@ public class GameScreen extends PApplet {
 					}
 				} else if (obstacles.get(i) instanceof FinishHouse) {
 					currentMenu = finishedLevelMenu;
-				} else {
+				} 
+				else {
 
 					guy.takeDamage(obstacles.get(i).getDamage());
 					if (obstacles.get(i) instanceof LandMine) {
@@ -660,7 +674,6 @@ public class GameScreen extends PApplet {
 				}
 			} else {
 				obstacles.get(i).resetNumTimesHit();
-
 			}
 			if (obstacles.get(i) instanceof Turret) {
 				Turret t = (Turret) (obstacles.get(i));
@@ -668,6 +681,8 @@ public class GameScreen extends PApplet {
 					Bullet b = t.bullets().get(j);
 					if (b.getBoundingRect().intersects(guy.getBoundingRect())) {
 						guy.takeDamage(b.getDamage());
+						guy.setTintRed();
+//						guy.setVY(guy.getVY() + -7);
 						t.bullets().remove(j);
 						j--;
 					} else {
