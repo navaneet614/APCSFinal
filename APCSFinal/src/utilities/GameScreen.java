@@ -313,8 +313,8 @@ public class GameScreen extends PApplet {
 		}
 		
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
-		System.out.println(width + " " + height);
-		System.out.println(displayWidth + " " + displayHeight);
+//		System.out.println(width + " " + height);
+//		System.out.println(displayWidth + " " + displayHeight);
 		background(Color.WHITE.getRGB());
 		
 		if (currentMenu != null) {
