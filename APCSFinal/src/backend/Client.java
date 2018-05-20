@@ -4,6 +4,13 @@ import java.net.*;
 
 import java.io.*;
 
+/**
+ * 
+ * @author shaunakbhandarkar
+ * 
+ * The Client class 
+ *
+ */
 public class Client implements AutoCloseable, Runnable {
 	Socket s;
 	private BufferedReader in;
