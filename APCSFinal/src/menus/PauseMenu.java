@@ -1,7 +1,9 @@
 package menus;
 import java.awt.Color;
 
+import processing.core.PApplet;
 import utilities.GameScreen;
+import utilities.ImageLoader;
 /**
  * 
  * @author Navaneet Kadaba
@@ -34,6 +36,11 @@ public class PauseMenu extends Menu {
 			gameScreen.changeMenuMode("quit");
 		}
 
+	}
+	
+	public void draw(PApplet drawer) {
+		drawer.background(ImageLoader.background);
+		super.draw(drawer);
 	}
 
 }

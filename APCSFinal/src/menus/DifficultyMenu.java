@@ -3,6 +3,7 @@ import java.awt.Color;
 
 import processing.core.PApplet;
 import utilities.GameScreen;
+import utilities.ImageLoader;
 
 /**
  * 
@@ -39,6 +40,7 @@ public class DifficultyMenu extends Menu {
 	}
 	
 	public void draw(PApplet drawer) {
+		drawer.background(ImageLoader.background);
 		super.draw(drawer);
 		drawer.textFont(drawer.createFont("Georgia", 20));
 		drawer.textSize(20);

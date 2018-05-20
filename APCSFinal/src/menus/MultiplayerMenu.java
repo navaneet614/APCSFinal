@@ -1,7 +1,9 @@
 package menus;
 import java.awt.Color;
 
+import processing.core.PApplet;
 import utilities.GameScreen;
+import utilities.ImageLoader;
 
 /**
  * 
@@ -31,6 +33,12 @@ public class MultiplayerMenu extends Menu {
 			gameScreen.changeMenuMode("main");
 		}
 
+	}
+	
+
+	public void draw(PApplet drawer) {
+		drawer.background(ImageLoader.multiplayerImage);
+		super.draw(drawer);
 	}
 
 }

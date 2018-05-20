@@ -16,7 +16,7 @@ import processing.core.PImage;
 public class ImageLoader {
 	
 	public static PImage block, character, glue, health, lightningbolt, 
-	platform, player_walk, spike, turret,mine, finish;
+	platform, player_walk, spike, turret,mine, finish, background, startImage, multiplayerImage,deathImage;
 	
 	public static void loadAllImages(PApplet p, String locationOfResources) {
 		block = p.loadImage(locationOfResources + "block.png");
@@ -30,6 +30,15 @@ public class ImageLoader {
 		turret = p.loadImage(locationOfResources + "turret2.png");
 		mine = p.loadImage(locationOfResources + "mine.png");
 		finish = p.loadImage(locationOfResources + "finish.png");
+		background = p.loadImage(locationOfResources+ "GameBackground.jpg");
+		background.resize(800, 600);
+		startImage = p.loadImage(locationOfResources + "StartImage.png");
+		startImage.resize(800, 600);
+		multiplayerImage = p.loadImage(locationOfResources+"multiplayerMenu.jpg");
+		multiplayerImage.resize(800, 600);
+		deathImage = p.loadImage(locationOfResources+"gameOver.png");
+		deathImage.resize(800, 600);
+				
 	}
 	
 

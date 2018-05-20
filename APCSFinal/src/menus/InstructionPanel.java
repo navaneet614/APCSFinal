@@ -43,7 +43,8 @@ public class InstructionPanel extends Menu
 	}
 	
 	public void draw(PApplet drawer) 
-	{
+	{	
+		drawer.background(ImageLoader.background);
 		super.draw(drawer);
 		Block b1 = new Block( 500, 400, 50, 50 );
 		Block b2 = new Block( 550, 400, 50, 50 );

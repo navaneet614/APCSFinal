@@ -120,6 +120,7 @@ public class GameScreen extends PApplet {
 		}
 		doLvl();
 		setupBlocks();
+		
 	}
 
 	public void settings() {
@@ -304,44 +305,11 @@ public class GameScreen extends PApplet {
 	public void draw() {
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		background(Color.WHITE.getRGB());
-		// System.out.println("FPS:" + frameRate);
-		// System.out.println(this.distanceTranslated);
-		// if (guy.hearts() <= 0) {
-		// currentMenu = deathMenu;
-		// }
-		// if (currentMenu != null) {
-		// currentMenu.draw(this);
-		// } else if (currentMenu == null) {
-		//
-		// if (inGameMenu != null) {
-		// if (!god.canPlace() && inGameMenu instanceof GodScreen) {
-		// inGameMenu = null;
-		// translate(-distanceTranslated);
-		//
-		// } else
-		// inGameMenu.draw(this);
-		// } else if (gameMode.equals(gameModes.singleplayer)) {
-		// this.simpleAI();
-		// inGameMenu = null;
-		// }
-		//
-		// if (!(inGameMenu instanceof DifficultyMenu) || !(inGameMenu instanceof
-		// LevelMenu)) {
-		// for (Obstacle o : obstacles) {
-		// o.draw(this);
-		// }
-		// }
-		//
-		// if (!(inGameMenu instanceof GodScreen)) {
-		// hitDetection();
-		// guy.update(keys, this);
-		// guy.draw(this);
-		// }
-		// }
-
+		
 		if (currentMenu != null) {
 			currentMenu.draw(this);
 		} else {
+			background(ImageLoader.background);
 			for (Obstacle o : obstacles) {
 				// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
 				o.draw(this);

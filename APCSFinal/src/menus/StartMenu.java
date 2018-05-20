@@ -3,6 +3,7 @@ import java.awt.Color;
 
 import processing.core.PApplet;
 import utilities.GameScreen;
+import utilities.ImageLoader;
 
 /**
  * 
@@ -43,10 +44,14 @@ public class StartMenu extends Menu {
 	}
 	
 	public void draw(PApplet drawer) {
+		drawer.background(ImageLoader.startImage);
 		super.draw(drawer);
 		drawer.textFont(drawer.createFont("Georgia", 20));
-		drawer.textSize(20);
+		drawer.textSize(38);
+		drawer.fill(Color.black.getRGB());
 		drawer.textAlign(PApplet.CENTER, PApplet.CENTER);
 		drawer.text("God's Plan", 400, 100);
+		
+		
 	}
 }
