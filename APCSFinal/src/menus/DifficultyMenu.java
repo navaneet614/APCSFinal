@@ -19,10 +19,10 @@ public class DifficultyMenu extends Menu {
 	}
 	
 	private void doButtons() {
-		this.addButton(new Button(325, 200, 150, 50, "Easy", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 260, 150, 50, "Not Easy", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 320, 150, 50, "Really Not Easy", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 380, 150, 50, "Back", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(10, 300, 150, 50, "Really Not Easy", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(375, 450, 150, 50, "Easy", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(640, 375, 150, 50, " Not Easy", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 540, 150, 50, "Back", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 	}
 	
 	
@@ -40,11 +40,11 @@ public class DifficultyMenu extends Menu {
 	}
 	
 	public void draw(PApplet drawer) {
-		drawer.background(ImageLoader.background);
+		drawer.background(ImageLoader.difficultyImage);
 		super.draw(drawer);
 		drawer.textFont(drawer.createFont("Georgia", 20));
 		drawer.textSize(20);
 		drawer.textAlign(PApplet.CENTER, PApplet.CENTER);
-		drawer.text("Difficulty Select", 400, 100);
+		drawer.text("Difficulty Select", 400, 25);
 	}
 }
