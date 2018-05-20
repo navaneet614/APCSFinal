@@ -49,7 +49,7 @@ public class Player implements Serializable {
 		vy = 0;
 		boundingRectangle = new Rectangle((int) x, (int) y, (int) w, (int) h);
 		slow = false;
-		health = 7;
+		health = 3;
 		tintRed = false;
 		count = 0;
 	}
