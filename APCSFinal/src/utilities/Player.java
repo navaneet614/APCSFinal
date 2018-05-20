@@ -76,7 +76,6 @@ public class Player implements Serializable {
 			drawer.noTint();
 			tintRed = false;
 		}
-		System.out.println(count);
 		drawer.image(character, (float) xCoord, (float) yCoord, (float) width, (float) height);
 		drawer.popStyle();
 		// drawer.point((float)xCoord, (float)yCoord);

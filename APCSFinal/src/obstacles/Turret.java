@@ -57,6 +57,9 @@ public class Turret extends Obstacle implements ActionListener
 		super.draw(drawer);
 		GameScreen gs = (GameScreen)drawer;
 		
+		this.getBoundRect().setBounds((int)getX(), (int)getY() + 10, (int)getWidth(), (int)getHeight() - 10);
+
+		
 		for(int j = 0;j<bullets.size();j++) {
 			Bullet b = bullets.get(j);
 			if(b.getY()<0||b.getY()>gs.ORIGINAL_HEIGHT) {

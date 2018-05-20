@@ -129,14 +129,15 @@ public class GameScreen extends PApplet {
 		// this.getSurface().setResizable(true);
 		// fullScreen(P2D);
 	}
-
-	private void setupBlocks() {
-		for (Obstacle o : obstacles) {
-			for (Obstacle ob : obstacles) {
-				if (o instanceof Block && Math.abs(ob.getY() - o.getY() - o.getHeight()) < .1
-						&& Math.abs(ob.getX() - o.getX()) < .1) {
-					Block hu = (Block) ob;
-					hu.setStuffOnTop(true);
+	
+	public void setupBlocks() {
+		for(Obstacle o:obstacles) {
+			if(o instanceof Block) {
+				Block block = (Block) o;
+				block.setStuffOnTop(false);
+				for(Obstacle o2:obstacles) {
+					if(Math.abs(o.getX() - o2.getX())<.1&&Math.abs((o2.getY() + o2.getHeight()) - o.getY())<.1)
+						block.setStuffOnTop(true);
 				}
 			}
 		}
@@ -292,10 +293,8 @@ public class GameScreen extends PApplet {
 			obstacles.add(new Block(2350, ORIGINAL_HEIGHT - 200, 50, 50));
 			obstacles.add(new Block(2400, ORIGINAL_HEIGHT - 200, 50, 50));
 
-		}
-		else if ( lvlNum == 4 ) 
-		{
-			
+		} else if (lvlNum == 4) {
+
 		}
 		obstacles.add(new FinishHouse(2630, 450, ImageLoader.finish, 100, 100));
 		this.setupBlocks();
@@ -390,9 +389,9 @@ public class GameScreen extends PApplet {
 		if ((keyCode == KeyEvent.VK_P || keyCode == KeyEvent.VK_SPACE) && currentMenu == null) {
 			currentMenu = pauseMenu;
 		} else if (keyCode == KeyEvent.VK_D && inGameMenu instanceof GodScreen) {
-			translate(10);
+			translate(20);
 		} else if (keyCode == KeyEvent.VK_A && inGameMenu instanceof GodScreen) {
-			translate(-10);
+			translate(-20);
 		}
 		keys.add(this.keyCode);
 	}
@@ -421,15 +420,12 @@ public class GameScreen extends PApplet {
 						obstacles.add(new Glue((float) obstacles.get(hu).getX(), (float) obstacles.get(hu).getY() - 10,
 								50, 20));
 					} else if (kadaba == 2) {
-						if ( lvlNum == 4 ) 
-						{
+						if (lvlNum == 4) {
 							obstacles.add(new Turret((float) obstacles.get(hu).getX(),
-									(float) obstacles.get(hu).getY() - 50, 50, 50, 5*Math.PI/4));
-						}
-						else 
-						{
+									(float) obstacles.get(hu).getY() - 50, 50, 50, 5 * Math.PI / 4));
+						} else {
 							obstacles.add(new Turret((float) obstacles.get(hu).getX(),
-								(float) obstacles.get(hu).getY() - 50, 50, 50, Math.PI));
+									(float) obstacles.get(hu).getY() - 50, 50, 50, Math.PI));
 						}
 					} else if (kadaba == 3) {
 						obstacles.add(new LandMine((float) obstacles.get(hu).getX(),
@@ -497,18 +493,19 @@ public class GameScreen extends PApplet {
 				if (o.getBoundRect().contains(mouseP) && o instanceof Block) {
 					Block bee = (Block) o;
 					if (!bee.getStuffOnTop()) {
-						godScreen.setDragging(false);
 						if (x.equals("spike")) {
 							spike = new Spike((float) o.getX(), (float) o.getY() - 30, 50, 30);
+							bee.setStuffOnTop(true);
 						} else if (x.equals("glue")) {
 							glue = new Glue((float) o.getX(), (float) o.getY() - 10, 50, 10);
+							bee.setStuffOnTop(true);
 						} else if (x.equals("turret")) {
 							turret = new Turret((float) o.getX(), (float) o.getY() - 50, 50, 50, Math.PI);
+							bee.setStuffOnTop(true);
 						} else if (x.equals("mine")) {
 							mine = new LandMine((float) o.getX(), (float) o.getY() - 25, 20, 20);
+							bee.setStuffOnTop(true);
 						}
-
-						bee.setStuffOnTop(true);
 					} else {
 						spike = null;
 						glue = null;
@@ -538,15 +535,26 @@ public class GameScreen extends PApplet {
 				mine = null;
 				god.place();
 			}
-			if (canPlaceBlock && mouseY > 100 && x.equals("block")) {
-				obstacles.add(new Block((float) (mouseX - mouseX % (50)), (float) mouseY - mouseY % 50, 50, 50));
+			if (canPlaceBlock && (mouseY / (height / ORIGINAL_HEIGHT)) > 100 && x.equals("block")) {
+				float mx = (mouseX / (width / ORIGINAL_WIDTH));
+				float my = (mouseY / (height / ORIGINAL_HEIGHT));
+				obstacles.add(new Block((float) (mx - mx % (50)), (float) my - my % 50, 50, 50));
 				god.place();
+				setupBlocks();
 			}
 		}
 	}
-	
+
+	private boolean spaceIsFree(float x, float y) {
+		for (Obstacle o : obstacles) {
+			if (Math.abs(o.getX() - x) < 10 && Math.abs(o.getY() - y) < 10)
+				return false;
+		}
+		return true;
+	}
+
 	public void removeObstacle() {
-		obstacles.remove(obstacles.size()-1);
+		obstacles.remove(obstacles.size() - 1);
 	}
 
 	public void mouseMoved() {
@@ -619,23 +627,22 @@ public class GameScreen extends PApplet {
 
 				if (obstacles.get(i) instanceof Glue) {
 					guy.setSlow(true);
-				} 
-				else if(obstacles.get(i) instanceof Spike || obstacles.get(i) instanceof Turret) {
+				} else if (obstacles.get(i) instanceof Spike) {
 					guy.takeDamage(obstacles.get(i).getDamage());
 					double temp = (guy.getX() - obstacles.get(i).getBoundRect().getCenterX());
-//					temp = 30;
-					if(temp<0) {
-						guy.moveDirection((temp+guy.getWidth()));
+					if (temp < 0) {
+						guy.setX(guy.getX() - guy.getWidth());
 
 					} else {
-						guy.moveDirection(temp);
+						guy.setX(guy.getX() + guy.getWidth());
 					}
 					temp = (guy.getY() - obstacles.get(i).getBoundRect().getCenterY());
 					guy.setY(guy.getY() + temp);
 					guy.setTintRed();
+					guy.cancelJump();
 				}
 
-				else if (obstacles.get(i) instanceof Block) {
+				else if (obstacles.get(i) instanceof Block || obstacles.get(i) instanceof Turret) {
 					guy.setSlow(false);
 					int offset = 20;
 					if (gRect.intersectsLine(oRect.getX() + offset, oRect.getY(), oRect.getMaxX() - offset,
@@ -663,8 +670,7 @@ public class GameScreen extends PApplet {
 					}
 				} else if (obstacles.get(i) instanceof FinishHouse) {
 					currentMenu = finishedLevelMenu;
-				} 
-				else {
+				} else {
 
 					guy.takeDamage(obstacles.get(i).getDamage());
 					if (obstacles.get(i) instanceof LandMine) {
@@ -682,7 +688,7 @@ public class GameScreen extends PApplet {
 					if (b.getBoundingRect().intersects(guy.getBoundingRect())) {
 						guy.takeDamage(b.getDamage());
 						guy.setTintRed();
-//						guy.setVY(guy.getVY() + -7);
+						// guy.setVY(guy.getVY() + -7);
 						t.bullets().remove(j);
 						j--;
 					} else {
