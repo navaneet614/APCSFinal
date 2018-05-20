@@ -129,14 +129,14 @@ public class GameScreen extends PApplet {
 		// this.getSurface().setResizable(true);
 		// fullScreen(P2D);
 	}
-	
+
 	public void setupBlocks() {
-		for(Obstacle o:obstacles) {
-			if(o instanceof Block) {
+		for (Obstacle o : obstacles) {
+			if (o instanceof Block) {
 				Block block = (Block) o;
 				block.setStuffOnTop(false);
-				for(Obstacle o2:obstacles) {
-					if(Math.abs(o.getX() - o2.getX())<.1&&Math.abs((o2.getY() + o2.getHeight()) - o.getY())<.1)
+				for (Obstacle o2 : obstacles) {
+					if (Math.abs(o.getX() - o2.getX()) < .1 && Math.abs((o2.getY() + o2.getHeight()) - o.getY()) < .1)
 						block.setStuffOnTop(true);
 				}
 			}
@@ -420,19 +420,8 @@ public class GameScreen extends PApplet {
 						obstacles.add(new Glue((float) obstacles.get(hu).getX(), (float) obstacles.get(hu).getY() - 10,
 								50, 20));
 					} else if (kadaba == 2) {
-						if (lvlNum == 4) {
-						if ( 3*Math.random() > 1 )
-						{
-							obstacles.add(new Turret((float) obstacles.get(hu).getX(),
-									(float) obstacles.get(hu).getY() - 50, 50, 50, 5 * Math.PI / 4));
-						} else {
+						obstacles.add(new Turret((float) obstacles.get(hu).getX(),
 								(float) obstacles.get(hu).getY() - 50, 50, 50, Math.PI));
-						}
-						else 
-						{
-							obstacles.add(new Turret((float) obstacles.get(hu).getX(),
-									(float) obstacles.get(hu).getY() - 50, 50, 50, 5*Math.PI/6));
-						}
 					} else if (kadaba == 3) {
 						obstacles.add(new LandMine((float) obstacles.get(hu).getX(),
 								(float) obstacles.get(hu).getY() - 25, 25, 25));
