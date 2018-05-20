@@ -314,7 +314,7 @@ public class GameScreen extends PApplet {
 		} else {
 			background(ImageLoader.background);
 			for (Obstacle o : obstacles) {
-				// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
+//				 if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
 				o.draw(this);
 			}
 			if (inGameMenu != null) {
