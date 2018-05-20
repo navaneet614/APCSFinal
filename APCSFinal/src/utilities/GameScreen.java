@@ -310,8 +310,8 @@ public class GameScreen extends PApplet {
 		ImageLoader.resizeImages(this);
 		currentWidth = width;
 		currentHeight = height;
-		
 		}
+		
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		System.out.println(width + " " + height);
 		System.out.println(displayWidth + " " + displayHeight);
