@@ -51,6 +51,7 @@ public class ImageLoader {
 		deathImage.resize(x.width, x.height);
 		difficultyImage.resize(x.width, x.height);
 		levelImage.resize(x.width, x.height);
+		System.out.println("hello!");
 	}
 	
 
