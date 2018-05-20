@@ -64,4 +64,36 @@ public class God
 		placedObstacles--;
 	}
 	
+	
+	
+//	public void throwObstacle( Obstacle ob, float startX, float startY ) 
+//	{
+//		
+//	}
+//	
+//	private void fall( Obstacle o ) {
+//		
+//		/*	if ( yCoord < 550 )
+//				canFall = true;
+//			else
+//				canFall = false;*/
+//		double velocity = 0;
+//			
+//			if( ( 600 - o.getY() - o.getHeight() ) > 1) {
+//			velocity+=0.25;
+//			if(velocity >= 15) {
+//				velocity = 15;
+//			}
+//			o.setY((float)o.getY() + (float)velocity);
+//			if(o.getY() > 550) {
+//				o.setY(550);
+//				//canFall = false;
+//			}
+//			}
+//			
+//		}
+//	
+	
+	
+	
 }

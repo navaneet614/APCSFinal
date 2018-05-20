@@ -73,7 +73,7 @@ public class GameScreen extends PApplet {
 		instructions = new InstructionPanel();
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
-		god = new God(450, 100, 120, 140, 20);
+		god = new God(450, 100, 120, 140, 15);
 		keys = new HashSet<Integer>();
 		obstacles = new ArrayList<Obstacle>();
 		godScreen = new GodScreen(0, 0, 800, 100, god);
@@ -385,7 +385,7 @@ public class GameScreen extends PApplet {
 		int hu, kadaba;
 		while (god.canPlace()) {
 			hu = (int) (Math.random() * obstacles.size());
-			if (obstacles.get(hu).getX() > 2500  || obstacles.get(hu).getX() < 200) {
+			if (obstacles.get(hu).getX() > this.levelLength - 200 || obstacles.get(hu).getX() < 200) {
 				continue;
 			}
 			if (obstacles.get(hu) instanceof Block) {
