@@ -201,6 +201,9 @@ public class Player implements Serializable {
 		}
 		vy += GRAVITY;
 		yCoord += vy;
+		if(vy>40) {
+			vy = 40;
+		}
 		boundingRectangle.setLocation((int) xCoord, (int) yCoord);
 	}
 
