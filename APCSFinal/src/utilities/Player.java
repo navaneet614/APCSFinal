@@ -178,7 +178,7 @@ public class Player implements Serializable {
 						moveLeft();
 				}
 			} else if ((key == PApplet.RIGHT || key == KeyEvent.VK_D) && getX()  + width < gameScreen.width) {
-				if (xCoord + width < gameScreen.ORIGINAL_WIDTH * 3 / 4) {
+				if (xCoord + width < gameScreen.ORIGINAL_WIDTH * 1 / 2) {
 					moveRight();
 				} else {
 					if (!gameScreen.translate(7))
