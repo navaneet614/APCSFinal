@@ -33,7 +33,7 @@ public class ImageLoader {
 		background = p.loadImage(locationOfResources+ "GameBackground.jpg");
 		background.resize(800, 600);
 		startImage = p.loadImage(locationOfResources + "StartImage.png");
-		startImage.resize(800, 600);
+		startImage.resize(800,600);
 		multiplayerImage = p.loadImage(locationOfResources+"multiplayerMenu.jpg");
 		multiplayerImage.resize(800, 600);
 		deathImage = p.loadImage(locationOfResources+"gameOver.png");
@@ -43,6 +43,15 @@ public class ImageLoader {
 		levelImage = p.loadImage(locationOfResources + "levels.jpg");
 		levelImage.resize(800, 600);
 				
+	}
+	
+	public static void resizeImages(PApplet x){
+		startImage.resize(x.width, x.height);
+		background.resize(x.width, x.height);
+		multiplayerImage.resize(x.width, x.height);
+		deathImage.resize(x.width, x.height);
+		difficultyImage.resize(x.width, x.height);
+		levelImage.resize(x.width, x.height);
 	}
 	
 

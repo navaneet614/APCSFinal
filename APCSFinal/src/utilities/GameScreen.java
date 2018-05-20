@@ -303,7 +303,10 @@ public class GameScreen extends PApplet {
 	}
 
 	public void draw() {
+		ImageLoader.resizeImages(this);
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
+		System.out.println(width + " " + height);
+		System.out.println(displayWidth + " " + displayHeight);
 		background(Color.WHITE.getRGB());
 		
 		if (currentMenu != null) {
