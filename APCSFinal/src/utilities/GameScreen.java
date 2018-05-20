@@ -36,7 +36,7 @@ import processing.core.PApplet;
  *
  */
 public class GameScreen extends PApplet {
-	private int lvlNum = 0;
+	private int lvlNum = 0, currentWidth, currentHeight;;
 	public static final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
 	private static int levelLength = 2000 - 50, densityOfBlocks = 2;
 	private StartMenu startMenu;
@@ -81,6 +81,8 @@ public class GameScreen extends PApplet {
 		lvlNum = 3;
 		currentMenu = startMenu;
 		inGameMenu = null;
+		currentWidth = width;
+		currentHeight = height;
 	}
 
 	public void reset(boolean fullClear) {
@@ -303,7 +305,13 @@ public class GameScreen extends PApplet {
 	}
 
 	public void draw() {
+	
+		if(width != currentWidth || height != currentHeight) {
 		ImageLoader.resizeImages(this);
+		currentWidth = width;
+		currentHeight = height;
+		
+		}
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
 		System.out.println(width + " " + height);
 		System.out.println(displayWidth + " " + displayHeight);
