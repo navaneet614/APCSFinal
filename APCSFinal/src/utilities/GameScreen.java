@@ -421,15 +421,15 @@ public class GameScreen extends PApplet {
 						obstacles.add(new Glue((float) obstacles.get(hu).getX(), (float) obstacles.get(hu).getY() - 10,
 								50, 20));
 					} else if (kadaba == 2) {
-						if ( lvlNum == 4 ) 
+						if ( 3*Math.random() > 1 )
 						{
 							obstacles.add(new Turret((float) obstacles.get(hu).getX(),
-									(float) obstacles.get(hu).getY() - 50, 50, 50, 5*Math.PI/4));
+								(float) obstacles.get(hu).getY() - 50, 50, 50, Math.PI));
 						}
 						else 
 						{
 							obstacles.add(new Turret((float) obstacles.get(hu).getX(),
-								(float) obstacles.get(hu).getY() - 50, 50, 50, Math.PI));
+									(float) obstacles.get(hu).getY() - 50, 50, 50, 5*Math.PI/6));
 						}
 					} else if (kadaba == 3) {
 						obstacles.add(new LandMine((float) obstacles.get(hu).getX(),
