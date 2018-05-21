@@ -61,7 +61,9 @@ public class GodScreen extends Menu {
 		    dialog.setAlwaysOnTop(true);
 		    dialog.setVisible(true);
 		    dialog.toFront();
-
+		    optionPane.setRequestFocusEnabled(true);
+		    optionPane.grabFocus();
+		    optionPane.requestFocus();
 		    showedPopup = true;
 	    }
 		drawer.fill(Color.LIGHT_GRAY.getRGB());
