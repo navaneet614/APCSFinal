@@ -42,7 +42,7 @@ import processing.core.PApplet;
  */
 public class GameScreen extends PApplet implements NetworkListener {
 	private int lvlNum = 0, currentWidth, currentHeight;;
-	public static final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
+	public final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
 	private static int levelLength = 2000 - 50, densityOfBlocks = 2;
 	private StartMenu startMenu;
 	private Menu currentMenu, inGameMenu;
@@ -129,7 +129,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 		}
 		doLvl();
 		setupBlocks();
-		
+
 	}
 
 	public void settings() {
@@ -312,24 +312,24 @@ public class GameScreen extends PApplet implements NetworkListener {
 	}
 
 	public void draw() {
-	
-		if(width != currentWidth || height != currentHeight) {
-		ImageLoader.resizeImages(this);
-		currentWidth = width;
-		currentHeight = height;
+
+		if (width != currentWidth || height != currentHeight) {
+			ImageLoader.resizeImages(this);
+			currentWidth = width;
+			currentHeight = height;
 		}
-		
+
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
-//		System.out.println(width + " " + height);
-//		System.out.println(displayWidth + " " + displayHeight);
+		// System.out.println(width + " " + height);
+		// System.out.println(displayWidth + " " + displayHeight);
 		background(Color.WHITE.getRGB());
-		
+
 		if (currentMenu != null) {
 			currentMenu.draw(this);
 		} else {
 			background(ImageLoader.background);
 			for (Obstacle o : obstacles) {
-//				 if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
+				// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
 				o.draw(this);
 			}
 			if (inGameMenu != null) {
@@ -518,11 +518,24 @@ public class GameScreen extends PApplet implements NetworkListener {
 			if (canPlaceBlock && (mouseY / (height / ORIGINAL_HEIGHT)) > 100 && x.equals("block")) {
 				float mx = (float) ((mouseX / (width / ORIGINAL_WIDTH)));
 				float my = (float) ((mouseY / (height / ORIGINAL_HEIGHT)));
-				obstacles.add(new Block((float)((mx - mx % (50) - distanceTranslated%50)), (float) my - my % 50, 50, 50));
-				god.place();
+				mx = (float) ((mx - mx % (50) - distanceTranslated % 50));
+				my = (float) my - my % 50;
+				if (spaceIsFree(mx, my)) {
+					obstacles.add(new Block(mx, my, 50, 50));
+					god.place();
+				}
 				setupBlocks();
 			}
 		}
+	}
+
+	private boolean spaceIsFree(float mx, float my) {
+		Rectangle r = new Rectangle((int) mx, (int) my, 50, 50);
+		for (Obstacle o : obstacles) {
+			if (r.intersects(o.getBoundRect()))
+				return false;
+		}
+		return true;
 	}
 
 	public void removeObstacle() {
@@ -705,18 +718,18 @@ public class GameScreen extends PApplet implements NetworkListener {
 		distanceTranslated += x;
 		return true;
 	}
-	
+
 	private NetworkMessenger nm;
 
 	@Override
 	public void connectedToServer(NetworkMessenger nm) {
 		this.nm = nm;
-		
+
 	}
 
 	@Override
 	public void networkMessageReceived(NetworkDataObject ndo) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
