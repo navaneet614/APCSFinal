@@ -47,6 +47,11 @@ public class Button {
 	public boolean mouseOver(int mouseX, int mouseY) {
 		return (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height);
 	}
+	
+	public void setFill( Color fill ) 
+	{
+		fillColor  = fill;
+	}
 
 	public String getText() {
 		return text;

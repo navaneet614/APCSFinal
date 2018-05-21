@@ -3,13 +3,21 @@ package utilities;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Queue;
+
+import frontend.NetworkDataObject;
+import frontend.NetworkListener;
+import frontend.NetworkMessenger;
 import menus.DeathMenu;
 import menus.DifficultyMenu;
 import menus.FinishedLevelMenu;
 import menus.GodScreen;
 import menus.InstructionPanel;
+import menus.LanMenu;
 import menus.LevelMenu;
 import menus.Menu;
 import menus.MultiplayerMenu;
@@ -35,9 +43,9 @@ import processing.core.PApplet;
  *         is the "backbone" of the game.
  *
  */
-public class GameScreen extends PApplet {
-	private int lvlNum = 0;
-	public static final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
+public class GameScreen extends PApplet implements NetworkListener {
+	private int lvlNum = 0, currentWidth, currentHeight;;
+	public final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
 	private static int levelLength = 2000 - 50, densityOfBlocks = 2;
 	private StartMenu startMenu;
 	private Menu currentMenu, inGameMenu;
@@ -49,6 +57,7 @@ public class GameScreen extends PApplet {
 	private InstructionPanel instructions;
 	private DifficultyMenu difficultyMenu;
 	private FinishedLevelMenu finishedLevelMenu;
+	private LanMenu lanMenu;
 	private Player guy;
 	private God god;
 	private HashSet<Integer> keys;
@@ -71,6 +80,7 @@ public class GameScreen extends PApplet {
 		difficultyMenu = new DifficultyMenu();
 		finishedLevelMenu = new FinishedLevelMenu();
 		instructions = new InstructionPanel();
+		lanMenu = new LanMenu();
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
 		god = new God(450, 100, 120, 140, 15);
@@ -81,6 +91,8 @@ public class GameScreen extends PApplet {
 		lvlNum = 3;
 		currentMenu = startMenu;
 		inGameMenu = null;
+		currentWidth = width;
+		currentHeight = height;
 	}
 
 	public void reset(boolean fullClear) {
@@ -120,6 +132,7 @@ public class GameScreen extends PApplet {
 		}
 		doLvl();
 		setupBlocks();
+
 	}
 
 	public void settings() {
@@ -130,13 +143,14 @@ public class GameScreen extends PApplet {
 		// fullScreen(P2D);
 	}
 
-	private void setupBlocks() {
+	public void setupBlocks() {
 		for (Obstacle o : obstacles) {
-			for (Obstacle ob : obstacles) {
-				if (o instanceof Block && Math.abs(ob.getY() - o.getY() - o.getHeight()) < .1
-						&& Math.abs(ob.getX() - o.getX()) < .1) {
-					Block hu = (Block) ob;
-					hu.setStuffOnTop(true);
+			if (o instanceof Block) {
+				Block block = (Block) o;
+				block.setStuffOnTop(false);
+				for (Obstacle o2 : obstacles) {
+					if (Math.abs(o.getX() - o2.getX()) < .1 && Math.abs((o2.getY() + o2.getHeight()) - o.getY()) < .1)
+						block.setStuffOnTop(true);
 				}
 			}
 		}
@@ -292,6 +306,8 @@ public class GameScreen extends PApplet {
 			obstacles.add(new Block(2350, ORIGINAL_HEIGHT - 200, 50, 50));
 			obstacles.add(new Block(2400, ORIGINAL_HEIGHT - 200, 50, 50));
 
+		} else if (lvlNum == 4) {
+
 		}
 		obstacles.add(new FinishHouse(2630, 450, ImageLoader.finish, 100, 100));
 		this.setupBlocks();
@@ -299,46 +315,40 @@ public class GameScreen extends PApplet {
 	}
 
 	public void draw() {
+
+		if (width != currentWidth || height != currentHeight) {
+			ImageLoader.resizeImages(this);
+			currentWidth = width;
+			currentHeight = height;
+		}
+
 		scale(width / ORIGINAL_WIDTH, height / ORIGINAL_HEIGHT);
+		// System.out.println(width + " " + height);
+		// System.out.println(displayWidth + " " + displayHeight);
 		background(Color.WHITE.getRGB());
-		// System.out.println("FPS:" + frameRate);
-		// System.out.println(this.distanceTranslated);
-		// if (guy.hearts() <= 0) {
-		// currentMenu = deathMenu;
-		// }
-		// if (currentMenu != null) {
-		// currentMenu.draw(this);
-		// } else if (currentMenu == null) {
-		//
-		// if (inGameMenu != null) {
-		// if (!god.canPlace() && inGameMenu instanceof GodScreen) {
-		// inGameMenu = null;
-		// translate(-distanceTranslated);
-		//
-		// } else
-		// inGameMenu.draw(this);
-		// } else if (gameMode.equals(gameModes.singleplayer)) {
-		// this.simpleAI();
-		// inGameMenu = null;
-		// }
-		//
-		// if (!(inGameMenu instanceof DifficultyMenu) || !(inGameMenu instanceof
-		// LevelMenu)) {
-		// for (Obstacle o : obstacles) {
-		// o.draw(this);
-		// }
-		// }
-		//
-		// if (!(inGameMenu instanceof GodScreen)) {
-		// hitDetection();
-		// guy.update(keys, this);
-		// guy.draw(this);
-		// }
-		// }
+		
+		if(gameMode!=null && gameMode.equals(gameModes.onlineMultiplayer)) {
+			
+			
+			if(isHost) {
+				for (Obstacle o : obstacles) {
+					// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
+					o.draw(this);
+				}
+				currentMenu = null;
+				inGameMenu = godScreen;
+				inGameMenu.draw(this);
+			}
+			
+			
+			this.processNetworkMessages();
+		}
+		
 
 		if (currentMenu != null) {
 			currentMenu.draw(this);
 		} else {
+			background(ImageLoader.background);
 			for (Obstacle o : obstacles) {
 				// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
 				o.draw(this);
@@ -357,7 +367,6 @@ public class GameScreen extends PApplet {
 					// guy.draw(this);
 				}
 			} else {
-				// thread("update");
 				update();
 				guy.draw(this);
 			}
@@ -386,9 +395,9 @@ public class GameScreen extends PApplet {
 		if ((keyCode == KeyEvent.VK_P || keyCode == KeyEvent.VK_SPACE) && currentMenu == null) {
 			currentMenu = pauseMenu;
 		} else if (keyCode == KeyEvent.VK_D && inGameMenu instanceof GodScreen) {
-			translate(10);
+			translate(20);
 		} else if (keyCode == KeyEvent.VK_A && inGameMenu instanceof GodScreen) {
-			translate(-10);
+			translate(-20);
 		}
 		keys.add(this.keyCode);
 	}
@@ -403,7 +412,7 @@ public class GameScreen extends PApplet {
 		int hu, kadaba;
 		while (god.canPlace()) {
 			hu = (int) (Math.random() * obstacles.size());
-			if (obstacles.get(hu).getX() > this.levelLength - 50 || obstacles.get(hu).getX() < 100) {
+			if (obstacles.get(hu).getX() > 2500 || obstacles.get(hu).getX() < 200) {
 				continue;
 			}
 			if (obstacles.get(hu) instanceof Block) {
@@ -485,18 +494,19 @@ public class GameScreen extends PApplet {
 				if (o.getBoundRect().contains(mouseP) && o instanceof Block) {
 					Block bee = (Block) o;
 					if (!bee.getStuffOnTop()) {
-						godScreen.setDragging(false);
 						if (x.equals("spike")) {
 							spike = new Spike((float) o.getX(), (float) o.getY() - 30, 50, 30);
+							bee.setStuffOnTop(true);
 						} else if (x.equals("glue")) {
 							glue = new Glue((float) o.getX(), (float) o.getY() - 10, 50, 10);
+							bee.setStuffOnTop(true);
 						} else if (x.equals("turret")) {
 							turret = new Turret((float) o.getX(), (float) o.getY() - 50, 50, 50, Math.PI);
+							bee.setStuffOnTop(true);
 						} else if (x.equals("mine")) {
 							mine = new LandMine((float) o.getX(), (float) o.getY() - 25, 20, 20);
+							bee.setStuffOnTop(true);
 						}
-
-						bee.setStuffOnTop(true);
 					} else {
 						spike = null;
 						glue = null;
@@ -526,15 +536,31 @@ public class GameScreen extends PApplet {
 				mine = null;
 				god.place();
 			}
-			if (canPlaceBlock && mouseY > 100 && x.equals("block")) {
-				obstacles.add(new Block((float) (mouseX - mouseX % (50)), (float) mouseY - mouseY % 50, 50, 50));
-				god.place();
+			if (canPlaceBlock && (mouseY / (height / ORIGINAL_HEIGHT)) > 100 && x.equals("block")) {
+				float mx = (float) ((mouseX / (width / ORIGINAL_WIDTH)));
+				float my = (float) ((mouseY / (height / ORIGINAL_HEIGHT)));
+				mx = (float) ((mx - mx % (50) - distanceTranslated % 50));
+				my = (float) my - my % 50;
+				if (spaceIsFree(mx, my)) {
+					obstacles.add(new Block(mx, my, 50, 50));
+					god.place();
+				}
+				setupBlocks();
 			}
 		}
 	}
-	
+
+	private boolean spaceIsFree(float mx, float my) {
+		Rectangle r = new Rectangle((int) mx, (int) my, 50, 50);
+		for (Obstacle o : obstacles) {
+			if (r.intersects(o.getBoundRect()))
+				return false;
+		}
+		return true;
+	}
+
 	public void removeObstacle() {
-		obstacles.remove(obstacles.size()-1);
+		obstacles.remove(obstacles.size() - 1);
 	}
 
 	public void mouseMoved() {
@@ -558,7 +584,7 @@ public class GameScreen extends PApplet {
 			reset(true);
 		} else if (menumode.equals("onlinemultiplayer")) {
 			gameMode = gameModes.onlineMultiplayer;
-			currentMenu = null;
+			currentMenu = lanMenu;
 		} else if (menumode.equals("main")) {
 			reset(true);
 			currentMenu = startMenu;
@@ -607,11 +633,23 @@ public class GameScreen extends PApplet {
 
 				if (obstacles.get(i) instanceof Glue) {
 					guy.setSlow(true);
+				} else if (obstacles.get(i) instanceof Spike) {
+					guy.takeDamage(obstacles.get(i).getDamage());
+					double temp = (guy.getX() - obstacles.get(i).getBoundRect().getCenterX());
+					if (temp < 0) {
+						guy.setX(guy.getX() - guy.getWidth());
+
+					} else {
+						guy.setX(guy.getX() + guy.getWidth());
+					}
+					temp = (guy.getY() - obstacles.get(i).getBoundRect().getCenterY());
+					guy.setY(guy.getY() + temp);
+					guy.setTintRed();
+					guy.cancelJump();
 				}
 
-				else if (obstacles.get(i) instanceof Block) {
+				else if (obstacles.get(i) instanceof Block || obstacles.get(i) instanceof Turret) {
 					guy.setSlow(false);
-
 					int offset = 20;
 					if (gRect.intersectsLine(oRect.getX() + offset, oRect.getY(), oRect.getMaxX() - offset,
 							oRect.getY())) {
@@ -648,7 +686,6 @@ public class GameScreen extends PApplet {
 				}
 			} else {
 				obstacles.get(i).resetNumTimesHit();
-
 			}
 			if (obstacles.get(i) instanceof Turret) {
 				Turret t = (Turret) (obstacles.get(i));
@@ -656,6 +693,8 @@ public class GameScreen extends PApplet {
 					Bullet b = t.bullets().get(j);
 					if (b.getBoundingRect().intersects(guy.getBoundingRect())) {
 						guy.takeDamage(b.getDamage());
+						guy.setTintRed();
+						// guy.setVY(guy.getVY() + -7);
 						t.bullets().remove(j);
 						j--;
 					} else {
@@ -699,5 +738,61 @@ public class GameScreen extends PApplet {
 		}
 		distanceTranslated += x;
 		return true;
+	}
+
+	private NetworkMessenger nm;
+	private static final String messageTypeObstacle = "OBSTACLE";
+	private boolean isHost;
+	
+	@Override
+	public void connectedToServer(NetworkMessenger nm) {
+		this.nm = nm;
+//		System.out.println("connected");
+	}
+
+	@Override
+	public void networkMessageReceived(NetworkDataObject ndo) {
+//		System.out.println("here");
+		String host = ndo.getSourceIP();
+//		System.out.println(host);
+		try {
+			String local = InetAddress.getLocalHost().toString();
+			local = local.substring(local.indexOf('/')+1);
+			isHost = host.equals(local);
+//			if(isHost) {
+//				System.out.println("i am host");
+//			}
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void processNetworkMessages() {
+		
+		if (nm == null)
+			return;
+		
+		Queue<NetworkDataObject> queue = nm.getQueuedMessages();
+		
+		while (!queue.isEmpty()) {
+			NetworkDataObject ndo = queue.poll();
+
+			String host = ndo.getSourceIP();
+
+			if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
+				if (ndo.message[0].equals(messageTypeObstacle)) {
+					
+					
+				}
+			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
+//				nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeInit, me.x, me.y, me.color);
+				
+			} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
+				gameMode = null;
+				this.changeMenuMode("main");
+			}
+
+		}
+
 	}
 }

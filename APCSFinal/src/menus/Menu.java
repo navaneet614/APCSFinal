@@ -28,7 +28,7 @@ public abstract class Menu{
 	}
 	
 	public void draw(PApplet drawer) {
-		drawer.background(Color.WHITE.getRGB());
+		//drawer.background(Color.WHITE.getRGB());
 		for(Button b:buttons) {
 			b.draw(drawer);
 		}

@@ -3,6 +3,7 @@ import java.awt.Color;
 
 import processing.core.PApplet;
 import utilities.GameScreen;
+import utilities.ImageLoader;
 
 /**
  * 
@@ -20,10 +21,10 @@ public class LevelMenu extends Menu {
 	}
 	
 	private void doButtons() {
-		this.addButton(new Button(325, 200, 150, 50, "Level 1", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 260, 150, 50, "Level 2", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 320, 150, 50, "Level 3", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 380, 150, 50, "Back", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(50, 400, 150, 50, "Level 1", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(220, 300, 150, 50, "Level 2", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(450, 100, 150, 50, "Level 3", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 500, 150, 50, "Back", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 	}
 	
 	
@@ -41,11 +42,12 @@ public class LevelMenu extends Menu {
 	}
 	
 	public void draw(PApplet drawer) {
+		drawer.background(ImageLoader.levelImage);
 		super.draw(drawer);
 		drawer.textFont(drawer.createFont("Georgia", 20));
 		drawer.textSize(20);
 		drawer.textAlign(PApplet.CENTER, PApplet.CENTER);
-		drawer.text("Level Select", 400, 100);
+		drawer.text("Level Select", 400, 50);
 	}
 
 }

@@ -32,11 +32,11 @@ public class Player implements Serializable {
 
 	private double xCoord;
 	private double yCoord;
-	private int health;
+	private int health, count;
 	private double width;
 	private double height;
 	private PImage character, heart;
-	private boolean alive, jumping, slow;
+	private boolean alive, jumping, slow, tintRed;
 	private double vy;
 	private Rectangle boundingRectangle;
 
@@ -50,6 +50,8 @@ public class Player implements Serializable {
 		boundingRectangle = new Rectangle((int) x, (int) y, (int) w, (int) h);
 		slow = false;
 		health = 3;
+		tintRed = false;
+		count = 0;
 	}
 
 	public void setup(PApplet drawer) {
@@ -64,7 +66,18 @@ public class Player implements Serializable {
 			drawer.image(heart, xSpot, ySpot, 20, 20);
 			xSpot += 20;
 		}
+		drawer.pushStyle();
+		if(tintRed){
+			drawer.tint(Color.RED.getRGB(), 128);
+			count++;
+		}
+		if(count>25) {
+			count = 0;
+			drawer.noTint();
+			tintRed = false;
+		}
 		drawer.image(character, (float) xCoord, (float) yCoord, (float) width, (float) height);
+		drawer.popStyle();
 		// drawer.point((float)xCoord, (float)yCoord);
 		// drawer.rect(boundingRectangle.x, boundingRectangle.y,boundingRectangle.width,
 		// boundingRectangle.height);
@@ -95,6 +108,10 @@ public class Player implements Serializable {
 		if (health <= 0) {
 			alive = false;
 		}
+	}
+	
+	public void setTintRed() {
+		tintRed = true;
 	}
 
 	public boolean getStatus() {
@@ -130,7 +147,7 @@ public class Player implements Serializable {
 	}
 
 	public void setVY(double newVY) {
-		vy = GRAVITY;
+		vy = GRAVITY + newVY;
 	}
 
 	private void moveLeft() {
@@ -161,7 +178,7 @@ public class Player implements Serializable {
 						moveLeft();
 				}
 			} else if ((key == PApplet.RIGHT || key == KeyEvent.VK_D) && getX()  + width < gameScreen.width) {
-				if (xCoord + width < gameScreen.ORIGINAL_WIDTH * 3 / 4) {
+				if (xCoord + width < gameScreen.ORIGINAL_WIDTH * 1 / 2) {
 					moveRight();
 				} else {
 					if (!gameScreen.translate(7))
@@ -184,6 +201,9 @@ public class Player implements Serializable {
 		}
 		vy += GRAVITY;
 		yCoord += vy;
+		if(vy>35) {
+			vy = 35;
+		}
 		boundingRectangle.setLocation((int) xCoord, (int) yCoord);
 	}
 

@@ -1,5 +1,7 @@
 package obstacles;
 
+import java.awt.Rectangle;
+
 import processing.core.PApplet;
 import utilities.ImageLoader;
 
@@ -37,6 +39,11 @@ public class LandMine extends Obstacle {
 		}else {
 			super.draw(drawer);
 		}
+	}
+	
+	public Rectangle getBoundRect() 
+	{
+		return new Rectangle( (int)super.getX()+5, (int)super.getY()+5, (int)super.getWidth()-5, (int)super.getHeight()-5 );
 	}
 	
 	

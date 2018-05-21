@@ -3,6 +3,7 @@ import java.awt.Color;
 
 import processing.core.PApplet;
 import utilities.GameScreen;
+import utilities.ImageLoader;
 
 /**
  * 
@@ -23,10 +24,10 @@ public class StartMenu extends Menu {
 	}
 	
 	private void doButtons() {
-		this.addButton(new Button(325, 200, 150, 50, "Singleplayer", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 260, 150, 50, "Multiplayer", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 320, 150, 50, "Instructions", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 380, 150, 50, "Quit", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 200, 150, 50, "Singleplayer", Color.BLACK, Color.ORANGE, Color.YELLOW, Color.BLUE));
+		this.addButton(new Button(325, 260, 150, 50, "Multiplayer", Color.BLACK, Color.MAGENTA, Color.PINK, Color.BLUE));
+		this.addButton(new Button(325, 320, 150, 50, "Instructions", Color.BLACK, Color.GREEN, Color.CYAN, Color.BLUE));
+		this.addButton(new Button(325, 380, 150, 50, "Quit", Color.BLACK, Color.RED, Color.ORANGE, Color.BLUE));
 	}
 
 	@Override
@@ -43,10 +44,14 @@ public class StartMenu extends Menu {
 	}
 	
 	public void draw(PApplet drawer) {
+		drawer.background(ImageLoader.startImage);
 		super.draw(drawer);
 		drawer.textFont(drawer.createFont("Georgia", 20));
-		drawer.textSize(20);
+		drawer.textSize(38);
+		drawer.fill(Color.black.getRGB());
 		drawer.textAlign(PApplet.CENTER, PApplet.CENTER);
 		drawer.text("God's Plan", 400, 100);
+		
+		
 	}
 }

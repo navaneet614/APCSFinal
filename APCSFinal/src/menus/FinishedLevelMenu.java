@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import processing.core.PApplet;
 import utilities.GameScreen;
+import utilities.ImageLoader;
 
 /**
  * 
@@ -19,9 +20,9 @@ public class FinishedLevelMenu extends Menu {
 	}
 	
 	private void doButtons() {
-		this.addButton(new Button(325, 200, 150, 50, "Restart", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 260, 150, 50, "Instructions", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 320, 150, 50, "Main Menu", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 200, 150, 50, "Restart", Color.BLACK, Color.CYAN, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 260, 150, 50, "Instructions", Color.BLACK, Color.CYAN, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 320, 150, 50, "Main Menu", Color.BLACK, Color.CYAN, Color.LIGHT_GRAY, Color.BLUE));
 		this.addButton(new Button(325, 380, 150, 50, "Quit", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
 	}
 
@@ -39,6 +40,7 @@ public class FinishedLevelMenu extends Menu {
 	}
 	
 	public void draw(PApplet drawer) {
+		drawer.background(ImageLoader.background);
 		super.draw(drawer);
 		drawer.textFont(drawer.createFont("Georgia", 20));
 		drawer.textSize(20);
