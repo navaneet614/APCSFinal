@@ -331,6 +331,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 			
 			
 			if(isHost) {
+				background(ImageLoader.background);
 				for (Obstacle o : obstacles) {
 					// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
 					o.draw(this);
@@ -338,6 +339,16 @@ public class GameScreen extends PApplet implements NetworkListener {
 				currentMenu = null;
 				inGameMenu = godScreen;
 				inGameMenu.draw(this);
+				nm.sendMessage(this.messageTypeObstacle, obstacles);
+			} else {
+				background(ImageLoader.background);
+				for (Obstacle o : obstacles) {
+					// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
+					o.draw(this);
+				}
+				fill(Color.BLACK.getRGB());
+				text("The host is making the level. Please Wait.",
+						350, 50);
 			}
 			
 			
@@ -759,9 +770,9 @@ public class GameScreen extends PApplet implements NetworkListener {
 			String local = InetAddress.getLocalHost().toString();
 			local = local.substring(local.indexOf('/')+1);
 			isHost = host.equals(local);
-//			if(isHost) {
-//				System.out.println("i am host");
-//			}
+			if(isHost) {
+				System.out.println("i am host");
+			}
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -781,8 +792,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 
 			if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
 				if (ndo.message[0].equals(messageTypeObstacle)) {
-					
-					
+					obstacles = (ArrayList<Obstacle>)ndo.message[1];
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
 //				nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeInit, me.x, me.y, me.color);
