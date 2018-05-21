@@ -20,10 +20,10 @@ import utilities.ImageLoader;
  * both the Player and God (in multiplayer mode).
  *
  */
-public class InstructionPanel extends Menu
+public class InstructionMenu extends Menu
 {
 
-	public InstructionPanel() 
+	public InstructionMenu() 
 	{
 		super();
 		doButtons();
@@ -46,7 +46,6 @@ public class InstructionPanel extends Menu
 	{	
 		drawer.background(ImageLoader.background);
 		super.draw(drawer);
-		drawer.image( ImageLoader.character, 200, 400 );
 		Block b1 = new Block( 500, 400, 50, 50 );
 		Block b2 = new Block( 550, 400, 50, 50 );
 		Block b3 = new Block( 620, 330, 50, 50 );
