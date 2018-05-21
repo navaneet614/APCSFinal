@@ -16,7 +16,7 @@ import menus.DeathMenu;
 import menus.DifficultyMenu;
 import menus.FinishedLevelMenu;
 import menus.GodScreen;
-import menus.InstructionPanel;
+import menus.InstructionMenu;
 import menus.LanMenu;
 import menus.LevelMenu;
 import menus.Menu;
@@ -54,7 +54,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 	private DeathMenu deathMenu;
 	private GodScreen godScreen;
 	private LevelMenu levelMenu;
-	private InstructionPanel instructions;
+	private InstructionMenu instructions;
 	private DifficultyMenu difficultyMenu;
 	private FinishedLevelMenu finishedLevelMenu;
 	private LanMenu lanMenu;
@@ -79,7 +79,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 		levelMenu = new LevelMenu();
 		difficultyMenu = new DifficultyMenu();
 		finishedLevelMenu = new FinishedLevelMenu();
-		instructions = new InstructionPanel();
+		instructions = new InstructionMenu();
 		lanMenu = new LanMenu();
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);

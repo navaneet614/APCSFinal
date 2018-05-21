@@ -20,10 +20,10 @@ import utilities.ImageLoader;
  * both the Player and God (in multiplayer mode).
  *
  */
-public class InstructionPanel extends Menu
+public class InstructionMenu extends Menu
 {
 
-	public InstructionPanel() 
+	public InstructionMenu() 
 	{
 		super();
 		doButtons();
