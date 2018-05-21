@@ -510,21 +510,13 @@ public class GameScreen extends PApplet {
 				god.place();
 			}
 			if (canPlaceBlock && (mouseY / (height / ORIGINAL_HEIGHT)) > 100 && x.equals("block")) {
-				float mx = (mouseX / (width / ORIGINAL_WIDTH));
-				float my = (mouseY / (height / ORIGINAL_HEIGHT));
-				obstacles.add(new Block((float) (mx - mx % (50)), (float) my - my % 50, 50, 50));
+				float mx = (float) ((mouseX / (width / ORIGINAL_WIDTH)));
+				float my = (float) ((mouseY / (height / ORIGINAL_HEIGHT)));
+				obstacles.add(new Block((float)((mx - mx % (50) - distanceTranslated%50)), (float) my - my % 50, 50, 50));
 				god.place();
 				setupBlocks();
 			}
 		}
-	}
-
-	private boolean spaceIsFree(float x, float y) {
-		for (Obstacle o : obstacles) {
-			if (Math.abs(o.getX() - x) < 10 && Math.abs(o.getY() - y) < 10)
-				return false;
-		}
-		return true;
 	}
 
 	public void removeObstacle() {
