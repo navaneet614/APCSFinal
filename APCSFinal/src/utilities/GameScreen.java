@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Queue;
 
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
 import frontend.NetworkDataObject;
 import frontend.NetworkListener;
 import frontend.NetworkMessenger;
@@ -64,6 +66,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 	private ArrayList<Obstacle> obstacles;
 	private double distanceTranslated;
 	private Rectangle mouseP;
+	private AudioPlayer bgMusic;
 
 	private enum gameModes {
 		singleplayer, localMultiplayer, onlineMultiplayer
@@ -122,9 +125,13 @@ public class GameScreen extends PApplet implements NetworkListener {
 	}
 
 	public void setup() {
+
 		// surface.setResizable(true);
 		this.frameRate(60);
 		ImageLoader.loadAllImages(this, "resources/");
+		Minim m = new Minim(this);
+		bgMusic = m.loadFile("/resources/godsplan.mp3");
+		bgMusic.loop();
 		guy.setup(this);
 		// god.setup(this);
 		for (Obstacle o : obstacles) {
@@ -410,6 +417,14 @@ public class GameScreen extends PApplet implements NetworkListener {
 		 */
 
 		// System.out.println(keyCode == KeyEvent.VK_D);
+		
+		if(keyCode == KeyEvent.VK_M) {
+			if(bgMusic.isPlaying()) {
+				bgMusic.pause();
+			} else {
+				bgMusic.play();
+			}
+		}
 
 		if ((keyCode == KeyEvent.VK_P || keyCode == KeyEvent.VK_SPACE) && currentMenu == null) {
 			currentMenu = pauseMenu;
