@@ -346,7 +346,6 @@ public class GameScreen extends PApplet implements NetworkListener {
 					// guy.draw(this);
 				}
 			} else {
-				// thread("update");
 				update();
 				guy.draw(this);
 			}
