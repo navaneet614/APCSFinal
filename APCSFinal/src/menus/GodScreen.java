@@ -60,6 +60,8 @@ public class GodScreen extends Menu {
 		    JDialog dialog = optionPane.createDialog("IMPORTANT MESSAGE");
 		    dialog.setAlwaysOnTop(true);
 		    dialog.setVisible(true);
+		    dialog.toFront();
+
 		    showedPopup = true;
 	    }
 		drawer.fill(Color.LIGHT_GRAY.getRGB());
