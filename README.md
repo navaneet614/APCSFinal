@@ -1,6 +1,6 @@
 -- HEADER --
 God’s Plan - By William Hu, Shaunak Bhandarkar, Navaneet Kadaba
-05-15-18
+05-21-18
 
 
 
@@ -71,6 +71,7 @@ Menu - is all the panels
 * PauseMenu 
 * StartMenu
 * DifficultyMenu
+* InstructionsMenu
 * FinishedLevelMenu
 * GodScreen
 * LevelMenu
@@ -96,6 +97,6 @@ Obstacle (abstract) - represents all obstacles. Inherited by:
 
 
 -- RESPONSIBILITY LIST --
-Navaneet - in charge of menu, buttons, and the game screen
-Shaunak - God of making obstacles, javadoc-ing, and READMe's
+Navaneet - in charge of menus, buttons, and the game screen
+Shaunak - God of making obstacles, graphical design, javadoc-ing, and READMe's
 William - in charge of creating God, Player, and the UML
