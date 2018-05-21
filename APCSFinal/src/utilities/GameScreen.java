@@ -3,8 +3,11 @@ package utilities;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Queue;
 
 import frontend.NetworkDataObject;
 import frontend.NetworkListener;
@@ -323,6 +326,24 @@ public class GameScreen extends PApplet implements NetworkListener {
 		// System.out.println(width + " " + height);
 		// System.out.println(displayWidth + " " + displayHeight);
 		background(Color.WHITE.getRGB());
+		
+		if(gameMode!=null && gameMode.equals(gameModes.onlineMultiplayer)) {
+			
+			
+			if(isHost) {
+				for (Obstacle o : obstacles) {
+					// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
+					o.draw(this);
+				}
+				currentMenu = null;
+				inGameMenu = godScreen;
+				inGameMenu.draw(this);
+			}
+			
+			
+			this.processNetworkMessages();
+		}
+		
 
 		if (currentMenu != null) {
 			currentMenu.draw(this);
@@ -720,16 +741,58 @@ public class GameScreen extends PApplet implements NetworkListener {
 	}
 
 	private NetworkMessenger nm;
-
+	private static final String messageTypeObstacle = "OBSTACLE";
+	private boolean isHost;
+	
 	@Override
 	public void connectedToServer(NetworkMessenger nm) {
 		this.nm = nm;
-
+//		System.out.println("connected");
 	}
 
 	@Override
 	public void networkMessageReceived(NetworkDataObject ndo) {
-		// TODO Auto-generated method stub
+//		System.out.println("here");
+		String host = ndo.getSourceIP();
+//		System.out.println(host);
+		try {
+			String local = InetAddress.getLocalHost().toString();
+			local = local.substring(local.indexOf('/')+1);
+			isHost = host.equals(local);
+//			if(isHost) {
+//				System.out.println("i am host");
+//			}
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void processNetworkMessages() {
+		
+		if (nm == null)
+			return;
+		
+		Queue<NetworkDataObject> queue = nm.getQueuedMessages();
+		
+		while (!queue.isEmpty()) {
+			NetworkDataObject ndo = queue.poll();
+
+			String host = ndo.getSourceIP();
+
+			if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
+				if (ndo.message[0].equals(messageTypeObstacle)) {
+					
+					
+				}
+			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
+//				nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeInit, me.x, me.y, me.color);
+				
+			} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
+				gameMode = null;
+				this.changeMenuMode("main");
+			}
+
+		}
 
 	}
 }
