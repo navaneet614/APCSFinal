@@ -27,7 +27,7 @@ public abstract class Obstacle implements Serializable
 	private float y;
 	private double width, height;
 	private Rectangle boundingRectangle;
-	private PImage pic;
+	private transient PImage pic;
 	private long numTimesHit;
 	
 	public Obstacle( float x, float y, PImage p, double width, double height) 
