@@ -5,11 +5,16 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import frontend.NetworkDataObject;
+import frontend.NetworkListener;
+import frontend.NetworkMessenger;
 import menus.DeathMenu;
 import menus.DifficultyMenu;
 import menus.FinishedLevelMenu;
 import menus.GodScreen;
 import menus.InstructionPanel;
+import menus.LanMenu;
 import menus.LevelMenu;
 import menus.Menu;
 import menus.MultiplayerMenu;
@@ -35,7 +40,7 @@ import processing.core.PApplet;
  *         is the "backbone" of the game.
  *
  */
-public class GameScreen extends PApplet {
+public class GameScreen extends PApplet implements NetworkListener {
 	private int lvlNum = 0, currentWidth, currentHeight;;
 	public static final float ORIGINAL_WIDTH = 800, ORIGINAL_HEIGHT = 600;
 	private static int levelLength = 2000 - 50, densityOfBlocks = 2;
@@ -49,6 +54,7 @@ public class GameScreen extends PApplet {
 	private InstructionPanel instructions;
 	private DifficultyMenu difficultyMenu;
 	private FinishedLevelMenu finishedLevelMenu;
+	private LanMenu lanMenu;
 	private Player guy;
 	private God god;
 	private HashSet<Integer> keys;
@@ -71,6 +77,7 @@ public class GameScreen extends PApplet {
 		difficultyMenu = new DifficultyMenu();
 		finishedLevelMenu = new FinishedLevelMenu();
 		instructions = new InstructionPanel();
+		lanMenu = new LanMenu();
 		distanceTranslated = 0;
 		guy = new Player(50, 450, 50, 50);
 		god = new God(450, 100, 120, 140, 15);
@@ -544,7 +551,7 @@ public class GameScreen extends PApplet {
 			reset(true);
 		} else if (menumode.equals("onlinemultiplayer")) {
 			gameMode = gameModes.onlineMultiplayer;
-			currentMenu = null;
+			currentMenu = lanMenu;
 		} else if (menumode.equals("main")) {
 			reset(true);
 			currentMenu = startMenu;
@@ -698,5 +705,19 @@ public class GameScreen extends PApplet {
 		}
 		distanceTranslated += x;
 		return true;
+	}
+	
+	private NetworkMessenger nm;
+
+	@Override
+	public void connectedToServer(NetworkMessenger nm) {
+		this.nm = nm;
+		
+	}
+
+	@Override
+	public void networkMessageReceived(NetworkDataObject ndo) {
+		// TODO Auto-generated method stub
+		
 	}
 }
