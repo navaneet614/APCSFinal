@@ -28,6 +28,17 @@ public class ClickableObstacle extends Button {
 		this.text = text;
 	}
 	
+	public ClickableObstacle( float x, float y, float width, float height, Obstacle obstacle, String text, Color fill ) 
+	{
+		super(x,y,width,height,text, Color.BLACK, fill, Color.LIGHT_GRAY, Color.BLUE);
+		this.obstacle = obstacle;
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		this.text = text;
+	}
+	
 	
 
 }

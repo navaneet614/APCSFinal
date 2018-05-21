@@ -36,19 +36,19 @@ public class GodScreen extends Menu {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		spike = new ClickableObstacle(x, y, width / 10, height, new Spike(x, y, 50, 50), "Spikes");
-		glue = new ClickableObstacle(x + width / 10, y, width / 10, height, new Glue(x, y, 50, 50), "Glue");
-		turret = new ClickableObstacle(x + width / 5, y, width / 10, height, new Turret(x, y, 50, 50, 180), "Turrets");
-		mine = new ClickableObstacle(x + 3 * width / 10, y, width / 10, height, new LandMine(x, y, 25, 25), "Mine");
-		block = new ClickableObstacle(x + 2 * width / 5, y, width / 10, height, new Block(x, y, 50, 50), "Block");
+		spike = new ClickableObstacle(x, y, width / 10, height, new Spike(x, y, 50, 50), "Spikes", Color.PINK);
+		glue = new ClickableObstacle(x + width / 10, y, width / 10, height, new Glue(x, y, 50, 50), "Glue", Color.GREEN);
+		turret = new ClickableObstacle(x + width / 5, y, width / 10, height, new Turret(x, y, 50, 50, 180), "Turrets", Color.ORANGE);
+		mine = new ClickableObstacle(x + 3 * width / 10, y, width / 10, height, new LandMine(x, y, 25, 25), "Mine", Color.YELLOW);
+		block = new ClickableObstacle(x + 2 * width / 5, y, width / 10, height, new Block(x, y, 50, 50), "Block", Color.RED);
 		addButton(spike);
 		addButton(glue);
 		addButton(turret);
 		addButton(mine);
 		addButton(block);
-		done = new Button(x + 5 * width / 8, y, width / 8, height, "Done", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY,
+		done = new Button(x + 5 * width / 8, y, width / 8, height, "Done", Color.BLACK, Color.CYAN, Color.LIGHT_GRAY,
 				Color.BLUE);
-		undo = new Button(x + width / 2, y, width / 8, height, "Undo", Color.black, Color.WHITE, Color.LIGHT_GRAY,
+		undo = new Button(x + width / 2, y, width / 8, height, "Undo", Color.black, Color.MAGENTA, Color.LIGHT_GRAY,
 				Color.BLUE);
 		this.addButton(done);
 		this.addButton(undo);
