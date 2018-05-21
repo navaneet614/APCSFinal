@@ -314,6 +314,10 @@ public class GameScreen extends PApplet implements NetworkListener {
 
 	}
 
+	public void nullCurrentMenu() {
+		currentMenu = null;
+	}
+
 	public void draw() {
 
 		if (width != currentWidth || height != currentHeight) {
@@ -326,35 +330,39 @@ public class GameScreen extends PApplet implements NetworkListener {
 		// System.out.println(width + " " + height);
 		// System.out.println(displayWidth + " " + displayHeight);
 		background(Color.WHITE.getRGB());
-		
-		if(gameMode!=null && gameMode.equals(gameModes.onlineMultiplayer)) {
-			
-			
-			if(isHost) {
-				background(ImageLoader.background);
-				for (Obstacle o : obstacles) {
-					// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
-					o.draw(this);
+
+		if (gameMode != null && gameMode.equals(gameModes.onlineMultiplayer)) {
+
+			if (currentMenu == null) {
+				if (isHost) {
+					for (Obstacle o : obstacles) {
+						// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
+						o.draw(this);
+					}
+					currentMenu = null;
+					inGameMenu = godScreen;
+					inGameMenu.draw(this);
+					nm.sendMessage(this.messageTypeObstacle, obstacles);
+				} else if (notHost) {
+					for (Obstacle o : obstacles) {
+						// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
+						o.draw(this);
+					}
+					currentMenu = null;
+					inGameMenu = godScreen;
+					inGameMenu.draw(this);
+				} else {
+					fill(Color.BLACK.getRGB());
+					text("Look at the other window when you open the panel.", 350, 50);
 				}
-				currentMenu = null;
-				inGameMenu = godScreen;
-				inGameMenu.draw(this);
-				nm.sendMessage(this.messageTypeObstacle, obstacles);
 			} else {
-				background(ImageLoader.background);
-				for (Obstacle o : obstacles) {
-					// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
-					o.draw(this);
-				}
-				fill(Color.BLACK.getRGB());
-				text("The host is making the level. Please Wait.",
-						350, 50);
+				currentMenu.draw(this);
+
 			}
-			
-			
+
 			this.processNetworkMessages();
+			return;
 		}
-		
 
 		if (currentMenu != null) {
 			currentMenu.draw(this);
@@ -753,38 +761,42 @@ public class GameScreen extends PApplet implements NetworkListener {
 
 	private NetworkMessenger nm;
 	private static final String messageTypeObstacle = "OBSTACLE";
-	private boolean isHost;
-	
+	private boolean isHost, notHost;
+
 	@Override
 	public void connectedToServer(NetworkMessenger nm) {
 		this.nm = nm;
-//		System.out.println("connected");
+		// System.out.println("connected");
 	}
 
 	@Override
 	public void networkMessageReceived(NetworkDataObject ndo) {
-//		System.out.println("here");
+		// System.out.println("here");
 		String host = ndo.getSourceIP();
-//		System.out.println(host);
+		// System.out.println(host);
 		try {
 			String local = InetAddress.getLocalHost().toString();
-			local = local.substring(local.indexOf('/')+1);
+			local = local.substring(local.indexOf('/') + 1);
 			isHost = host.equals(local);
-			if(isHost) {
+			notHost = !host.equals(local);
+			if (isHost) {
 				System.out.println("i am host");
+			}
+			if (notHost) {
+				System.out.println("im not the host");
 			}
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void processNetworkMessages() {
-		
+
 		if (nm == null)
 			return;
-		
+
 		Queue<NetworkDataObject> queue = nm.getQueuedMessages();
-		
+
 		while (!queue.isEmpty()) {
 			NetworkDataObject ndo = queue.poll();
 
@@ -792,11 +804,12 @@ public class GameScreen extends PApplet implements NetworkListener {
 
 			if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
 				if (ndo.message[0].equals(messageTypeObstacle)) {
-					obstacles = (ArrayList<Obstacle>)ndo.message[1];
+					obstacles = (ArrayList<Obstacle>) ndo.message[1];
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
-//				nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeInit, me.x, me.y, me.color);
-				
+				// nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeInit, me.x, me.y,
+				// me.color);
+
 			} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
 				gameMode = null;
 				this.changeMenuMode("main");

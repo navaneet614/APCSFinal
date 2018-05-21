@@ -21,6 +21,7 @@ public class LanMenu extends Menu {
 			if(nmp == null) {
 				nmp = new NetworkManagementPanel("Gods Plan", 5, gameScreen);
 			}
+			gameScreen.nullCurrentMenu();
 		} else if(buttonText.equals("Main Menu")) {
 			gameScreen.changeMenuMode("main");
 		}
