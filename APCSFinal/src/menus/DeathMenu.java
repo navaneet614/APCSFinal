@@ -18,10 +18,10 @@ public class DeathMenu extends Menu {
 	}
 	
 	private void doButtons() {
-		this.addButton(new Button(325, 200, 150, 50, "Restart", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 260, 150, 50, "Instructions", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 320, 150, 50, "Main Menu", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
-		this.addButton(new Button(325, 380, 150, 50, "Quit", Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 200, 150, 50, "Restart", Color.BLACK, Color.YELLOW, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 260, 150, 50, "Instructions", Color.BLACK, Color.YELLOW, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 320, 150, 50, "Main Menu", Color.BLACK, Color.YELLOW, Color.LIGHT_GRAY, Color.BLUE));
+		this.addButton(new Button(325, 380, 150, 50, "Quit", Color.BLACK, Color.YELLOW, Color.LIGHT_GRAY, Color.BLUE));
 	}
 
 	@Override
