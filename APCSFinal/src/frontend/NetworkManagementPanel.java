@@ -58,6 +58,8 @@ public class NetworkManagementPanel extends JPanel
 	private int timeOut;
 	
 	private int maxPerServer;
+	
+	private JFrame window;
 
 	
 	/**
@@ -159,11 +161,15 @@ public class NetworkManagementPanel extends JPanel
 			discoverButton.setEnabled(false);
 		}
 
-		JFrame window = new JFrame("Network Management");
+		window = new JFrame("Network Management");
 		window.setBounds(300, 300, 700, 480);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.add(this);
 		window.setVisible(true);
+	}
+	
+	public JFrame getWindow() {
+		return window;
 	}
 	
 	
