@@ -121,6 +121,8 @@ public class GameScreen extends PApplet implements NetworkListener {
 			godScreen = new GodScreen(0, 0, 800, 100, god);
 			currentMenu = levelMenu;
 			setupBlocks();
+			isHost = false;
+			notHost = false;
 		}
 	}
 
@@ -629,6 +631,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 	public void removeObstacle() {
 		obstacles.remove(obstacles.size() - 1);
 		if (isHost) {
+			System.out.println("sent add obstacle");
 			nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
 		}
 	}
@@ -867,6 +870,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 					ArrayList<Obstacle> obstacles = (ArrayList<Obstacle>) ndo.message[1];
 					for (Obstacle o : obstacles) {
 						String type = o.getClass().toString();
+						System.out.println(type);
 						type = type.substring(type.lastIndexOf('.') + 1);
 						o.doImage(type);
 					}
