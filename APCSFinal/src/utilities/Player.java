@@ -47,7 +47,7 @@ public class Player implements Serializable {
 		height = h;
 		alive = true;
 		vy = 0;
-		boundingRectangle = new Rectangle((int) x, (int) y, (int) w, (int) h);
+		boundingRectangle = new Rectangle((int) x + 5, (int) y, (int) w - 5, (int) h);
 		slow = false;
 		health = 3;
 		tintRed = false;
@@ -67,20 +67,19 @@ public class Player implements Serializable {
 			xSpot += 20;
 		}
 		drawer.pushStyle();
-		if(tintRed){
+		if (tintRed) {
 			drawer.tint(Color.RED.getRGB(), 128);
 			count++;
 		}
-		if(count>25) {
+		if (count > 25) {
 			count = 0;
 			drawer.noTint();
 			tintRed = false;
 		}
+		drawer.point((float) xCoord, (float) yCoord);
+		drawer.rect(boundingRectangle.x, boundingRectangle.y, boundingRectangle.width, boundingRectangle.height);
 		drawer.image(character, (float) xCoord, (float) yCoord, (float) width, (float) height);
 		drawer.popStyle();
-		// drawer.point((float)xCoord, (float)yCoord);
-		// drawer.rect(boundingRectangle.x, boundingRectangle.y,boundingRectangle.width,
-		// boundingRectangle.height);
 
 	}
 
@@ -109,7 +108,7 @@ public class Player implements Serializable {
 			alive = false;
 		}
 	}
-	
+
 	public void setTintRed() {
 		tintRed = true;
 	}
@@ -177,7 +176,7 @@ public class Player implements Serializable {
 					if (!gameScreen.translate(-7))
 						moveLeft();
 				}
-			} else if ((key == PApplet.RIGHT || key == KeyEvent.VK_D) && getX()  + width < gameScreen.width) {
+			} else if ((key == PApplet.RIGHT || key == KeyEvent.VK_D) && getX() + width < gameScreen.width) {
 				if (xCoord + width < gameScreen.ORIGINAL_WIDTH * 1 / 2) {
 					moveRight();
 				} else {
@@ -201,7 +200,7 @@ public class Player implements Serializable {
 		}
 		vy += GRAVITY;
 		yCoord += vy;
-		if(vy>35) {
+		if (vy > 35) {
 			vy = 35;
 		}
 		boundingRectangle.setLocation((int) xCoord, (int) yCoord);
