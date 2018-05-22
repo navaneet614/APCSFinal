@@ -807,11 +807,9 @@ public class GameScreen extends PApplet implements NetworkListener {
 	@Override
 	public void networkMessageReceived(NetworkDataObject ndo) {
 		// System.out.println("here");
-		String host = ndo.getSourceIP();
-		// System.out.println(host);
+		InetAddress host = ndo.serverHost;
 		try {
-			String local = InetAddress.getLocalHost().toString();
-			local = local.substring(local.indexOf('/') + 1);
+			InetAddress local = InetAddress.getLocalHost();
 			isHost = host.equals(local);
 			notHost = !host.equals(local);
 			if (isHost) {
