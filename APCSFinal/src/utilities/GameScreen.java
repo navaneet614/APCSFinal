@@ -320,6 +320,10 @@ public class GameScreen extends PApplet implements NetworkListener {
 		this.setupBlocks();
 
 	}
+	
+	public void nullCurrentMenu() {
+		currentMenu = null;
+	}
 
 	public void draw() {
 
@@ -352,6 +356,9 @@ public class GameScreen extends PApplet implements NetworkListener {
 					}
 					currentMenu = null;
 					inGameMenu = null;
+				} else {
+					fill(Color.BLACK.getRGB());
+					text("Look at the other window that got opened.", 350, 50);
 				}
 			} else {
 				currentMenu.draw(this);
