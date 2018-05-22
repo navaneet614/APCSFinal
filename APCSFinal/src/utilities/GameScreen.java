@@ -949,6 +949,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 				} else if (ndo.message[0].equals(messageTypePlayerInfo)) {
 					Player p = (Player) ndo.message[1];
 					p.doImages();
+					if(currentMenu==null)
 					p.draw(this);
 				} else if (ndo.message[0].equals(messagePutText)) {
 					if (isHost) {
