@@ -346,7 +346,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 		background(Color.WHITE.getRGB());
 
 		if (gameMode != null && gameMode.equals(gameModes.onlineMultiplayer)) {
-
+			
 			if (currentMenu == null) {
 				if (isHost) {
 					for (Obstacle o : obstacles) {
@@ -371,7 +371,8 @@ public class GameScreen extends PApplet implements NetworkListener {
 			} else {
 				currentMenu.draw(this);
 			}
-
+			
+			update();
 			this.processNetworkMessages();
 			return;
 		}
