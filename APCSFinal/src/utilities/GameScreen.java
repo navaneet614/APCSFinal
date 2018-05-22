@@ -384,7 +384,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 						if (guy == null) {
 							guy = new Player(50, 450, 50, 50);
 							guy.setup(this);
-							nm.sendMessage(messageTypePlayerInfo, guy);
+							nm.sendMessage(NetworkDataObject.MESSAGE, messageTypePlayerInfo, guy);
 							
 						}
 						if (players != null) {
