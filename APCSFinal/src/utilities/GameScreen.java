@@ -433,6 +433,9 @@ public class GameScreen extends PApplet implements NetworkListener {
 	}
 
 	public void update() {
+		if(guy==null) {
+			return;
+		}
 		hitDetection();
 		guy.update(keys, this);
 		if (guy.hearts() <= 0) {
