@@ -355,23 +355,27 @@ public class GameScreen extends PApplet implements NetworkListener {
 						// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
 						o.draw(this);
 					}
-					if (!god.canPlace()&&inGameMenu!=null) {
+					if (!god.canPlace() && inGameMenu != null) {
 						translate(-distanceTranslated);
 						inGameMenu = null;
 						nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
 						nm.sendMessage(messageTypeObstaclesDone);
 					}
-					if(inGameMenu!=null) {
+					if (inGameMenu != null) {
 						currentMenu = null;
 						inGameMenu = godScreen;
 						inGameMenu.draw(this);
 					} else {
-						players = new HashMap<String, Player>();
-						for(String s : players.keySet()) {
-							players.get(s).draw(this);
+						if (playersTurn) {
+							players = new HashMap<String, Player>();
+							for (String s : players.keySet()) {
+								players.get(s).draw(this);
+							}
+						} else {
+							inGameMenu = godScreen;
 						}
 					}
-	
+
 				} else if (notHost) {
 					// System.out.println(obstacles.size());
 					for (Obstacle o : obstacles) {
@@ -380,12 +384,12 @@ public class GameScreen extends PApplet implements NetworkListener {
 					}
 					currentMenu = null;
 					inGameMenu = null;
-					if(playersTurn) {
-						if(guy==null) {
+					if (playersTurn) {
+						if (guy == null) {
 							guy = new Player(50, 450, 50, 50);
 							guy.setup(this);
 						}
-						
+
 					} else {
 						guy = null;
 					}
@@ -904,7 +908,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 						}
 					}
 					this.obstacles = obstacles;
-				}  else if (ndo.message[0].equals(messageTypePlayerInfo)) {
+				} else if (ndo.message[0].equals(messageTypePlayerInfo)) {
 					players.put(ndo.getSourceIP(), (Player) ndo.message[1]);
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
@@ -921,7 +925,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 	}
 
 	public void sendInfoToEveryone() {
-		if(playersTurn)
+		if (playersTurn)
 			nm.sendMessage(NetworkDataObject.MESSAGE, messageTypePlayerInfo, guy);
 	}
 }
