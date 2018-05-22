@@ -386,7 +386,6 @@ public class GameScreen extends PApplet implements NetworkListener {
 							guy.setup(this);
 							nm.sendMessage(messageTypePlayerInfo, guy);
 
-							players = new HashMap<String, Player>();
 							for (String s : players.keySet()) {
 								players.get(s).draw(this);
 							}
@@ -879,12 +878,12 @@ public class GameScreen extends PApplet implements NetworkListener {
 			InetAddress local = InetAddress.getLocalHost();
 			isHost = host.equals(local);
 			notHost = !host.equals(local);
-			if (isHost) {
-				System.out.println("i am host");
-			}
-			if (notHost) {
-				System.out.println("im not the host");
-			}
+//			if (isHost) {
+//				System.out.println("i am host");
+//			}
+//			if (notHost) {
+//				System.out.println("im not the host");
+//			}
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
