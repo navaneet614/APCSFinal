@@ -357,10 +357,10 @@ public class GameScreen extends PApplet implements NetworkListener {
 					}
 
 					if (playersTurn) {
-						if (players == null)
-							players = new HashMap<String, Player>();
-						for (String s : players.keySet()) {
-							players.get(s).draw(this);
+						if (players != null) {
+							for (String s : players.keySet()) {
+								players.get(s).draw(this);
+							}
 						}
 					}
 
@@ -385,10 +385,11 @@ public class GameScreen extends PApplet implements NetworkListener {
 							guy = new Player(50, 450, 50, 50);
 							guy.setup(this);
 							nm.sendMessage(messageTypePlayerInfo, guy);
-							if (players != null) {
-								for (String s : players.keySet()) {
-									players.get(s).draw(this);
-								}
+							
+						}
+						if (players != null) {
+							for (String s : players.keySet()) {
+								players.get(s).draw(this);
 							}
 						}
 
