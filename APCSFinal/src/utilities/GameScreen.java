@@ -377,6 +377,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 					if (god.canPlace()) {
 						inGameMenu = godScreen;
 						inGameMenu.draw(this);
+						guy = null;
 					}
 					
 					if(!drawPlayer) {
