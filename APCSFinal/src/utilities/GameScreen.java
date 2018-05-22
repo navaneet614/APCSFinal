@@ -840,8 +840,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 			return;
 
 		Queue<NetworkDataObject> queue = nm.getQueuedMessages();
-		if(queue.size()!=0)
-		System.out.println(queue.size());
+
 
 		while (!queue.isEmpty()) {
 			NetworkDataObject ndo = queue.poll();
@@ -859,7 +858,12 @@ public class GameScreen extends PApplet implements NetworkListener {
 					this.translate((double)(ndo.message[1]));
 				} else if(ndo.message[0].equals(messageTypeObstacles)) {
 					System.out.println("yo waddup");
-					obstacles = (ArrayList<Obstacle>)ndo.message[1];
+					ArrayList<Obstacle> obstacles = (ArrayList<Obstacle>)ndo.message[1];
+					for(Obstacle o:obstacles) {
+						String type = o.getClass().toString();
+						type = type.substring(type.lastIndexOf('.')+1);
+						o.doImage(type);
+					}
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
 				if(isHost) {
