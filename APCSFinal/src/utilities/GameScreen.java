@@ -367,7 +367,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 						translate(-distanceTranslated);
 						inGameMenu = null;
 						nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
-						nm.sendMessage(messageTypeObstaclesDone);
+						nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstaclesDone);
 					}
 					if(god.canPlace()) {
 						inGameMenu = godScreen;
