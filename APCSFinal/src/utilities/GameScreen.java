@@ -355,18 +355,21 @@ public class GameScreen extends PApplet implements NetworkListener {
 						// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
 						o.draw(this);
 					}
+					
+					if (playersTurn) {
+						players = new HashMap<String, Player>();
+						for (String s : players.keySet()) {
+							players.get(s).draw(this);
+						}
+					}
+					
 					if (!god.canPlace() && inGameMenu != null) {
 						translate(-distanceTranslated);
 						inGameMenu = null;
 						nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
 						nm.sendMessage(messageTypeObstaclesDone);
 					}
-					if (playersTurn) {
-						players = new HashMap<String, Player>();
-						for (String s : players.keySet()) {
-							players.get(s).draw(this);
-						}
-					} else {
+					 else {
 						inGameMenu = godScreen;
 						inGameMenu.draw(this);
 					}
@@ -433,13 +436,19 @@ public class GameScreen extends PApplet implements NetworkListener {
 	}
 
 	public void update() {
-		if(guy==null) {
-			return;
+		boolean nullify = false;
+		if (guy == null) {
+			guy = new Player(50, 450, 50, 50);
+			guy.setup(this);
+			nullify = true;
 		}
 		hitDetection();
 		guy.update(keys, this);
 		if (guy.hearts() <= 0) {
 			currentMenu = deathMenu;
+		}
+		if (nullify) {
+			guy = null;
 		}
 	}
 
