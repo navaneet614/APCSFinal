@@ -19,6 +19,9 @@ public class LanMenu extends Menu {
 
 	@Override
 	public void doButtonAction(String buttonText, GameScreen gameScreen) {
+		if(nmp!=null) {
+			gameScreen.nullCurrentMenu();
+		}
 		if(buttonText.equals("Open Networking Panel")) {
 			if(nmp == null) {
 				nmp = new NetworkManagementPanel("Gods Plan", 2, gameScreen);
@@ -29,5 +32,4 @@ public class LanMenu extends Menu {
 			gameScreen.changeMenuMode("main");
 		}
 	}
-
 }

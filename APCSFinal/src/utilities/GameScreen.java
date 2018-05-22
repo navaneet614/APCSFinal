@@ -960,6 +960,9 @@ public class GameScreen extends PApplet implements NetworkListener {
 			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
 				if (isHost) {
 					nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
+					if(playersTurn) {
+						nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstaclesDone);
+					}
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
 				if (isHost) {
