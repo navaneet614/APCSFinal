@@ -21,7 +21,7 @@ public class LanMenu extends Menu {
 	public void doButtonAction(String buttonText, GameScreen gameScreen) {
 		if(buttonText.equals("Open Networking Panel")) {
 			if(nmp == null) {
-				nmp = new NetworkManagementPanel("Gods Plan", 5, gameScreen);
+				nmp = new NetworkManagementPanel("Gods Plan", 2, gameScreen);
 				this.removeButton(0);
 			}
 			gameScreen.nullCurrentMenu();

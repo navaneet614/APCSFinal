@@ -858,6 +858,9 @@ public class GameScreen extends PApplet implements NetworkListener {
 			}
 		}
 		distanceTranslated += x;
+		if(playersTurn) {
+			nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
+		}
 		return true;
 	}
 
