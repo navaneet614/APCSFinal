@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Queue;
-
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 import frontend.NetworkDataObject;
