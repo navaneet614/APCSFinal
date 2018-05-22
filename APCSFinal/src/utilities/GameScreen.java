@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Queue;
 
@@ -123,6 +124,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 			setupBlocks();
 			isHost = false;
 			notHost = false;
+			playersTurn = false;
 		}
 	}
 
@@ -346,16 +348,30 @@ public class GameScreen extends PApplet implements NetworkListener {
 		background(Color.WHITE.getRGB());
 
 		if (gameMode != null && gameMode.equals(gameModes.onlineMultiplayer)) {
-			
+
 			if (currentMenu == null) {
 				if (isHost) {
 					for (Obstacle o : obstacles) {
 						// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
 						o.draw(this);
 					}
-					currentMenu = null;
-					inGameMenu = godScreen;
-					inGameMenu.draw(this);
+					if (!god.canPlace()&&inGameMenu!=null) {
+						translate(-distanceTranslated);
+						inGameMenu = null;
+						nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
+						nm.sendMessage(messageTypeObstaclesDone);
+					}
+					if(inGameMenu!=null) {
+						currentMenu = null;
+						inGameMenu = godScreen;
+						inGameMenu.draw(this);
+					} else {
+						players = new HashMap<String, Player>();
+						for(String s : players.keySet()) {
+							players.get(s).draw(this);
+						}
+					}
+	
 				} else if (notHost) {
 					// System.out.println(obstacles.size());
 					for (Obstacle o : obstacles) {
@@ -364,6 +380,15 @@ public class GameScreen extends PApplet implements NetworkListener {
 					}
 					currentMenu = null;
 					inGameMenu = null;
+					if(playersTurn) {
+						if(guy==null) {
+							guy = new Player(50, 450, 50, 50);
+							guy.setup(this);
+						}
+						
+					} else {
+						guy = null;
+					}
 				} else {
 					fill(Color.BLACK.getRGB());
 					text("Look at the other window that got opened.", 350, 50);
@@ -371,7 +396,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 			} else {
 				currentMenu.draw(this);
 			}
-			
+
 			update();
 			this.processNetworkMessages();
 			return;
@@ -816,9 +841,12 @@ public class GameScreen extends PApplet implements NetworkListener {
 
 	private NetworkMessenger nm;
 	private static final String messageTypeObstacles = "OBSTACLES";
-	private static final String messageTypeObstacle = "OBSTACLE";
+	private static final String messageTypeObstaclesDone = "OBSTACLESDONE";
 	private static final String messageTypeTranslate = "TRANSLATE";
+	private static final String messageTypePlayerInfo = "PLAYERS";
 	private boolean isHost, notHost;
+	private boolean playersTurn = false;
+	private HashMap<String, Player> players;
 
 	@Override
 	public void connectedToServer(NetworkMessenger nm) {
@@ -858,28 +886,26 @@ public class GameScreen extends PApplet implements NetworkListener {
 			String host = ndo.getSourceIP();
 
 			if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
-				if (ndo.message[0].equals(messageTypeObstacle)) {
-					Obstacle newObstacle = (Obstacle) ndo.message[1];
-					String type = newObstacle.getClass().getName();
-					System.out.println(type);
-					newObstacle.doImage(type);
-					obstacles.add(newObstacle);
+				if (ndo.message[0].equals(messageTypeObstaclesDone)) {
+					playersTurn = true;
 				} else if (ndo.message[0].equals(messageTypeTranslate)) {
 					this.translate((double) (ndo.message[1]));
 				} else if (ndo.message[0].equals(messageTypeObstacles)) {
-					System.out.println("yo waddup");
+					// System.out.println("yo waddup");
 					ArrayList<Obstacle> obstacles = (ArrayList<Obstacle>) ndo.message[1];
 					for (Obstacle o : obstacles) {
 						String type = o.getClass().toString();
 						System.out.println(type);
 						type = type.substring(type.lastIndexOf('.') + 1);
 						o.doImage(type);
-						if(type.equalsIgnoreCase("turret")) {
+						if (type.equalsIgnoreCase("turret")) {
 							Turret t = (Turret) o;
 							t.startClock();
 						}
 					}
 					this.obstacles = obstacles;
+				}  else if (ndo.message[0].equals(messageTypePlayerInfo)) {
+					players.put(ndo.getSourceIP(), (Player) ndo.message[1]);
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
 				if (isHost) {
@@ -892,5 +918,10 @@ public class GameScreen extends PApplet implements NetworkListener {
 
 		}
 
+	}
+
+	public void sendInfoToEveryone() {
+		if(playersTurn)
+			nm.sendMessage(NetworkDataObject.MESSAGE, messageTypePlayerInfo, guy);
 	}
 }

@@ -35,7 +35,7 @@ public class Player implements Serializable {
 	private int health, count;
 	private double width;
 	private double height;
-	private PImage character, heart;
+	private transient PImage character, heart;
 	private boolean alive, jumping, slow, tintRed;
 	private double vy;
 	private Rectangle boundingRectangle;
@@ -187,6 +187,7 @@ public class Player implements Serializable {
 			}
 		}
 		act();
+		gameScreen.sendInfoToEveryone();
 	}
 
 	private void act() {
@@ -212,6 +213,11 @@ public class Player implements Serializable {
 
 	public void setSlow(boolean x) {
 		slow = x;
+	}
+	
+	public void doImage() {
+		character = ImageLoader.character;
+		heart = ImageLoader.health;
 	}
 
 }
