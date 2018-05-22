@@ -362,7 +362,6 @@ public class GameScreen extends PApplet implements NetworkListener {
 						nm.sendMessage(messageTypeObstaclesDone);
 					}
 					if (inGameMenu != null) {
-						currentMenu = null;
 						inGameMenu = godScreen;
 						inGameMenu.draw(this);
 					} else {
@@ -382,12 +381,16 @@ public class GameScreen extends PApplet implements NetworkListener {
 						// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
 						o.draw(this);
 					}
-					currentMenu = null;
-					inGameMenu = null;
 					if (playersTurn) {
 						if (guy == null) {
 							guy = new Player(50, 450, 50, 50);
 							guy.setup(this);
+							nm.sendMessage(messageTypePlayerInfo, guy);
+						}
+						
+						players = new HashMap<String, Player>();
+						for (String s : players.keySet()) {
+							players.get(s).draw(this);
 						}
 
 					} else {
@@ -909,15 +912,21 @@ public class GameScreen extends PApplet implements NetworkListener {
 					}
 					this.obstacles = obstacles;
 				} else if (ndo.message[0].equals(messageTypePlayerInfo)) {
-					players.put(ndo.getSourceIP(), (Player) ndo.message[1]);
+					Player p = (Player) ndo.message[1];
+					p.doImages();
+					players.put(ndo.getSourceIP(), p);
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
 				if (isHost) {
 					nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
-				gameMode = null;
-				this.changeMenuMode("main");
+				if(isHost) {
+					players.remove(ndo.getSourceIP());
+				} else if(notHost) {
+					gameMode = null;
+					this.changeMenuMode("main");
+				}
 			}
 
 		}

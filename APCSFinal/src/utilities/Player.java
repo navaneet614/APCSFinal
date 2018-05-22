@@ -215,7 +215,7 @@ public class Player implements Serializable {
 		slow = x;
 	}
 	
-	public void doImage() {
+	public void doImages() {
 		character = ImageLoader.character;
 		heart = ImageLoader.health;
 	}
