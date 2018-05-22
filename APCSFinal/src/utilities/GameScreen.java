@@ -361,21 +361,17 @@ public class GameScreen extends PApplet implements NetworkListener {
 						nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
 						nm.sendMessage(messageTypeObstaclesDone);
 					}
-					if (inGameMenu != null) {
-						inGameMenu.draw(this);
-					} else {
-						if (playersTurn) {
-							players = new HashMap<String, Player>();
-							for (String s : players.keySet()) {
-								players.get(s).draw(this);
-							}
-						} else {
-							inGameMenu = godScreen;
+					if (playersTurn) {
+						players = new HashMap<String, Player>();
+						for (String s : players.keySet()) {
+							players.get(s).draw(this);
 						}
+					} else {
+						inGameMenu = godScreen;
+						inGameMenu.draw(this);
 					}
 
 				} else if (notHost) {
-					// System.out.println(obstacles.size());
 					for (Obstacle o : obstacles) {
 						// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
 						o.draw(this);
@@ -847,7 +843,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 
 	private NetworkMessenger nm;
 	private static final String messageTypeObstacles = "OBSTACLES";
-	private static final String messageTypeObstaclesDone = "OBSTACLESDONE";
+	private static final String messageTypeObstaclesDone = "DONE";
 	private static final String messageTypeTranslate = "TRANSLATE";
 	private static final String messageTypePlayerInfo = "PLAYERS";
 	private boolean isHost, notHost;
@@ -893,6 +889,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 
 			if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
 				if (ndo.message[0].equals(messageTypeObstaclesDone)) {
+					System.out.println("here");
 					playersTurn = true;
 				} else if (ndo.message[0].equals(messageTypeTranslate)) {
 					this.translate((double) (ndo.message[1]));
