@@ -624,6 +624,9 @@ public class GameScreen extends PApplet implements NetworkListener {
 
 	public void removeObstacle() {
 		obstacles.remove(obstacles.size() - 1);
+		if(isHost) {
+			nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
+		}
 	}
 
 	public void mouseMoved() {
