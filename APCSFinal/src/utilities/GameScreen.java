@@ -130,7 +130,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 		this.frameRate(60);
 		ImageLoader.loadAllImages(this, "resources/");
 		Minim m = new Minim(this);
-		bgMusic = m.loadFile("/resources/godsplan.mp3");
+		bgMusic = m.loadFile("resources/godsplan.mp3");
 		bgMusic.loop();
 		guy.setup(this);
 		// god.setup(this);
