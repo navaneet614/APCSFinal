@@ -355,22 +355,22 @@ public class GameScreen extends PApplet implements NetworkListener {
 						// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
 						o.draw(this);
 					}
-					
+
 					if (playersTurn) {
-						if(players==null)
+						if (players == null)
 							players = new HashMap<String, Player>();
 						for (String s : players.keySet()) {
 							players.get(s).draw(this);
 						}
 					}
-					
+
 					if (!god.canPlace() && inGameMenu != null) {
 						translate(-distanceTranslated);
 						inGameMenu = null;
 						nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
 						nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstaclesDone);
 					}
-					if(god.canPlace()) {
+					if (god.canPlace()) {
 						inGameMenu = godScreen;
 						inGameMenu.draw(this);
 					}
@@ -385,9 +385,10 @@ public class GameScreen extends PApplet implements NetworkListener {
 							guy = new Player(50, 450, 50, 50);
 							guy.setup(this);
 							nm.sendMessage(messageTypePlayerInfo, guy);
-
-							for (String s : players.keySet()) {
-								players.get(s).draw(this);
+							if (players != null) {
+								for (String s : players.keySet()) {
+									players.get(s).draw(this);
+								}
 							}
 						}
 
@@ -878,12 +879,12 @@ public class GameScreen extends PApplet implements NetworkListener {
 			InetAddress local = InetAddress.getLocalHost();
 			isHost = host.equals(local);
 			notHost = !host.equals(local);
-//			if (isHost) {
-//				System.out.println("i am host");
-//			}
-//			if (notHost) {
-//				System.out.println("im not the host");
-//			}
+			// if (isHost) {
+			// System.out.println("i am host");
+			// }
+			// if (notHost) {
+			// System.out.println("im not the host");
+			// }
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -924,7 +925,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 				} else if (ndo.message[0].equals(messageTypePlayerInfo)) {
 					Player p = (Player) ndo.message[1];
 					p.doImages();
-					if(players==null)
+					if (players == null)
 						players = new HashMap<String, Player>();
 
 					players.put(ndo.getSourceIP(), p);
