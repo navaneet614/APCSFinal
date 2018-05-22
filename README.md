@@ -91,7 +91,7 @@ Package - utilities:
 * Main - Runs the program
 
 Package - obstacles: 
-Obstacle (abstract) - represents all obstacles. Inherited by:
+* Obstacle (abstract) - represents all obstacles. Inherited by:
 * Spikes
 * Glue
 * Turrets
