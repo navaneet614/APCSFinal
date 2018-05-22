@@ -357,7 +357,8 @@ public class GameScreen extends PApplet implements NetworkListener {
 					}
 					
 					if (playersTurn) {
-						players = new HashMap<String, Player>();
+						if(players==null)
+							players = new HashMap<String, Player>();
 						for (String s : players.keySet()) {
 							players.get(s).draw(this);
 						}
