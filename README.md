@@ -117,6 +117,11 @@ Package - frontend:
 
 
 -- RESPONSIBILITY LIST --
-Navaneet - in charge of menus, buttons, and the game screen
+Navaneet - in charge of menus, buttons, the game screen, and Networking 
 Shaunak - God of making obstacles, graphical design, javadoc-ing, and READMe's
-William - God of creating God, Player, and the UML
+William - God of creating God, Player, level design and the UML
+
+-- SPECIAL THANKS --
+Mr. Shelby - for providing Networking packages
+Caleb and Arthur - for insightful feedback on our game
+
