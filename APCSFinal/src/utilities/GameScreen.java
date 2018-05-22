@@ -355,6 +355,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 					inGameMenu = godScreen;
 					inGameMenu.draw(this);
 				} else if (notHost) {
+					System.out.println(obstacles.size());
 					for (Obstacle o : obstacles) {
 						// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
 						o.draw(this);
@@ -607,7 +608,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 				setupBlocks();
 			}
 		}
-		if(god.getPlacedObstacles()>num) {
+		if(isHost && god.getPlacedObstacles()>num) {
 			nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
 		}
 	}
@@ -857,6 +858,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 				} else if(ndo.message[0].equals(messageTypeTranslate)) {
 					this.translate((double)(ndo.message[1]));
 				} else if(ndo.message[0].equals(messageTypeObstacles)) {
+					System.out.println("yo waddup");
 					obstacles = (ArrayList<Obstacle>)ndo.message[1];
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
