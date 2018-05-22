@@ -117,6 +117,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 			}
 		}
 		drawPlayer = true;
+		 currentMessage = "";
 		if (fullClear) {
 			obstacles.clear();
 			doLvl();
@@ -376,6 +377,11 @@ public class GameScreen extends PApplet implements NetworkListener {
 					if (god.canPlace()) {
 						inGameMenu = godScreen;
 						inGameMenu.draw(this);
+					}
+					
+					if(!drawPlayer) {
+						fill(Color.BLACK.getRGB());
+						text((String) currentMessage, 350, 50);
 					}
 
 				} else if (notHost) {
@@ -882,6 +888,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 	private boolean isHost, notHost;
 	private boolean playersTurn = false;
 	private boolean drawPlayer = true;
+	private String currentMessage = "";
 
 	@Override
 	public void connectedToServer(NetworkMessenger nm) {
@@ -945,8 +952,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 					p.draw(this);
 				} else if (ndo.message[0].equals(messagePutText)) {
 					if (isHost) {
-						fill(Color.BLACK.getRGB());
-						text((String) ndo.message[1], 350, 50);
+						currentMessage = (String)ndo.message[1];
 						drawPlayer = false;
 					}
 				}
