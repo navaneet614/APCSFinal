@@ -67,6 +67,8 @@ Stretch features:
 
 
 -- CLASS LIST --
+
+Package - menus:
 Menu - is all the panels
 * DeathMenu 
 * PauseMenu 
@@ -77,13 +79,18 @@ Menu - is all the panels
 * GodScreen
 * LevelMenu
 * MultiplayerMenu
+* LanMenu
 Button - Represents a clickable button
         * ClickableObstacle - A Button that represents an Obstacle
+        
+Package - utilities: 
 GameScreen - has the game
 Player - represents each player
 God - Keeps track of how many obstacles God has placed
 ImageLoader - Stores all images used to increase efficiency
 Main - Runs the program
+
+Package - obstacles: 
 Obstacle (abstract) - represents all obstacles. Inherited by:
 * Spikes
 * Glue
@@ -92,6 +99,20 @@ Obstacle (abstract) - represents all obstacles. Inherited by:
 * Block
 * LandMine
 * FinishHouse
+
+Package - backend:
+* Client
+* ClientReader
+* ClientWriter
+* PeerDiscovery
+* SchoolClient
+* SchoolServer
+
+Package - frontend:
+* NetworkDataObject
+* NetworkListener (Interface)
+* NetworkManagementPanel
+* NetworkMessenger (Interface)
 
 
 
