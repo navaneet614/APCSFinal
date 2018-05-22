@@ -76,8 +76,8 @@ public class Player implements Serializable {
 			drawer.noTint();
 			tintRed = false;
 		}
-		drawer.point((float) xCoord, (float) yCoord);
-		drawer.rect(boundingRectangle.x, boundingRectangle.y, boundingRectangle.width, boundingRectangle.height);
+//		drawer.point((float) xCoord, (float) yCoord);
+//		drawer.rect(boundingRectangle.x, boundingRectangle.y, boundingRectangle.width, boundingRectangle.height);
 		drawer.image(character, (float) xCoord, (float) yCoord, (float) width, (float) height);
 		drawer.popStyle();
 
