@@ -132,6 +132,11 @@ public class GameScreen extends PApplet implements NetworkListener {
 		Minim m = new Minim(this);
 		bgMusic = m.loadFile("resources/godsplan.mp3");
 		bgMusic.loop();
+		if(!bgMusic.isPlaying()) {
+			Minim m2 = new Minim(this);
+			bgMusic = m2.loadFile("resources/godsplan.mp3");
+			bgMusic.loop();
+		}
 		guy.setup(this);
 		// god.setup(this);
 		for (Obstacle o : obstacles) {
@@ -428,12 +433,12 @@ public class GameScreen extends PApplet implements NetworkListener {
 		} else if (keyCode == KeyEvent.VK_D && inGameMenu instanceof GodScreen) {
 			translate(20);
 			if(isHost) {
-				nm.sendMessage(messageTypeTranslate, 20);
+				nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeTranslate, 20);
 			}
 		} else if (keyCode == KeyEvent.VK_A && inGameMenu instanceof GodScreen) {
 			translate(-20);
 			if(isHost) {
-				nm.sendMessage(messageTypeTranslate, -20);
+				nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeTranslate, -20);
 			}
 		}
 		keys.add(this.keyCode);
@@ -521,6 +526,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 		if (keyPressed) {
 			return;
 		}
+		int num = god.getPlacedObstacles();
 		if (godScreen.getDragging()) {
 			Spike spike = null;
 			Glue glue = null;
@@ -561,30 +567,30 @@ public class GameScreen extends PApplet implements NetworkListener {
 				obstacles.add(spike);
 				spike = null;
 				god.place();
-				if(isHost) {
-					nm.sendMessage(messageTypeObstacle, spike, "spike");
-				}
+//				if(isHost) {
+//					nm.sendMessage(messageTypeObstacle, spike, "spike");
+//				}
 			} else if (glue != null) {
 				obstacles.add(glue);
 				glue = null;
 				god.place();
-				if(isHost) {
-					nm.sendMessage(messageTypeObstacle, glue, "glue");
-				}
+//				if(isHost) {
+//					nm.sendMessage(messageTypeObstacle, glue, "glue");
+//				}
 			} else if (turret != null) {
 				obstacles.add(turret);
 				turret = null;
 				god.place();
-				if(isHost) {
-					nm.sendMessage(messageTypeObstacle, turret, "turret");
-				}
+//				if(isHost) {
+//					nm.sendMessage(messageTypeObstacle, turret, "turret");
+//				}
 			} else if (mine != null) {
 				obstacles.add(mine);
 				mine = null;
 				god.place();
-				if(isHost) {
-					nm.sendMessage(messageTypeObstacle, mine, "mine");
-				}
+//				if(isHost) {
+//					nm.sendMessage(messageTypeObstacle, mine, "mine");
+//				}
 			}
 			if (canPlaceBlock && (mouseY / (height / ORIGINAL_HEIGHT)) > 100 && x.equals("block")) {
 				float mx = (float) ((mouseX / (width / ORIGINAL_WIDTH)));
@@ -594,12 +600,15 @@ public class GameScreen extends PApplet implements NetworkListener {
 				if (spaceIsFree(mx, my)) {
 					obstacles.add(new Block(mx, my, 50, 50));
 					god.place();
-					if(isHost) {
-						nm.sendMessage(messageTypeObstacle, obstacles.get(obstacles.size()-1), "block");
-					}
+//					if(isHost) {
+//						nm.sendMessage(messageTypeObstacle, obstacles.get(obstacles.size()-1), "block");
+//					}
 				}
 				setupBlocks();
 			}
+		}
+		if(god.getPlacedObstacles()>num) {
+			nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
 		}
 	}
 
@@ -794,7 +803,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 	}
 
 	private NetworkMessenger nm;
-	private static final String messageTypeInit = "OBSTACLES";
+	private static final String messageTypeObstacles = "OBSTACLES";
 	private static final String messageTypeObstacle = "OBSTACLE";
 	private static final String messageTypeTranslate = "TRANSLATE";
 	private boolean isHost, notHost;
@@ -830,6 +839,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 			return;
 
 		Queue<NetworkDataObject> queue = nm.getQueuedMessages();
+		if(queue.size()!=0)
 		System.out.println(queue.size());
 
 		while (!queue.isEmpty()) {
@@ -846,12 +856,12 @@ public class GameScreen extends PApplet implements NetworkListener {
 					obstacles.add(newObstacle);
 				} else if(ndo.message[0].equals(messageTypeTranslate)) {
 					this.translate((double)(ndo.message[1]));
-				} else if(ndo.message[0].equals(messageTypeInit)) {
+				} else if(ndo.message[0].equals(messageTypeObstacles)) {
 					obstacles = (ArrayList<Obstacle>)ndo.message[1];
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
 				if(isHost) {
-					nm.sendMessage(messageTypeInit, obstacles);
+					nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
 				} 
 			} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
 				gameMode = null;
