@@ -362,7 +362,6 @@ public class GameScreen extends PApplet implements NetworkListener {
 						nm.sendMessage(messageTypeObstaclesDone);
 					}
 					if (inGameMenu != null) {
-						inGameMenu = godScreen;
 						inGameMenu.draw(this);
 					} else {
 						if (playersTurn) {
@@ -386,11 +385,11 @@ public class GameScreen extends PApplet implements NetworkListener {
 							guy = new Player(50, 450, 50, 50);
 							guy.setup(this);
 							nm.sendMessage(messageTypePlayerInfo, guy);
-						}
-						
-						players = new HashMap<String, Player>();
-						for (String s : players.keySet()) {
-							players.get(s).draw(this);
+
+							players = new HashMap<String, Player>();
+							for (String s : players.keySet()) {
+								players.get(s).draw(this);
+							}
 						}
 
 					} else {
@@ -921,9 +920,9 @@ public class GameScreen extends PApplet implements NetworkListener {
 					nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
-				if(isHost) {
+				if (isHost) {
 					players.remove(ndo.getSourceIP());
-				} else if(notHost) {
+				} else if (notHost) {
 					gameMode = null;
 					this.changeMenuMode("main");
 				}
