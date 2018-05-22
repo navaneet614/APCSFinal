@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.io.*;
 
 import processing.core.*;
+import utilities.ImageLoader;
 
 /**
  * 
@@ -101,6 +102,26 @@ public abstract class Obstacle implements Serializable
 	
 	public double getY() {
 		return y;
+	}
+
+	public void doImage(String type) {
+		switch(type) {
+		case "Block":
+			pic = ImageLoader.block;
+			break;
+		case "Glue":
+			pic = ImageLoader.glue;
+			break;
+		case "LandMine":
+			pic = ImageLoader.mine;
+			break;
+		case "Spike":
+			pic = ImageLoader.spike;
+			break;
+		case "Turret":
+			pic = ImageLoader.turret;
+			break;
+		}
 	}
 
 }

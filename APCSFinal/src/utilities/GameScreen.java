@@ -321,10 +321,6 @@ public class GameScreen extends PApplet implements NetworkListener {
 
 	}
 
-	public void nullCurrentMenu() {
-		currentMenu = null;
-	}
-
 	public void draw() {
 
 		if (width != currentWidth || height != currentHeight) {
@@ -349,22 +345,16 @@ public class GameScreen extends PApplet implements NetworkListener {
 					currentMenu = null;
 					inGameMenu = godScreen;
 					inGameMenu.draw(this);
-					nm.sendMessage(this.messageTypeObstacle, obstacles);
 				} else if (notHost) {
 					for (Obstacle o : obstacles) {
 						// if(o.getX()>=-50 && o.getX()<=ORIGINAL_WIDTH)
 						o.draw(this);
 					}
 					currentMenu = null;
-					inGameMenu = godScreen;
-					inGameMenu.draw(this);
-				} else {
-					fill(Color.BLACK.getRGB());
-					text("Look at the other window when you open the panel.", 350, 50);
+					inGameMenu = null;
 				}
 			} else {
 				currentMenu.draw(this);
-
 			}
 
 			this.processNetworkMessages();
@@ -430,8 +420,14 @@ public class GameScreen extends PApplet implements NetworkListener {
 			currentMenu = pauseMenu;
 		} else if (keyCode == KeyEvent.VK_D && inGameMenu instanceof GodScreen) {
 			translate(20);
+			if(isHost) {
+				nm.sendMessage(messageTypeTranslate, 20);
+			}
 		} else if (keyCode == KeyEvent.VK_A && inGameMenu instanceof GodScreen) {
 			translate(-20);
+			if(isHost) {
+				nm.sendMessage(messageTypeTranslate, -20);
+			}
 		}
 		keys.add(this.keyCode);
 	}
@@ -500,8 +496,9 @@ public class GameScreen extends PApplet implements NetworkListener {
 		mouseP.setLocation((int) (mouseX / (width / ORIGINAL_WIDTH)), (int) (mouseY / (height / ORIGINAL_HEIGHT)));
 		// System.out.println( " " + mouseP.getX() + " " + mouseP.getY() +
 		// godScreen.getDragging());
-		if (inGameMenu instanceof GodScreen)
+		if (inGameMenu instanceof GodScreen) {
 			addObstacle();
+		}
 		// allows player to remove by clicking on
 		// if(currentMenu == null && inGameMenu == null) {
 		// for(int i = 0;i<obstacles.size();i++) {
@@ -557,18 +554,30 @@ public class GameScreen extends PApplet implements NetworkListener {
 				obstacles.add(spike);
 				spike = null;
 				god.place();
+				if(isHost) {
+					nm.sendMessage(messageTypeObstacle, spike, "spike");
+				}
 			} else if (glue != null) {
 				obstacles.add(glue);
 				glue = null;
 				god.place();
+				if(isHost) {
+					nm.sendMessage(messageTypeObstacle, glue, "glue");
+				}
 			} else if (turret != null) {
 				obstacles.add(turret);
 				turret = null;
 				god.place();
+				if(isHost) {
+					nm.sendMessage(messageTypeObstacle, turret, "turret");
+				}
 			} else if (mine != null) {
 				obstacles.add(mine);
 				mine = null;
 				god.place();
+				if(isHost) {
+					nm.sendMessage(messageTypeObstacle, mine, "mine");
+				}
 			}
 			if (canPlaceBlock && (mouseY / (height / ORIGINAL_HEIGHT)) > 100 && x.equals("block")) {
 				float mx = (float) ((mouseX / (width / ORIGINAL_WIDTH)));
@@ -578,6 +587,9 @@ public class GameScreen extends PApplet implements NetworkListener {
 				if (spaceIsFree(mx, my)) {
 					obstacles.add(new Block(mx, my, 50, 50));
 					god.place();
+					if(isHost) {
+						nm.sendMessage(messageTypeObstacle, obstacles.get(obstacles.size()-1), "block");
+					}
 				}
 				setupBlocks();
 			}
@@ -776,6 +788,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 
 	private NetworkMessenger nm;
 	private static final String messageTypeObstacle = "OBSTACLE";
+	private static final String messageTypeTranslate = "TRANSLATE";
 	private boolean isHost, notHost;
 
 	@Override
@@ -819,7 +832,13 @@ public class GameScreen extends PApplet implements NetworkListener {
 
 			if (ndo.messageType.equals(NetworkDataObject.MESSAGE)) {
 				if (ndo.message[0].equals(messageTypeObstacle)) {
-					obstacles = (ArrayList<Obstacle>) ndo.message[1];
+					Obstacle newObstacle = (Obstacle)ndo.message[1];
+					String type = newObstacle.getClass().getName();
+					System.out.println(type);
+					newObstacle.doImage(type);
+					obstacles.add(newObstacle);
+				} else if(ndo.message[0].equals(messageTypeTranslate)) {
+					this.translate((double)(ndo.message[1]));
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
 				// nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeInit, me.x, me.y,

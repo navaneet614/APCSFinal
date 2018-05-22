@@ -38,6 +38,10 @@ public abstract class Menu{
 		buttons.add(b);
 	}
 	
+	public void removeButton(int index) {
+		buttons.remove(index);
+	}
+	
 	public String checkIfButtonsPressed(int mouseX, int mouseY) {
 		for(Button b:buttons) {
 			if (b.mouseOver(mouseX, mouseY)) {
