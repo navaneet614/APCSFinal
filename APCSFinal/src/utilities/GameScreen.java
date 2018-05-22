@@ -874,6 +874,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 						type = type.substring(type.lastIndexOf('.') + 1);
 						o.doImage(type);
 					}
+					this.obstacles = obstacles;
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
 				if (isHost) {
