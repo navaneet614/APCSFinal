@@ -69,7 +69,7 @@ Stretch features:
 -- CLASS LIST --
 
 Package - menus:
-Menu - is all the panels
+* Menu - is all the panels
 * DeathMenu 
 * PauseMenu 
 * StartMenu
@@ -80,15 +80,15 @@ Menu - is all the panels
 * LevelMenu
 * MultiplayerMenu
 * LanMenu
-Button - Represents a clickable button
+* Button - Represents a clickable button
         * ClickableObstacle - A Button that represents an Obstacle
         
 Package - utilities: 
-GameScreen - has the game
-Player - represents each player
-God - Keeps track of how many obstacles God has placed
-ImageLoader - Stores all images used to increase efficiency
-Main - Runs the program
+* GameScreen - has the game
+* Player - represents each player
+* God - Keeps track of how many obstacles God has placed
+* ImageLoader - Stores all images used to increase efficiency
+* Main - Runs the program
 
 Package - obstacles: 
 Obstacle (abstract) - represents all obstacles. Inherited by:
