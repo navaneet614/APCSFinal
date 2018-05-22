@@ -782,10 +782,6 @@ public class GameScreen extends PApplet implements NetworkListener {
 						}
 					}
 				}
-				if (isHost) {
-					System.out.println("sent add obstacle");
-					nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
-				}
 			}
 
 		}
@@ -877,6 +873,10 @@ public class GameScreen extends PApplet implements NetworkListener {
 						System.out.println(type);
 						type = type.substring(type.lastIndexOf('.') + 1);
 						o.doImage(type);
+						if(type.equalsIgnoreCase("turret")) {
+							Turret t = (Turret) o;
+							t.startClock();
+						}
 					}
 					this.obstacles = obstacles;
 				}

@@ -26,6 +26,7 @@ public class Turret extends Obstacle implements ActionListener
 	private Timer t;
 	double angle;
 	int count;
+	
 	public Turret(float x, float y, double width, double height, double a) 
 	{
 		super(x, y, ImageLoader.turret, width, height);
@@ -34,6 +35,10 @@ public class Turret extends Obstacle implements ActionListener
 		t.start();
 		angle = a;
 		count = 0;
+	}
+	
+	public void startClock() {
+		t.start();
 	}
 
 	public int getDamage() 
@@ -88,6 +93,7 @@ public class Turret extends Obstacle implements ActionListener
 			b.shoot();
 		}
 		count++;
+
 		
 	}
 
