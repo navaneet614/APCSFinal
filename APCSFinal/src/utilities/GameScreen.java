@@ -794,6 +794,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 	}
 
 	private NetworkMessenger nm;
+	private static final String messageTypeInit = "OBSTACLES";
 	private static final String messageTypeObstacle = "OBSTACLE";
 	private static final String messageTypeTranslate = "TRANSLATE";
 	private boolean isHost, notHost;
@@ -844,15 +845,17 @@ public class GameScreen extends PApplet implements NetworkListener {
 					obstacles.add(newObstacle);
 				} else if(ndo.message[0].equals(messageTypeTranslate)) {
 					this.translate((double)(ndo.message[1]));
+				} else if(ndo.message[0].equals(messageTypeInit)) {
+					obstacles = (ArrayList<Obstacle>)ndo.message[1];
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
-				// nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeInit, me.x, me.y,
-				// me.color);
-
+				if(isHost) {
+					nm.sendMessage(messageTypeInit, obstacles);
+				} 
 			} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
 				gameMode = null;
 				this.changeMenuMode("main");
-			}
+			} 
 
 		}
 
