@@ -25,6 +25,7 @@ Keyboard Actions:
         Spacebar or p - Pauses the game
         A - Scrolls the screen left in God mode
         D - Scrolls the screen right in God mode
+        M - Toggle the music (pause and play)
 
 
 
@@ -79,8 +80,6 @@ Menu - is all the panels
 Button - Represents a clickable button
         * ClickableObstacle - A Button that represents an Obstacle
 GameScreen - has the game
-Sound - does sound for the game
-Server - makes the server for multiplayer
 Player - represents each player
 God - Keeps track of how many obstacles God has placed
 ImageLoader - Stores all images used to increase efficiency
@@ -99,4 +98,4 @@ Obstacle (abstract) - represents all obstacles. Inherited by:
 -- RESPONSIBILITY LIST --
 Navaneet - in charge of menus, buttons, and the game screen
 Shaunak - God of making obstacles, graphical design, javadoc-ing, and READMe's
-William - in charge of creating God, Player, and the UML
+William - God of creating God, Player, and the UML
