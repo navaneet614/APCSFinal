@@ -1,5 +1,6 @@
 package obstacles;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 import processing.core.*;
 
@@ -14,8 +15,11 @@ import processing.core.*;
  * going in a straight line indefinitely.
  * 
  */
-public class Bullet
+public class Bullet implements Serializable
 {
+
+	private static final long serialVersionUID = -2882183503421892520L;
+	
 	private double xCoord, yCoord;
 	private Rectangle boundingRectangle;
 	//private String direction;
