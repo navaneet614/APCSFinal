@@ -830,6 +830,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 			return;
 
 		Queue<NetworkDataObject> queue = nm.getQueuedMessages();
+		System.out.println(queue.size());
 
 		while (!queue.isEmpty()) {
 			NetworkDataObject ndo = queue.poll();
