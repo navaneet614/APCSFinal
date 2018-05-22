@@ -356,14 +356,14 @@ public class GameScreen extends PApplet implements NetworkListener {
 						o.draw(this);
 					}
 
-					if (playersTurn) {
-						System.out.println("playersturn");
-						if (players != null) {
-							for (String s : players.keySet()) {
-								players.get(s).draw(this);
-							}
-						}
-					}
+//					if (playersTurn) {
+//						System.out.println("playersturn");
+//						if (players != null) {
+//							for (String s : players.keySet()) {
+//								players.get(s).draw(this);
+//							}
+//						}
+//					}
 
 					if (!god.canPlace() && inGameMenu != null) {
 						translate(-distanceTranslated);
@@ -389,11 +389,11 @@ public class GameScreen extends PApplet implements NetworkListener {
 							nm.sendMessage(NetworkDataObject.MESSAGE, messageTypePlayerInfo, guy);
 							
 						}
-						if (players != null) {
-							for (String s : players.keySet()) {
-								players.get(s).draw(this);
-							}
-						}
+//						if (players != null) {
+//							for (String s : players.keySet()) {
+//								players.get(s).draw(this);
+//							}
+//						}
 
 					} else {
 						guy = null;
@@ -866,7 +866,6 @@ public class GameScreen extends PApplet implements NetworkListener {
 	private static final String messageTypePlayerInfo = "PLAYERS";
 	private boolean isHost, notHost;
 	private boolean playersTurn = false;
-	private HashMap<String, Player> players;
 
 	@Override
 	public void connectedToServer(NetworkMessenger nm) {
@@ -928,10 +927,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 				} else if (ndo.message[0].equals(messageTypePlayerInfo)) {
 					Player p = (Player) ndo.message[1];
 					p.doImages();
-					if (players == null)
-						players = new HashMap<String, Player>();
-
-					players.put(ndo.getSourceIP(), p);
+					p.draw(this);
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.CLIENT_LIST)) {
 				if (isHost) {
@@ -939,7 +935,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 				}
 			} else if (ndo.messageType.equals(NetworkDataObject.DISCONNECT)) {
 				if (isHost) {
-					players.remove(ndo.getSourceIP());
+					
 				} else if (notHost) {
 					gameMode = null;
 					this.changeMenuMode("main");
