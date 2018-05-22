@@ -369,10 +369,6 @@ public class GameScreen extends PApplet implements NetworkListener {
 						nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
 						nm.sendMessage(messageTypeObstaclesDone);
 					}
-					 else {
-						inGameMenu = godScreen;
-						inGameMenu.draw(this);
-					}
 
 				} else if (notHost) {
 					for (Obstacle o : obstacles) {
