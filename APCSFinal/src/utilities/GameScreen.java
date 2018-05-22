@@ -782,6 +782,10 @@ public class GameScreen extends PApplet implements NetworkListener {
 						}
 					}
 				}
+				if (isHost) {
+					System.out.println("sent add obstacle");
+					nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
+				}
 			}
 
 		}
