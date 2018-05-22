@@ -121,6 +121,9 @@ public abstract class Obstacle implements Serializable
 		case "Turret":
 			pic = ImageLoader.turret;
 			break;
+		case "FinishHouse":
+			pic = ImageLoader.finish;
+			break;
 		}
 	}
 
