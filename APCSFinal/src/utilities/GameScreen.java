@@ -369,6 +369,10 @@ public class GameScreen extends PApplet implements NetworkListener {
 						nm.sendMessage(NetworkDataObject.MESSAGE, messageTypeObstacles, obstacles);
 						nm.sendMessage(messageTypeObstaclesDone);
 					}
+					if(god.canPlace()) {
+						inGameMenu = godScreen;
+						inGameMenu.draw(this);
+					}
 
 				} else if (notHost) {
 					for (Obstacle o : obstacles) {
@@ -389,6 +393,8 @@ public class GameScreen extends PApplet implements NetworkListener {
 
 					} else {
 						guy = null;
+						fill(Color.BLACK.getRGB());
+						text("The level is being made by the god right now.", 350, 50);
 					}
 				} else {
 					fill(Color.BLACK.getRGB());
