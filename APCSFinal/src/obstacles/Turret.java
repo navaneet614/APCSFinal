@@ -22,7 +22,7 @@ import javax.swing.Timer;
  */
 public class Turret extends Obstacle implements ActionListener
 {
-	private ArrayList<Bullet> bullets;
+	private transient ArrayList<Bullet> bullets;
 	private Timer t;
 	double angle;
 	int count;

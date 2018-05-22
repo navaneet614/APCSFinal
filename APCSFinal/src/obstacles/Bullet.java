@@ -15,7 +15,7 @@ import processing.core.*;
  * going in a straight line indefinitely.
  * 
  */
-public class Bullet implements Serializable
+public class Bullet
 {
 
 	private static final long serialVersionUID = -2882183503421892520L;
