@@ -357,6 +357,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 					}
 
 					if (playersTurn) {
+						System.out.println("playersturn");
 						if (players != null) {
 							for (String s : players.keySet()) {
 								players.get(s).draw(this);
@@ -381,6 +382,7 @@ public class GameScreen extends PApplet implements NetworkListener {
 						o.draw(this);
 					}
 					if (playersTurn) {
+						System.out.println("playersturn");
 						if (guy == null) {
 							guy = new Player(50, 450, 50, 50);
 							guy.setup(this);
@@ -949,7 +951,9 @@ public class GameScreen extends PApplet implements NetworkListener {
 	}
 
 	public void sendInfoToEveryone() {
-		if (playersTurn)
+		if (playersTurn) {
 			nm.sendMessage(NetworkDataObject.MESSAGE, messageTypePlayerInfo, guy);
+			System.out.println("sent player info");
+		}
 	}
 }
